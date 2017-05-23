@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<div id="box">
+	
+</div>
+<script src="jquery-1.11.0.min.js"></script>
+	<script>
+		$.ajax({
+		    url:'index.php',   //服务器端的代理程序
+		    type:'post',
+		    datatype:'json',
+		    data:{user_phone:'15893081324',user_pwd:'qwe'},
+		    success:function (data){
+		    	// console.log(data.splic('"'))
+		    	// console.log(data.slice(data.indexOf('{'),data.indexOf('}')));
+		    	console.log(JSON.parse(data))
+		    }
+		})
+	</script>
+</body>
+</html>
