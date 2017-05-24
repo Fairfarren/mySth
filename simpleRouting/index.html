@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="true">
+    <meta name="MobileOptimized" content="320">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="msapplication-tap-highlight" content="no">
+	<title>西藏阿里地区发展和改革委员</title>
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<style>
+		*{margin:0;padding:0;}
+		html, body{
+			background-color:#f8f7f1;
+			font-size:16px;
+			font-family: "Microsoft YaHei";
+		}
+		#box{
+			width:1200px;
+			margin:0 auto;
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<div id="header">
+			
+		</div>
+		<div id="body" class="model1">
+			
+		</div>
+		<div id="footer">
+			<a href="#/header" onclick="gbl.changeModle1('#/header','1')">1</a>
+			<a href="#/footer" onclick="gbl.changeModle1('#/footer','1')">2</a>
+		</div>
+	</div>
+	<script src="js/jquery-1.11.0.min.js"></script>
+	<script src="js/index.js"></script>
+	<script src="js/onload.js"></script>
+	<script>
+		$(document).ready(function(){
+			var locationHash = window.location.hash.split("/").splice(0,2);
+			if(locationHash.length >= 2){
+				console.log(locationHash)
+				var locationHashArr = locationHash.join('/');
+				gbl.changeModle1(locationHashArr,'1');
+			}else{
+				gbl.changeModle1('#/header','1');
+			}
+			
+		})
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+@charset "utf-8";
+
+/*头部*/
+.header{
+	width:2px;
+}
+.headerImg{
+	width:100px;
+}
+.headerNav>table{
+	width:100%;
+}
