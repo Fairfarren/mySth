@@ -34,8 +34,8 @@
 			
 		</div>
 		<div id="footer">
-			<a href="#/header" onclick="gbl.changeModle1('#/header','1')">1</a>
-			<a href="#/footer" onclick="gbl.changeModle1('#/footer','1')">2</a>
+			<a href="javascript:(0)" onclick="gbl.changeModle1('#/header','1')">1</a>
+			<a href="javascript:(0)" onclick="gbl.changeModle1('#/footer','1')">2</a>
 		</div>
 	</div>
 	<script src="js/jquery-1.11.0.min.js"></script>
@@ -45,7 +45,7 @@
 		$(document).ready(function(){
 			var locationHash = window.location.hash.split("/").splice(0,2);
 			if(locationHash.length >= 2){
-				console.log(locationHash)
+				// console.log(locationHash)
 				var locationHashArr = locationHash.join('/');
 				gbl.changeModle1(locationHashArr,'1');
 			}else{
