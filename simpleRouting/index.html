@@ -37,11 +37,15 @@
 			<a href="javascript:(0)" onclick="gbl.changeModle1('#/header','1')">1</a>
 			<a href="javascript:(0)" onclick="gbl.changeModle1('#/footer','1')">2</a>
 		</div>
+		<div id="others">
+			
+		</div>
 	</div>
 	<script src="js/jquery-1.11.0.min.js"></script>
 	<script src="js/index.js"></script>
 	<script src="js/onload.js"></script>
 	<script>
+		$('#others').append(gbl.newsNewsDetail);
 		$(document).ready(function(){
 			var locationHash = window.location.hash.split("/").splice(0,2);
 			if(locationHash.length >= 2){

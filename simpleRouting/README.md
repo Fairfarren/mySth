@@ -4,7 +4,8 @@
 
 ## 做了一个如果hash值不完整，跳转首页的效果
 
-### [观看地址](https://fairfarren.github.io/mySth/simpleRouting)
+### [在线观看](https://fairfarren.github.io/mySth/simpleRouting)
+
 
 
 

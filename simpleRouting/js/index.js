@@ -17,7 +17,9 @@ gbl.footer = '<div>footer<a href="javascript:(0)" onclick="gbl.changeModle1(\'#/
 
 gbl.home1 = '<div>home1</div>';
 gbl.home2 = '<div>home2<div class="model3"></div></div>';
-gbl.home3 = '<div>home3</div>'
+gbl.home3 = '<div>home3</div>';
+
+gbl.newsNewsDetail = '<div class="workTrends"><ul class="workTrendsList"><!--<li><a href="">阿里地区2月份主要商品市场价格运行情况综述价格运行情</a><span>2014-02-13</span></li>--></ul><div class="workTrendsPages"><span class="workTrendsFirst">首页</span><ul class="workTrendsPagesNumber"><!--<li>...</li><li class="clickPages">1</li><li class="clickPages">2</li><li class="clickPages">3</li><li>...</li>--></ul><span class="workTrendsLast">尾页</span></div></div><script>GG.workTrends();</script>';
 
 gbl.changeModle1 = function(loca,index,sear){
 	//改变前

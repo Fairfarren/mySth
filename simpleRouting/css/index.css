@@ -10,3 +10,501 @@
 .headerNav>table{
 	width:100%;
 }
+
+*{margin:0;padding:0;list-style:none;}
+html, body{
+	background-color:#f8f7f1;
+	font-size:14px;
+	font-family: "Microsoft YaHei";
+}
+img{
+	border:0;
+	outline:none;
+}
+#box{
+	width:1200px;
+	margin:0 auto;
+}
+
+
+/* 共工作动态列表 */
+.workTrendsList>li{
+	width:100%;
+	overflow:hidden;
+	height:30px;
+	line-height:30px;
+}
+.workTrendsList>li>a{
+	color:black;
+	font-size:14px;
+	display:inline-block;
+	width:84%;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	overflow:hidden;
+	text-decoration:none;
+}
+.workTrendsList>li>a:before{
+	content:'·';
+	margin-right:10px;
+}
+.workTrendsList>li>span{
+	float:right;
+}
+.workTrendsPages{
+	float:right;
+	margin:10px;
+	color:#666666;
+}
+.workTrendsPages>span{
+	float:left;
+	margin-right:5px;
+	cursor:pointer;
+}
+.workTrendsPagesNumber{
+	overflow:hidden;
+	float:left;
+}
+
+.workTrendsPagesNumber>li{
+	float:left;
+	width:20px;
+	/*border:1px solid black;*/
+	text-align:center;
+	margin-right:5px;
+	cursor:pointer;
+}
+.workTrendsPagesNumber>.clickPagesColor{
+	color:#bf543b;
+	text-decoration:underline;
+}
+.workTrendsList>hr{
+	background:#cccccc;
+	border-color:#cccccc;
+	margin:10px 0;
+}
+/*图片新闻*/
+.imgNews>li>a{
+	display:table;
+	text-decoration:none;
+}
+.imgNews>li>a>div{
+	display:table-cell;
+}
+.imgNewsLeft{
+	width:250px;
+	height:160px;
+	vertical-align:middle;
+}
+.imgNewsLeft>img{
+	width:100%;
+	height:100%;
+}
+.imgNewsRight{
+	padding-left:37px;
+	vertical-align:top;
+}
+.imgNewsRightTitle{
+	width:468px;
+	margin-bottom:20px;
+	color:black;
+}
+.imgNewsRightTitle>span:first-child{
+	display:inline-block;
+	width:80%;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	overflow:hidden;
+}
+.imgNewsRightTitle>.imgNewsRightTitleTime{
+	float:right;
+	color:#666666;
+}
+.imgNewsRightText{
+	width:468px;
+	height:108px;
+	display: -webkit-box;
+	display: -o-box;
+	display: -ms-box;
+	display: -moz-box;
+	display: box;
+	-webkit-box-orient: vertical;
+	-moz-box-orient: vertical;
+	-o-box-orient: vertical;
+	-ms-box-orient: vertical;
+	box-orient: vertical;
+	-webkit-line-clamp: 4;
+	-moz-line-clamp: 4;
+	-o-line-clamp: 4;
+	-ms-line-clamp: 4;
+	line-clamp: 4;
+	overflow: hidden;
+	line-height:28px;
+	color:#666666;
+}
+.imgNews>hr{
+	margin:10px 0;
+}
+/*阿里图集*/
+.alImagesList{
+	overflow:hidden;
+}
+.alImagesList>li{
+	float:left;
+	width:240px;
+	height:180px;
+}
+.alImagesList>.alImagesListMargin{
+	margin:0 20px 40px 0;
+}
+.alImagesList>li>a{
+	display:block;
+	width:100%;
+	height:100%;
+	position:relative;
+}
+.alImagesList>li>a>img{
+	width:100%;
+	height:100%;
+}
+.alImagesList>li>a>div{
+	width:100%;
+	height:30px;
+	background-color:rgba(0,0,0,.5) !important;
+	position:absolute;
+	left:0;
+	bottom:0;
+	line-height:30px;
+	text-align:center;
+	color:#fff;
+	filter:progid:DXImageTransform.Microsoft.Gradient(startColorstr=#88000000,endColorstr=#88000000);
+}
+
+/*来信选登*/
+.selectedLetters a{
+	text-decoration:none;
+}
+.selectedLettersTitle{
+	overflow:hidden;
+	margin-bottom:15px;
+}
+.selectedLettersTitle>span{
+	float:left;
+	color:#b83e21;
+}
+.selectedLettersTitle>.selectedLettersTime{
+	float:right;
+	color:#666666;
+}
+.selectedLettersText{
+	height:60px;
+	color:#333333;
+	display: -webkit-box;
+	display: -o-box;
+	display: -ms-box;
+	display: -moz-box;
+	display: box;
+	-webkit-box-orient: vertical;
+	-moz-box-orient: vertical;
+	-o-box-orient: vertical;
+	-ms-box-orient: vertical;
+	box-orient: vertical;
+	-webkit-line-clamp: 3;
+	-moz-line-clamp: 3;
+	-o-line-clamp: 3;
+	-ms-line-clamp: 3;
+	line-clamp: 3;
+	overflow: hidden;
+	line-height:21px;
+}
+.selectedLettersLookAll{
+	text-align:right;
+	color:#b83e21;
+}
+.selectedLetters>hr{
+	margin:10px 0;
+}
+
+/*在线填写*/
+.fillInOnline{
+	margin:0 auto;
+}
+.fillInOnline>ul>li{
+	overflow:hidden;
+	margin-bottom:20px;
+}
+.fillInOnlineName>div{
+	float:left;
+	width:660px;
+}
+.fillInOnlineName>.fillInOnlineTitle{
+	text-align:right;
+	width:90px;
+	height:28px;
+	line-height:28px;
+	color:#222222;
+}
+.fillInOnlineName>.fillInOnlineInput{
+	width:200px;
+	height:28px;
+	margin-left:10px;
+}
+.fillInOnlineInput>input{
+	border:1px solid #bfbfbf;
+	outline:none;
+	width:188px;
+	height:26px;
+	color:#acacac;
+	padding:0 5px;
+	line-height:26px;
+}
+.fillInOnlineSelect{
+	margin-left:10px;
+}
+.fillInOnlineSelect>select{
+	width:200px;
+	height:28px;
+	line-height:28px;
+	border:1px solid #bfbfbf;
+}
+.fillInOnlineInput>.fillInOnlineInputTime{
+	border:0;
+	color:black;
+}
+.fillInOnlineTextarea{
+	width: 660px;
+  	height: 128px;
+  	margin-left:10px;
+  	border:1px solid #bfbfbf;
+}
+.fillInOnlineTextarea>textarea{
+	width:640px;
+	border:0;
+	padding:10px;
+	outline:none;
+	resize:none;
+}
+.fillInOnlineLast{
+	margin-left:10px;
+}
+.fillInOnlineLast>p{
+	line-height:28px;
+}
+.fillInOnlineSubmit{
+	text-align:center;
+}
+.fillInOnlineSubmit>input{
+	width: 140px;
+  	height: 36px;
+  	background-color: #b83e21;
+  	color:#fff;
+  	font-size:16px;
+  	line-height:36px;
+  	border:0;
+  	outline:none;
+  	cursor:pointer;
+}
+
+/*下载表格*/
+.downloadfillOut{
+	overflow:hidden;
+}
+.downloadfillOut>div{
+	float:left;
+	width:50%;
+	text-align:center;
+}
+.downloadfillOut>div>a{
+	display:block;
+	margin:0 auto;
+	width: 140px;
+	height: 36px;
+	background-color: #b83e21;
+	color:#fff;
+	text-decoration:none;
+	line-height:36px;
+}
+.downloadfillOut>div>span{
+	display:block;
+	width: 140px;
+	height: 36px;
+	margin:auto;
+	background-color:#795248;
+	color:#fff;
+	line-height:36px;
+	position:relative;
+	cursor:pointer;
+}
+.downloadfillOut>div>span input{
+	display:block;
+	width: 140px;
+	height: 36px;
+	margin:auto;
+	background-color:#795248;
+	color:#fff;
+	line-height:36px;
+	outline: medium none;
+    position: absolute;
+    filter:alpha(opacity=0);
+    -moz-opacity:0;
+    opacity:0; 
+	left:0;
+	top:0;
+	opacity:0;
+	cursor:pointer;
+}
+
+/*在线写信*/
+.upDataSub{
+	width: 120px;
+  	height: 30px;
+  	background:url('../images/others/btn_6_02upload.png') no-repeat center;
+  	background-size:120px 30px;
+  	position:relative;
+  	line-height:30px;
+  	text-align:center;
+  	float:left;
+  	margin-right:10px;
+}
+.upDataSub>input{
+	outline: medium none;
+    position: absolute;
+    filter:alpha(opacity=0);
+    -moz-opacity:0;
+    opacity:0; 
+    display:block;
+    position:absolute;
+    left:0;
+    top:0;
+    cursor:pointer;
+    width:120px;
+    height:30px;
+}
+.upDataImg{
+	float:left;
+	width:527px;
+}
+.upDataImg>span{
+	display:inline-block;
+	width:80px;
+	height:80px;
+	position:relative;
+	margin-right:20px;
+}
+.upDataImg>span>i{
+	width:22px;
+	height:22px;
+	display:inline-block;
+	position:absolute;
+	right:0;
+	top:0;
+	background:url('../images/others/icon_6_02del.png') no-repeat center;
+	background-size:22px 22px;
+	cursor:pointer;
+}
+.upDataImg img{
+	width:100%;
+	height:100%;
+}
+.upDataImg input{
+	display:none;
+}
+.ifIEHide{
+	display:none;
+}
+.fillInOnline hr{
+	margin-bottom:20px;
+}
+
+/*举报平台*/
+.reportingPlatform{
+	text-align:center;
+	color:black;
+	font-weight:bold;
+	margin-top:40px;
+}
+.reportingPlatform a{
+	color:#b83e21;
+}
+
+/*援藏工作*/
+.help{
+	background-color:#fff;
+	overflow:hidden;
+	border:1px solid #bfbfbf;
+}
+.helpTitle{
+	background:url('../images/others/img_title.png') no-repeat center;
+}
+.help>.workTrends{
+	padding:0 20px;
+}
+
+/*专题专栏*/
+.newsDetail{
+	padding:25px;
+}
+.newsDetailTitle{
+	padding:15px 0 40px;
+	text-align:center;
+	border-bottom:1px dotted black;
+	margin-bottom:20px;
+}
+.newsDetailTitle>p{
+	font-size:24px;
+	font-weight:bold;
+}
+.newsDetailContent{
+	word-wrap:break-word;
+	color:black;
+	font-size:14px;
+	line-height:30px;
+}
+.newsDetailContent img{
+	width:100%;
+	margin:10px 0;
+}
+
+/*重点项目*/
+.newsListCardHeader>.keyProject{
+	float:left;
+	color:#b83e21;
+	font-size:16px;
+}
+.keyProject>img{
+	margin-left:15px;
+}
+.keyProjectForm{
+	padding:0 25px;
+}
+.keyProjectForm>ul>li{
+	overflow:hidden;
+	margin-bottom:25px;
+}
+.keyProjectForm>ul>li>div{
+	float:left;
+	
+	line-height:30px;
+}
+.keyProjectForm>ul>hr{
+	margin-bottom:25px;
+}
+.keyProjectFormRight{
+	margin-left:10px;
+}
+.keyProjectFormRight>select{
+	height:28px;
+}
+.keyProjectFormRight>span{
+	margin-left:20px;
+}
+.keyProjectFormRight>input{
+	height:24px;
+	padding:0 20px;
+	line-height:24px;
+}
+.keyProjectFormRight>textarea{
+	padding:5px 20px;
+	height:118px;
+}
+
