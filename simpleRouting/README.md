@@ -4,6 +4,8 @@
 
 ## 做了一个如果hash值不完整，跳转首页的效果
 
+## 做了一个简单的分页，js内可以设置每一页显示的内容
+
 ### [在线观看](https://fairfarren.github.io/mySth/simpleRouting)
 
 
