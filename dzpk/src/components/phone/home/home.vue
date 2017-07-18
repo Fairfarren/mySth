@@ -28,7 +28,7 @@
 				</div>
 			</div>
 
-			<div class="page2" :style="{backgroundImage:'url('+ bgImg.bg3 +')'}">
+			<div class="phonePage2" :style="{backgroundImage:'url('+ bgImg.bg3 +')'}">
 				<div class="title" :style="{backgroundImage:'url('+ bgImg.bg4 +')'}">
 					风靡欧美的扑克游戏
 				</div>
@@ -41,12 +41,12 @@
 				</div>
 			</div>
 
-			<div class="page3" :style="{backgroundImage:'url('+ bgImg.bg6 +')'}">
+			<div class="phonePage3" :style="{backgroundImage:'url('+ bgImg.bg6 +')'}">
 				<div class="title" :style="{backgroundImage:'url('+ bgImg.bg4 +')'}">
 					最贴心的游戏体验
 				</div>
 				<div class="content">
-					<div class="page3Left">
+					<div class="phonePage3Left">
 						<ul>
 							<li>
 								<img src="static/thePhone/home/icon_diamond.png" alt="">
@@ -66,21 +66,21 @@
 							</li>
 						</ul>
 					</div>
-					<div class="page3Right">
+					<div class="phonePage3Right">
 						<img src="static/thePhone/home/iPhone_3.png" alt="">
 					</div>
 				</div>
 			</div>
 
-			<div class="page4" :style="{backgroundImage:'url('+ bgImg.bg7 +')'}">
+			<div class="phonePage4" :style="{backgroundImage:'url('+ bgImg.bg7 +')'}">
 				<div class="title" :style="{backgroundImage:'url('+ bgImg.bg4 +')'}">
 					丰富的好友互动
 				</div>
 				<div class="content">
-					<div class="page4Left">
+					<div class="phonePage4Left">
 						<img src="static/thePhone/home/iPhone_4.png" alt="">
 					</div>
-					<div class="page4Right">
+					<div class="phonePage4Right">
 						<ul>
 							<li>
 								<img src="static/thePhone/home/icon_club.png" alt="">
@@ -99,12 +99,12 @@
 				</div>
 			</div>
 
-			<div class="page5" :style="{backgroundImage:'url('+ bgImg.bg7 +')'}">
+			<div class="phonePage5" :style="{backgroundImage:'url('+ bgImg.bg7 +')'}">
 				<div class="title" :style="{backgroundImage:'url('+ bgImg.bg4 +')'}">
 					丰富的好友互动
 				</div>
 				<div class="content">
-					<div class="page5Left">
+					<div class="phonePage5Left">
 						<ul>
 							<li>
 								<img src="static/thePhone/home/icon_diamond.png" alt="">
@@ -116,10 +116,10 @@
 							</li>
 						</ul>
 					</div>
-					<div class="page5Content" :style="{backgroundImage:'url('+ bgImg.bg8 +')'}">
+					<div class="phonePage5Content" :style="{backgroundImage:'url('+ bgImg.bg8 +')'}">
 						<img src="static/thePhone/home/app_page.png" alt="">
 					</div>
-					<div class="page5Right">
+					<div class="phonePage5Right">
 						<ul>
 							<li>
 								<img src="static/thePhone/home/icon_diamond.png" alt="">
@@ -249,12 +249,12 @@ export default {
 		font-size:2.6125rem;
 	}
 
-	.page2{
+	.phonePage2{
 		background:no-repeat center;
 		background-size:100% 100%;
 		padding:4.375rem 0;
 	}
-	.page2>.title{
+	.phonePage2>.title{
 		font-size:2.5rem;
 		color:#e6c458;
 		text-align:center;
@@ -264,15 +264,15 @@ export default {
 		margin:0 auto;
 		width:25.7875rem;
 	}
-	.page2>.img{
+	.phonePage2>.img{
 		width:19.875rem;
 		margin:5.8125rem auto 0;
 		position:relative;
 	}
-	.page2 img{
+	.phonePage2 img{
 		width:100%;
 	}
-	.page2>.img>span{
+	.phonePage2>.img>span{
 		display:block;
 		position:absolute;
 		color:#fff;
@@ -280,7 +280,7 @@ export default {
 		background-size:100% 100%;
 		text-align:center;
 	}
-	.page2>.img>span:nth-child(2){
+	.phonePage2>.img>span:nth-child(2){
 		width:11.5125rem;
 		height:11.5125rem;
 		top:0;
@@ -290,7 +290,7 @@ export default {
 		box-sizing:border-box;
 		line-height:3.56rem;
 	}
-	.page2>.img>span:nth-child(3){
+	.phonePage2>.img>span:nth-child(3){
 		width:6.575rem;
 		height:6.575rem;
 		top:70%;
@@ -300,7 +300,7 @@ export default {
 		box-sizing:border-box;
 		line-height:1.99rem;
 	}
-	.page2>.img>span:nth-child(4){
+	.phonePage2>.img>span:nth-child(4){
 		width:7.5125rem;
 		height:7.5125rem;
 		top:0;
@@ -310,7 +310,7 @@ export default {
 		box-sizing:border-box;
 		line-height:2.39rem;
 	}
-	.page2>.img>span:nth-child(5){
+	.phonePage2>.img>span:nth-child(5){
 		width:9.0375rem;
 		height:9.0375rem;
 		top:60%;
@@ -321,15 +321,15 @@ export default {
 		line-height:2.74rem;
 	}
 
-	.page3 {
+	.phonePage3 {
 		background:no-repeat center;
 		background-size:100% 100%;
 		padding:4.375rem 0;
 	}
-	.page3 img{
+	.phonePage3 img{
 		width:100%;
 	}
-	.page3>.title{
+	.phonePage3>.title{
 		font-size:2.5rem;
 		color:#e6c458;
 		text-align:center;
@@ -339,37 +339,37 @@ export default {
 		margin:0 auto;
 		width:25.7875rem;
 	}
-	.page3>.content{
+	.phonePage3>.content{
 		overflow:hidden;
 	}
-	.page3>.content>div{
+	.phonePage3>.content>div{
 		width:50%;
 		float:left;
 	}
-	.page3Left{
+	.phonePage3Left{
 		margin-top:6.18rem;
 	}
-	.page3Left>ul>li{
+	.phonePage3Left>ul>li{
 		color:#fff;
 		font-size:1.75rem;
 		margin-left:3.6rem;
 		margin-bottom:4.5rem;
 		vertical-align:middle;
 	}
-	.page3Left>ul>li>img{
+	.phonePage3Left>ul>li>img{
 		width:1.625rem;
 		margin-right:13px;
 	}
-	.page3Right{
+	.phonePage3Right{
 		margin-top:3.36rem;
 	}
 
-	.page4 {
+	.phonePage4 {
 		background:no-repeat center;
 		background-size:100% 100%;
 		padding:4.375rem 0;
 	}
-	.page4>.title{
+	.phonePage4>.title{
 		font-size:2.5rem;
 		color:#e6c458;
 		text-align:center;
@@ -379,52 +379,52 @@ export default {
 		margin:0 auto;
 		width:25.7875rem;
 	}
-	.page4>.content{
+	.phonePage4>.content{
 		overflow:hidden;
 		position:relative;
 	}
-	.page4>.content>div{
+	.phonePage4>.content>div{
 		/*width:50%;*/
 		float:left;
 	}
-	.page4Left{
+	.phonePage4Left{
 		text-align:center;
 	}
-	.page4Left>img{
+	.phonePage4Left>img{
 		width:24.1875rem;
 		margin-left:1.81rem;
 		margin-top:7.93rem;
 	}
-	.page4Right{
+	.phonePage4Right{
 		width:28.3125rem;
 		position:absolute;
 		top:10%;
 		left:30%;
 	}
-	.page4Right>ul>li{
+	.phonePage4Right>ul>li{
 		color:#ffffff;
 		font-size:1.75rem;
 		margin-bottom:5.6875rem;
 		width:100%;
 	}
-	.page4Right>ul>li>img{
+	.phonePage4Right>ul>li>img{
 		width:2.625rem;
 		margin-right:13px;
 		vertical-align: middle;
 	}
-	.page4Right>ul>li:nth-child(2){
+	.phonePage4Right>ul>li:nth-child(2){
 		margin-left:7.18rem;
 	}
-	.page4Right>ul>li:nth-child(3){
+	.phonePage4Right>ul>li:nth-child(3){
 		margin-left:13rem;
 	}
 
-	.page5 {
+	.phonePage5 {
 		background:no-repeat center;
 		background-size:100% 100%;
 		padding:4.375rem 0;
 	}
-	.page5>.title{
+	.phonePage5>.title{
 		font-size:2.5rem;
 		color:#e6c458;
 		text-align:center;
@@ -434,32 +434,32 @@ export default {
 		margin:0 auto;
 		width:25.7875rem;
 	}
-	.page5>.content{
+	.phonePage5>.content{
 		display:table;
 		width:100%;
 		text-align:center;
 		margin-top:3.875rem;
 	}
-	.page5>.content>div{
+	.phonePage5>.content>div{
 		display:table-cell;
 		vertical-align:middle;
 		color:#e6c458;
 		font-size:1.75rem;
 	}
-	.page5Left li:nth-child(1),.page5Right li:nth-child(1){
+	.phonePage5Left li:nth-child(1),.phonePage5Right li:nth-child(1){
 		margin-bottom:8.625rem;
 	}
-	.page5Left img,.page5Right img{
+	.phonePage5Left img,.phonePage5Right img{
 		vertical-align:middle;
 		width:1.625rem;
 	}
-	.page5Content{
+	.phonePage5Content{
 		background:no-repeat center;
 		background-size:100% 100%;
 		width:14.875rem;
 		height:29.1875rem;
 	}
-	.page5Content img{
+	.phonePage5Content img{
 		width:13rem;
 	}
 </style>

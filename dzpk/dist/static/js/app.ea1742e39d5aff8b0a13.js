@@ -2330,6 +2330,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 // import Pc from './components/pc/index'
@@ -2388,6 +2414,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       arr.splice(1, 1, 'pc');
       window.location.hash = arr.join('/');
     }
+    window.onload = function () {
+      document.getElementById('svgLog').style.display = "none";
+    };
   },
   components: {
     Pc: resolve => __webpack_require__.e/* require */(1).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(129)]; (resolve.apply(null, __WEBPACK_AMD_REQUIRE_ARRAY__));}.bind(this)).catch(__webpack_require__.oe),
@@ -5552,7 +5581,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "href": "javascript:vido(0)"
     }
   }, [_vm._v("\n\t\t\t\t\t点击下载\n\t\t\t\t")])])]), _vm._v(" "), _c('div', {
-    staticClass: "page2",
+    staticClass: "phonePage2",
     style: ({
       backgroundImage: 'url(' + _vm.bgImg.bg3 + ')'
     })
@@ -5585,7 +5614,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       backgroundImage: 'url(' + _vm.bgImg.bg5[3] + ')'
     })
   }, [_vm._v("公平"), _c('br'), _vm._v("公正")])])]), _vm._v(" "), _c('div', {
-    staticClass: "page3",
+    staticClass: "phonePage3",
     style: ({
       backgroundImage: 'url(' + _vm.bgImg.bg6 + ')'
     })
@@ -5595,7 +5624,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       backgroundImage: 'url(' + _vm.bgImg.bg4 + ')'
     })
   }, [_vm._v("\n\t\t\t\t最贴心的游戏体验\n\t\t\t")]), _vm._v(" "), _vm._m(1)]), _vm._v(" "), _c('div', {
-    staticClass: "page4",
+    staticClass: "phonePage4",
     style: ({
       backgroundImage: 'url(' + _vm.bgImg.bg7 + ')'
     })
@@ -5605,7 +5634,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       backgroundImage: 'url(' + _vm.bgImg.bg4 + ')'
     })
   }, [_vm._v("\n\t\t\t\t丰富的好友互动\n\t\t\t")]), _vm._v(" "), _vm._m(2)]), _vm._v(" "), _c('div', {
-    staticClass: "page5",
+    staticClass: "phonePage5",
     style: ({
       backgroundImage: 'url(' + _vm.bgImg.bg7 + ')'
     })
@@ -5617,7 +5646,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("\n\t\t\t\t丰富的好友互动\n\t\t\t")]), _vm._v(" "), _c('div', {
     staticClass: "content"
   }, [_vm._m(3), _vm._v(" "), _c('div', {
-    staticClass: "page5Content",
+    staticClass: "phonePage5Content",
     style: ({
       backgroundImage: 'url(' + _vm.bgImg.bg8 + ')'
     })
@@ -5654,7 +5683,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', {
     staticClass: "content"
   }, [_c('div', {
-    staticClass: "page3Left"
+    staticClass: "phonePage3Left"
   }, [_c('ul', [_c('li', [_c('img', {
     attrs: {
       "src": "static/thePhone/home/icon_diamond.png",
@@ -5676,7 +5705,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "alt": ""
     }
   }), _vm._v(" "), _c('span', [_vm._v("全新的押牌玩法")])])])]), _vm._v(" "), _c('div', {
-    staticClass: "page3Right"
+    staticClass: "phonePage3Right"
   }, [_c('img', {
     attrs: {
       "src": "static/thePhone/home/iPhone_3.png",
@@ -5687,14 +5716,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', {
     staticClass: "content"
   }, [_c('div', {
-    staticClass: "page4Left"
+    staticClass: "phonePage4Left"
   }, [_c('img', {
     attrs: {
       "src": "static/thePhone/home/iPhone_4.png",
       "alt": ""
     }
   })]), _vm._v(" "), _c('div', {
-    staticClass: "page4Right"
+    staticClass: "phonePage4Right"
   }, [_c('ul', [_c('li', [_c('img', {
     attrs: {
       "src": "static/thePhone/home/icon_club.png",
@@ -5713,7 +5742,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('span', [_vm._v("全方位的排行榜")])])])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "page5Left"
+    staticClass: "phonePage5Left"
   }, [_c('ul', [_c('li', [_c('img', {
     attrs: {
       "src": "static/thePhone/home/icon_diamond.png",
@@ -5727,7 +5756,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('span', [_vm._v("心理战术")])])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "page5Right"
+    staticClass: "phonePage5Right"
   }, [_c('ul', [_c('li', [_c('img', {
     attrs: {
       "src": "static/thePhone/home/icon_diamond.png",
@@ -5805,7 +5834,136 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "app"
     }
-  }, [(_vm.pcOrPhone) ? _c('pc') : _c('home')], 1)
+  }, [(_vm.pcOrPhone) ? _c('pc') : _c('home'), _vm._v(" "), _c('div', {
+    staticStyle: {
+      "width": "100%",
+      "height": "100%",
+      "position": "fixed",
+      "top": "0",
+      "left": "0",
+      "display": "table",
+      "background": "linear-gradient(45deg, rgba(255, 255, 255, 0) 48%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0) 52%), linear-gradient(-45deg, rgba(255, 255, 255, 0) 48%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0) 52%)",
+      "-webkit-background-size": "1em 1em",
+      "background-size": "1em 1em",
+      "background-color": "#000",
+      "z-index": "9999999"
+    },
+    attrs: {
+      "id": "svgLog"
+    }
+  }, [_c('div', {
+    staticStyle: {
+      "display": "table-cell",
+      "vertical-align": "middle",
+      "text-align": "center"
+    }
+  }, [_c('svg', {
+    attrs: {
+      "viewBox": "0 0 120 120",
+      "version": "1.1",
+      "xmlns": "http://www.w3.org/2000/svg",
+      "xmlns:xlink": "http://www.w3.org/1999/xlink"
+    }
+  }, [_c('g', {
+    staticClass: "g-circles g-circles--v2",
+    attrs: {
+      "id": "circle"
+    }
+  }, [_c('circle', {
+    attrs: {
+      "id": "12",
+      "transform": "translate(35, 16.698730) rotate(-30) translate(-35, -16.698730) ",
+      "cx": "35",
+      "cy": "16.6987298",
+      "r": "10"
+    }
+  }), _vm._v(" "), _c('circle', {
+    attrs: {
+      "id": "11",
+      "transform": "translate(16.698730, 35) rotate(-60) translate(-16.698730, -35) ",
+      "cx": "16.6987298",
+      "cy": "35",
+      "r": "10"
+    }
+  }), _vm._v(" "), _c('circle', {
+    attrs: {
+      "id": "10",
+      "transform": "translate(10, 60) rotate(-90) translate(-10, -60) ",
+      "cx": "10",
+      "cy": "60",
+      "r": "10"
+    }
+  }), _vm._v(" "), _c('circle', {
+    attrs: {
+      "id": "9",
+      "transform": "translate(16.698730, 85) rotate(-120) translate(-16.698730, -85) ",
+      "cx": "16.6987298",
+      "cy": "85",
+      "r": "10"
+    }
+  }), _vm._v(" "), _c('circle', {
+    attrs: {
+      "id": "8",
+      "transform": "translate(35, 103.301270) rotate(-150) translate(-35, -103.301270) ",
+      "cx": "35",
+      "cy": "103.30127",
+      "r": "10"
+    }
+  }), _vm._v(" "), _c('circle', {
+    attrs: {
+      "id": "7",
+      "cx": "60",
+      "cy": "110",
+      "r": "10"
+    }
+  }), _vm._v(" "), _c('circle', {
+    attrs: {
+      "id": "6",
+      "transform": "translate(85, 103.301270) rotate(-30) translate(-85, -103.301270) ",
+      "cx": "85",
+      "cy": "103.30127",
+      "r": "10"
+    }
+  }), _vm._v(" "), _c('circle', {
+    attrs: {
+      "id": "5",
+      "transform": "translate(103.301270, 85) rotate(-60) translate(-103.301270, -85) ",
+      "cx": "103.30127",
+      "cy": "85",
+      "r": "10"
+    }
+  }), _vm._v(" "), _c('circle', {
+    attrs: {
+      "id": "4",
+      "transform": "translate(110, 60) rotate(-90) translate(-110, -60) ",
+      "cx": "110",
+      "cy": "60",
+      "r": "10"
+    }
+  }), _vm._v(" "), _c('circle', {
+    attrs: {
+      "id": "3",
+      "transform": "translate(103.301270, 35) rotate(-120) translate(-103.301270, -35) ",
+      "cx": "103.30127",
+      "cy": "35",
+      "r": "10"
+    }
+  }), _vm._v(" "), _c('circle', {
+    attrs: {
+      "id": "2",
+      "transform": "translate(85, 16.698730) rotate(-150) translate(-85, -16.698730) ",
+      "cx": "85",
+      "cy": "16.6987298",
+      "r": "10"
+    }
+  }), _vm._v(" "), _c('circle', {
+    attrs: {
+      "id": "1",
+      "cx": "60",
+      "cy": "10",
+      "r": "10"
+    }
+  })])])])])], 1)
 },staticRenderFns: []}
 
 /***/ }),
