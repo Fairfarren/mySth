@@ -17,7 +17,7 @@
 							你的专属德扑约局APP！
 						</p>
 						<p style="font-size:25px;line-height:58px;;">
-							<a href="javascript:(0)" style="background:url('../../../../static/thePc/home/1_banner/btn_download.png') no-repeat center;color:#fff;display:block;width:225px;margin:10px auto 100px;">
+							<a href="javascript:viod(0)" style="background: no-repeat center;color:#fff;display:block;width:225px;margin:10px auto 100px;" :style="{backgroundImage:'url('+ img.download +')'}">
 								点击下载
 							</a>
 						</p>
@@ -300,7 +300,8 @@ export default {
 				bg3: require('../../../../static/thePc/home/3/bg3.png'),
 				bg4: require('../../../../static/thePc/home/4/bg4.png'),
 				bg5: require('../../../../static/thePc/home/5/bg_5.png'),
-				footer: require('../../../../static/thePc/home/6_footer/footer_bg.png')
+				footer: require('../../../../static/thePc/home/6_footer/footer_bg.png'),
+				download: require('../../../../static/thePc/home/1_banner/btn_download.png')
 			}
 		}
 	},
@@ -460,7 +461,7 @@ export default {
 		z-index:2;
 	}
 	.pcSectionHeader{
-		background-size:1920px 100%;
+		background-size:1920px 101%;
 		background-repeat: no-repeat;
 		background-position:center;
 	}

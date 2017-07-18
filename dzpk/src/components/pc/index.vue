@@ -12,6 +12,10 @@ export default {
 		return {
 			title: 'this is pcIndex'
 		}
+	},
+	mounted (){
+		// var fontSize = window.innerWidth / 750 * 16;
+    	document.getElementsByTagName('html')[0].style.fontSize = 16 + 'px'
 	}
 }
 

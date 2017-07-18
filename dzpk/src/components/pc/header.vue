@@ -2,22 +2,22 @@
 	<div id="header">
 		<ul>
 			<li class="logo">
-				<router-link to="/home">
+				<router-link to="home">
 					<img src="../../../static/thePc/home/1_banner/logo.png" alt="">
 				</router-link>
 			</li>
 			<li class="navigation">
-				<span>
-					<router-link to="/download">下载</router-link>
+				<span :class="classColor.download">
+					<router-link to="download" >下载</router-link>
+				</span>
+				<span :class="classColor.rule">
+					<router-link to="rule" >规则</router-link>
 				</span>
 				<span>
-					<router-link to="/rule">规则</router-link>
+					<router-link to="home">活动</router-link>
 				</span>
-				<span>
-					<router-link to="/">活动</router-link>
-				</span>
-				<span>
-					<router-link to="/aboutUs">关于我们</router-link>
+				<span :class="classColor.aboutUs"> 
+					<router-link to="aboutUs" >关于我们</router-link>
 				</span>
 			</li>
 		</ul>
@@ -29,8 +29,27 @@ export default {
 	name: 'header',
 	data () {
 		return {
-			title: 'this is pc header'
+			title: 'this is pc header',
+			classColor:{
+				download:'',
+				rule:'',
+				aboutUs:''
+			},
+			hash:window.location.hash.split('/')[1]
 		}
+	},
+	methods: {
+		headerColor:function(){
+			this.classColor = {
+				download:'',
+				rule:'',
+				aboutUs:''
+			}
+			this.classColor[this.hash] = 'headerColor'
+		}
+	},
+	mounted (){
+		this.headerColor();
 	}
 }
 </script>
@@ -52,5 +71,8 @@ export default {
 		line-height:55px;
 		color:#fff;
 		margin:0 12px;
+	}
+	.headerColor a{
+		color:rgb(221, 189, 101);
 	}
 </style>

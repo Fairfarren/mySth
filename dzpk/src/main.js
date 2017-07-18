@@ -26,8 +26,11 @@ new Vue({
 		}
 	},
 	watch: {
-		$route (to){
-			location.reload([false])   
+		$route (to,from){
+			// console.log(from);
+			if(from.path === '/pc/home'){
+				location.reload([false])   
+			}
 		}
 	}
 })

@@ -7,6 +7,7 @@
 </template>
 
 <script>
+
 // import Pc from './components/pc/index'
 //import Home from './components/phone/index'
 
@@ -23,31 +24,45 @@ export default {
   mounted () {
     const that = this;
     //检测浏览器宽度
-    // window.onresize = () => {
-    //   return (() => {
-    //       window.screenWidth = document.documentElement.clientWidth
-    //       that.screenWidth = window.screenWidth
-    //   })()
-    // }
+    window.onresize = () => {
+      return (() => {
+          window.screenWidth = document.documentElement.clientWidth
+          that.screenWidth = window.screenWidth
+      })()
+    }
   },
   watch: {
     //检测浏览器宽度并作出相应的改变
-    // screenWidth (val) {
-    //   this.screenWidth = val;
-    //   // console.log(this.screenWidth)
-    //   if(this.screenWidth <= 768){
-    //     this.pcOrPhone = false;
-    //   }else{
-    //     this.pcOrPhone = true;
-    //   }
-    // }
+    screenWidth (val) {
+      this.screenWidth = val;
+      // console.log(this.screenWidth)
+      if(this.screenWidth <= 768){
+        this.pcOrPhone = false;
+        // window.location.hash = window.location.hash.split('/').splice(1,1,'phone').join('/');
+        var arr = window.location.hash.split('/');
+        arr.splice(1,1,'phone');
+        window.location.hash = arr.join('/')
+      }else{
+        this.pcOrPhone = true;
+        var arr = window.location.hash.split('/');
+        arr.splice(1,1,'pc');
+        window.location.hash = arr.join('/')
+      }
+    }
   },
   //页面加载后开始运行
   created () {
+    // window.location.hash = '#/pc/home'
     if(this.screenWidth <= 768){
       this.pcOrPhone = false;
+      var arr = window.location.hash.split('/');
+        arr.splice(1,1,'phone');
+        window.location.hash = arr.join('/')
     }else{
       this.pcOrPhone = true;
+      var arr = window.location.hash.split('/');
+        arr.splice(1,1,'pc');
+        window.location.hash = arr.join('/')
     }
   },
   components: {
