@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {margin:0;padding:0;}
+        body {
+            padding: 0 10px;
+        }
+        p {
+            margin-top: 20px;
+        }
+        li {
+            list-style: none;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="flex-direction">
+        <style>
+        .directionRow {
+            display: flex;
+            flex-direction: row;
+        }
+        .directionRowReverse {
+            display: flex;
+            flex-direction: row-reverse;
+        }
+        .directionColumn {
+            display: flex;
+            flex-direction: column;
+        }
+        .directionColumnReverse {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+        .directionRow>li,.directionRowReverse>li,.directionColumn>li,.directionColumnReverse>li{
+            width: 50px;
+            height: 50px;
+            border: 1px solid black;
+        }
+        </style>
+        <p>flex-direction: row;</p>
+        <ul class="directionRow">
+            <li>1</li><li>2</li><li>3</li>
+            <li>4</li><li>5</li><li>6</li>
+        </ul>
+        <p>flex-direction: row-reverse;</p>
+        <ul class="directionRowReverse">
+            <li>1</li><li>2</li><li>3</li>
+            <li>4</li><li>5</li><li>6</li>
+        </ul>
+        <p>flex-direction: column;</p>
+        <ul class="directionColumn">
+            <li>1</li><li>2</li><li>3</li>
+            <li>4</li><li>5</li><li>6</li>
+        </ul>
+        <p>flex-direction: column-reverse</p>
+        <ul class="directionColumnReverse">
+            <li>1</li><li>2</li><li>3</li>
+            <li>4</li><li>5</li><li>6</li>
+        </ul>
+    </div>
+    
+    <div class="flex-wrap">
+        <style>
+            .flex-wrap{
+                margin-top: 200px;
+            }
+            .nowrap {
+                border: 1px solid red;
+                width: 300px;
+                display: flex;
+                flex-wrap: nowrap;
+            }
+            .wrap {
+                border: 1px solid red;
+                width: 300px;
+                display: flex;
+                flex-wrap: wrap;
+            }
+            .wrapReverse {
+                border: 1px solid red;
+                width: 300px;
+                display: flex;
+                flex-wrap: wrap-reverse;
+            }
+            .nowrap>li,.wrap>li,.wrapReverse>li {
+                width: 90px;
+                height: 50px;
+                border: 1px solid black;
+            }
+        </style>
+        <p>flex-wrap: nowrap;</p>
+        <ul class="nowrap">
+            <li>1</li><li>2</li><li>3</li>
+            <li>4</li><li>5</li><li>6</li>
+        </ul>
+        <p>flex-wrap: wrap;</p>
+        <ul class="wrap">
+            <li>1</li><li>2</li><li>3</li>
+            <li>4</li><li>5</li><li>6</li>
+        </ul>
+        <p>flex-wrap: wrap-reverse;</p>
+        <ul class="wrapReverse">
+            <li>1</li><li>2</li><li>3</li>
+            <li>4</li><li>5</li><li>6</li> 
+        </ul>
+    </div>
+
+
+    <div class="justifyContent">
+        <style>
+            .justifyContent {
+                margin-top: 200px;
+            }
+            .justifyContent li:nth-child(1){
+                width: 100px;
+                height: 50px;
+                border: 1px solid black;
+            }
+            .justifyContent li:nth-child(2){
+                width: 50px;
+                height: 50px;
+                border: 1px solid black;
+            }
+            .justifyContent li:nth-child(3){
+                width: 150px;
+                height: 50px;
+                border: 1px solid black;
+            }
+            .flexStart {
+                display: flex;
+                justify-content: flex-start;
+            }
+            .flexEnd {
+                display: flex;
+                justify-content: flex-end;
+            }
+            .center {
+                display: flex;
+                justify-content: center;
+            }
+            .spaceBetween {
+                display: flex;
+                justify-content: space-between;
+            }
+            .spaceAround {
+                display: flex;
+                justify-content: space-around;
+            }
+        </style>
+        <p>justify-content: flex-start;</p>
+        <ul class="flexStart">
+            <li>1</li><li>2</li><li>3</li>
+        </ul>
+        <p>justify-content: flex-end;</p>
+        <ul class="flexEnd">
+            <li>1</li><li>2</li><li>3</li>
+        </ul>
+        <p>justify-content: center;</p>
+        <ul class="center">
+            <li>1</li><li>2</li><li>3</li>
+        </ul>
+        <p>justify-content: space-between;</p>
+        <ul class="spaceBetween">
+            <li>1</li><li>2</li><li>3</li>
+        </ul>
+        <p>justify-content: space-around;</p>
+        <ul class="spaceAround">
+            <li>1</li><li>2</li><li>3</li>
+        </ul>
+    </div>
+
+    <div class="alignItems">
+        <style>
+            .alignItems {
+                margin-top: 200px;
+            }
+            .alignItems li{
+                width: 100px;
+                border: 1px solid black;
+            }
+            .alignItems li:nth-child(1){
+                height: 100px;
+            }
+            .alignItems li:nth-child(2){
+                height: 50px;
+            }
+            .alignItems li:nth-child(3){
+                height: 80px;
+            }
+            .flexStartItems {
+                display: flex;
+                align-items: flex-start;
+            }
+            .flexEndItems {
+                display: flex;
+                align-items: flex-end;
+            }
+            .flexCenterItems {
+                display: flex;
+                align-items: center;
+            }
+            .flexBaselineItems {
+                display: flex;
+                align-items: baseline
+            }
+            .stretchItems {
+                display: flex;
+                align-items: stretch;
+            }
+        </style>
+        <p>align-items: flex-start;</p>
+        <ul class="flexStartItems">
+            <li>1</li><li>2</li><li>3</li>
+        </ul>
+        <p>align-items: flex-end;</p>
+        <ul class="flexEndItems">
+            <li>1</li><li>2</li><li>3</li>
+        </ul>
+        <p>align-items: center;</p>
+        <ul class="flexCenterItems">
+            <li>1</li><li>2</li><li>3</li>
+        </ul>
+        <p>align-items: baseline;</p>
+        <ul class="flexBaselineItems">
+            <li>1</li><li>2</li><li>3</li>
+        </ul>
+        <p>align-items: stretch;</p>
+        <ul class="stretchItems">
+            <li>1</li><li>2</li><li>3</li>
+        </ul>
+    </div>
+
+    <div class="alignContent">
+        <style>
+            .alignContent {
+                margin-top: 200px;
+            }
+            .alignContent li {
+                width: 300px;
+                height: 50px;
+                border: 1px solid black;
+                
+            }
+            .alignContent>ul {
+                width: 500px;
+                height: 200px;
+                border: 1px solid red;
+            }
+            .contentFlexStart {
+                display: flex;
+                flex-wrap: wrap;
+                align-content: flex-start;
+            }
+            .contentFlexEnd {
+                display: flex;
+                flex-wrap: wrap;
+                align-content: flex-end;
+            }
+            .contentCenter {
+                display: flex;
+                flex-wrap: wrap;
+                align-content: center;
+            }
+            .contentSpaceBetween {
+                display: flex;
+                flex-wrap: wrap;
+                align-content: space-between;
+            }
+            .contentSpaceAround {
+                display: flex;
+                flex-wrap: wrap;
+                align-content: space-around;
+            }
+            .contentStretch {
+                display: flex;
+                flex-wrap: wrap;
+                align-content: stretch;
+            }
+        </style>
+        <p>align-content: flex-start;</p>
+        <ul class="contentFlexStart">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+        <p>align-content: flex-end;</p>
+        <ul class="contentFlexEnd">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+        <p>align-content: center;</p>
+        <ul class="contentCenter">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+        <p>align-content: space-between;</p>
+        <ul class="contentSpaceBetween">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+        <p>align-content: space-around;</p>
+        <ul class="contentSpaceAround">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+        <p>align-content: stretch;</p>
+        <ul class="contentStretch">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+    </div>
+
+    <div class="order">
+        <style>
+            .orderBox {
+                display: flex;
+            }
+            .orderBox>li {
+                width: 100%;
+                border: 1px solid black;
+            }
+            .orderBox>li:nth-child(1){
+                order: 3;
+            }
+            .orderBox>li:nth-child(2){
+                order: 2;
+            }
+            .orderBox>li:nth-child(3){
+                order: 1;
+            }
+        </style>
+        <p>order: 3 | 2 | 1</p>
+        <ul class="orderBox">
+            <li>3</li>
+            <li>2</li>
+            <li>1</li>
+        </ul>
+    </div>
+
+
+    <div class="grow">
+        <style>
+            .growBox {
+                display: flex;
+            }
+            .growBox>li {
+                /* width: 100%; */
+                border: 1px solid black;
+            }
+            .growBox>li:nth-child(1){
+                flex-grow: 1;
+            }
+            .growBox>li:nth-child(2){
+                flex-grow: 2;
+            }
+            .growBox>li:nth-child(3){
+                flex-grow: 1;
+            }
+        </style>
+        <p>flex-grow: 1 | 2 | 1;</p>
+        <ul class="growBox">
+            <li>1</li>
+            <li>2</li>
+            <li>1</li>
+        </ul>
+    </div>
+
+    <div class="shrink">
+        <style>
+            .shrinkBox {
+                display: flex;
+            }
+            .shrinkBox>li {
+                width: 600px;
+                border: 1px solid black;
+            }
+            .shrinkBox>li:nth-child(1){
+                flex-shrink: 1;
+            }
+            .shrinkBox>li:nth-child(2){
+                flex-shrink: 0;
+            }
+            .shrinkBox>li:nth-child(3){
+                flex-shrink: 1;
+            }
+        </style>
+        <p>flex-shrink: 1 | 0 | 1;</p>
+        <ul class="shrinkBox">
+            <li>1</li>
+            <li>0</li>
+            <li>1</li>
+        </ul>
+    </div>
+
+
+    <div class="basis">
+            <style>
+                .basisBox {
+                    display: flex;
+                }
+                .basisBox>li {
+                    border: 1px solid black;
+                }
+                .basisBox>li:nth-child(1){
+                    flex-basis: 100px;
+                }
+                .basisBox>li:nth-child(2){
+                    flex-basis: 200px;
+                }
+                .basisBox>li:nth-child(3){
+                    flex-basis: 300px;
+                }
+            </style>
+            <p>flex-basis: 100px | 200px | 300px;</p>
+            <ul class="basisBox">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+            </ul>
+        </div>
+
+        <div class="alignContent">
+            <style>
+                .self {
+                    align-self: center;
+                }
+            </style>
+            <p>align-self: center</p>
+            <ul class="flexStart">
+                <li>1</li>
+                <li class="self">2</li>
+                <li>3</li>
+            </ul>
+        </div>
+</body>
+</html>
