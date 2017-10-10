@@ -1,0 +1,1 @@
+export const text = state => state.text;
