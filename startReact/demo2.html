@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo2</title>
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+    <script src="build/browser.min.js"></script>
+</head>
+<body>
+    <div id="example"></div>
+    <script type="text/babel">
+    //混写模式，遇到 < 就解析成html，遇到 { 就解析成js
+
+    //和vue一样，循环的时候如果没有一个key会出现一个waring，虽然不重要，但是不好看
+        let names = ['l','y','k']
+        ReactDOM.render(
+            <div>
+                {
+                    names.map( (name,index)=>{
+                        return <p key={index}>hello {name}</p>
+                    })
+                }
+            </div>,
+            document.getElementById('example')
+        )
+    </script>
+</body>
+</html>

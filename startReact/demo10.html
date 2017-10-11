@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo1</title>
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+    <script src="build/browser.min.js"></script>
+</head>
+<body>
+    <div id="example"></div>
+    <script type="text/babel">
+    //组件也有生命周期，有3个状态：
+        //Mounting:已插入真是DOM
+        //Update:正在被重新渲染
+        //UnMounting:已移除真是DOM
+    //每个状态有两个处理函数：
+        //will:进入状态前调用
+        //did:进入状态后调用
+    
+    //组合成5个处理函数：
+        //componentWillMount()
+        //componentDidMount()
+        //componentWillUpdate( Obj nextProps, Obj nextSate)
+        //componentDidUpdate( Obj prvxProps, Obj prveProps)
+        //componentWidllUnmount()
+    
+    //还有两个特殊处理函数
+        //componentWillReceiveProps( Obj nextProps)已加载组件收到新的参数时调用
+        //shouldComponentUpdate( Obj nextProps, ObjnextState)组件判断是否重新渲染时调用
+
+    //设置标签的style的时候一定要用{{}}双括号，因为style样式是一个对象，第一个表示js语法，里面那个表示对象属性
+
+        let Opa = React.createClass({
+            getInitialState() {
+                return {
+                    opacity: 1.0
+                }
+            },
+            componentDidMount() {
+                let opacity = this.state.opacity;
+                setInterval( ()=>{
+                    opacity = opacity <= 0 ? 1.0 : opacity -= 0.05
+                    this.setState({
+                        opacity: opacity
+                    })
+                },100)
+            },
+            render() {
+                return (
+                    <div style={{opacity: this.state.opacity,border: '1px solid black'}}>
+                        hello {this.props.name}
+                    </div>
+                )
+            }
+        })
+
+        ReactDOM.render(<Opa />,document.getElementById('example'))
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo7</title>
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+    <script src="build/browser.min.js"></script>
+</head>
+<body>
+    <div id="example"></div>
+    <script type="text/babel">
+    //react中去获取元素DOM节点是通过 ref 属性去获取的
+    //给一个标签定义一个ref属性，在组件内部用this.refs.[refName]去找到元素
+    //组件里面的方法直接写在组件里面，和vue不同的，vue是把方法写在methods属性下面
+    //标签触发的事件用的驼峰式的写法
+
+        let Input = React.createClass({
+            getName() {
+                this.refs.name.value = 'lyk';
+            },
+            render() {
+                return (
+                    <div>
+                        <input type="text" ref="name" placeholder="your name?"/>
+                        <input type="button" value="get name" onClick={this.getName} />
+                    </div>
+                )
+            }
+        })
+
+        ReactDOM.render(
+            <Input />,
+            document.getElementById('example')
+        )
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo1</title>
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+    <script src="build/browser.min.js"></script>
+</head>
+<body>
+    <div id="example"></div>
+    <script type="text/babel">
+    //对于ajax的调用写在componentDidMount()里面
+
+        let List = React.createClass({
+            getInitialState() {
+                return {
+                    lists: [1,2,3,4,5]
+                }
+            },
+            componentDidMount() {
+                axios.get('/good')
+                .then( (res)=>{
+
+                })
+            },
+            render() {
+                return (
+                    <ol>
+                        {
+                            this.state.lists.map( (list, index)=>{
+                                return <li key={index}>{list}</li>
+                            })
+                        }
+                    </ol>
+                )
+            }
+        })
+
+        ReactDOM.render(<List />,document.getElementById('example'))
+    </script>
+</body>
+</html>

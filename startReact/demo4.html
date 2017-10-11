@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo4</title>
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+    <script src="build/browser.min.js"></script>
+</head>
+<body>
+    <div id="example"></div>
+    <script type="text/babel">
+    //React.createClass()用来生成一个组件，在render中去返回一个标签
+    //在里面通过this.props可以返回标签的一些属性的值
+
+    // **组件手写字母一定要大写**
+    // **组件手写字母一定要大写**
+    // **组件手写字母一定要大写**
+
+    //特别需要注意，标签的class要写成className，for要写成htmlFor
+
+        let Mas = React.createClass({
+            render() {
+                return <h1>
+                    hello {this.props.name}，go {this.props.title}
+                    <img alt="图片挂了" title="hello" className="qwe" src='https://ss0.baidu.com/73F1bjeh1BF3odCf/it/u=2745424299,2546220866&fm=85&s=B572E7348EB4379A87BCBCCD03003061' />
+                </h1>
+            }
+        })
+
+        ReactDOM.render(
+            <Mas name="lyk" title="home" />,
+            document.getElementById('example')
+        )
+
+    //组件内部只能包含一个顶级标签
+    //下面这种写法就会报错
+
+    // var HelloMessage = React.createClass({
+    //     render: function() {
+    //         return <h1>
+    //         Hello {this.props.name}
+    //         </h1><p>
+    //         some text
+    //         </p>;
+    //     }
+    // });
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo9</title>
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+    <script src="build/browser.min.js"></script>
+</head>
+<body>
+    <div id="example"></div>
+    <script type="text/babel">
+    //在input框里面去实时改变一个状态
+    //需要用input的change方法去调用一个方法，然后再这个方法里面去改变状态
+    //标签调用的方法会接收一个传参，是标签的一些属性，其中一个target属性是标签本身，和vue中的$event差不多
+    //event对象在vue下面，在浏览器输出可以访问到，但是在react组件下面输出并不能访问到，react组件方法里面是可以访问到的
+    //这个好像是因为react在将DOM输出前，都是用的虚拟DOM
+    
+        let Input = React.createClass({
+            getInitialState() {
+                return {
+                    value: 'hello world'
+                }
+            },
+            inputChanges(event) {
+                this.setState({
+                    value: event.target.value
+                })
+            },
+            render() {
+                return (
+                    <div>
+                        <input type="text" value={this.state.value} onChange={this.inputChanges}/>
+                        <p>{this.state.value}</p>
+                    </div>
+                )
+            }
+        })
+
+        ReactDOM.render(<Input />, document.getElementById('example'))
+    </script>
+</body>
+</html>

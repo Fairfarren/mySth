@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo6</title>
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+    <script src="build/browser.min.js"></script>
+</head>
+<body>
+    <div id="example"></div>
+    <script type="text/babel">
+    //React.createClass()内部的属性proTypes就是验证标签属性用的
+    //里面还是会用到react的一个方法工具 React.PropTypes
+    //其中这里设置了标签属性必须要有title，并且需要为string属性
+
+    //我在下面将title的值设置成变量，因为设置的string类型，但是如果加载的number类型，就会在控制台出现warning
+
+        let MyTitle = React.createClass({
+            propTypes: {
+                title: React.PropTypes.string.isRequired
+            },
+            getDefaultProps() {
+                return {
+                    hello: 'lyk'
+                }
+            },
+            render() {
+                return <h1>{this.props.title},{this.props.hello}</h1>
+            }
+        })
+
+        let title = 123;
+
+        ReactDOM.render(
+            <MyTitle title={title} />,
+            document.getElementById('example')
+        )
+    </script>
+</body>
+</html>

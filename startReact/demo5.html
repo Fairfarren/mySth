@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo5</title>
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+    <script src="build/browser.min.js"></script>
+</head>
+<body>
+    <div id="example"></div>
+    <script type="text/babel">
+        //这里是生成一个组件，在<ol>标签内部去生成<li>标签
+        //然后在<li>标签内部去找到this.props.children
+
+        //其中this.props.children数据类型有3个，没有数据是undefined，有一个事Object,有多个是Array
+
+        //react提供了一个方法工具，React.Children，可以用这个React.Children.map()去遍历整个this.props.children，而不用去担心他的数据类型了
+
+        let List = React.createClass({
+            render() {
+                return (
+                    <ol>
+                        {
+                            React.Children.map( this.props.children, (child)=>{
+                                return <li>{child}</li>
+                            })
+                        }
+                    </ol>
+                )
+            }
+        })
+        ReactDOM.render(
+            <List>
+                <span>hello</span>
+                <span>lyk</span>
+            </List>,
+            document.getElementById('example')
+        )
+    </script>
+</body>
+</html>

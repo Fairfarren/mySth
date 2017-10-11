@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo3</title>
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+    <script src="build/browser.min.js"></script>
+</head>
+<body>
+    <div id="example"></div>
+    <script type="text/babel">
+        //可以在数组里面直接添加标签
+        //循环的时候直接把数组丢进去即可
+
+        //也可以在标签内部引用变量，{}括号方法去引用
+
+        let name = 'lyk';
+
+        //这样的话key好像并不好处理
+        let arr = [
+            <h1 key="1">hello world</h1>,
+            <div key="2">you win {name}</div>
+        ]
+
+        ReactDOM.render(
+            <div>
+                {arr}
+            </div>,
+            document.getElementById('example')
+        )
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>demo8</title>
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+    <script src="build/browser.min.js"></script>
+</head>
+<body>
+    <div id="example"></div>
+    <script type="text/babel">
+    //react组件的状态信息叫state，最初的状态写在getInitialState属性下面，和vue的data很像，是一个function，return一个Object出来
+    //要想改变状态码，只能通过setState()方法去改变，并不能像vue一样this.state.liked = !this.state.liked
+    //状态被改变后，组件内的值也会跟着改变
+
+    //可以在setState()内部去改变多个状态
+
+        let Like = React.createClass({
+            getInitialState() {
+                return {
+                    liked: false,
+                    title: 'hello'
+                }
+            },
+            hankLike() {
+                let titleText = this.state.title == 'hello' ? 'world' : 'hello';
+                this.setState({
+                    liked: !this.state.liked,
+                    title: titleText
+                })
+            },
+            render() {
+                let text = this.state.liked ? `like` : `haven't liked`;
+                return (
+                    <p onClick={this.hankLike}>
+                        you title {this.state.title},you {text} 
+                    </p>
+                )
+            }
+        })
+
+        ReactDOM.render(<Like />,document.getElementById('example'))
+    </script>
+</body>
+</html>
