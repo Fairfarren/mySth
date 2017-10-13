@@ -26,6 +26,7 @@
                 }
             },
             hankLike() {
+                console.log(this.state.title);
                 let titleText = this.state.title == 'hello' ? 'world' : 'hello';
                 this.setState({
                     liked: !this.state.liked,

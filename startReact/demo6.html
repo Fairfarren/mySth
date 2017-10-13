@@ -28,7 +28,11 @@
                 }
             },
             render() {
-                return <h1>{this.props.title},{this.props.hello}</h1>
+                return (
+                    <div>
+                        <h1>{this.props.title},{this.props.hello}</h1>
+                    </div>
+                )
             }
         })
 
