@@ -1,0 +1,66 @@
+<view class="marginTop">数据绑定</view>
+<text>{{title}}</text>
+
+<view class="marginTop">控制if</view>
+<text wx:if="{{viewShow}}">true</text>
+<text wx:else>false</text>
+
+<view class="marginTop">hidden属性为false会显示，true会隐藏</view>
+<view hidden="{{false}}">123</view>
+
+<view class="marginTop">for循环，默认下标是index，默认值是item</view>
+<view wx:for="{{[1,2,3,4,5]}}" wx:key="{{index}}">{{index}}:{{item}}</view>
+
+<view class="marginTop">使用 wx:for-item 可以指定数组当前元素的变量名，</view>
+<view>使用 wx:for-index 可以指定数组当前下标的变量名：</view>
+<view 
+  wx:for="{{[1,2,3,4,5]}}"
+  wx:key="{{idx}}"
+  wx:for-index="idx" 
+  wx:for-item="itemName"
+>{{idx}}:{{itemName}}</view>
+
+<view class="marginTop">用block标签包裹一个大块，可以做一整块的控制，比如if</view>
+<block wx:if="true">
+  <view>123</view>
+  <view>456</view>
+</block>
+
+<view>hidden和if和vue里面的特性是一样的，类似vue里面的if和show</view>
+
+
+<view class="marginTop">模板</view>
+<template name="odd">
+  <view> odd </view>
+</template>
+<template name="even">
+  <view> even </view>
+</template>
+<block wx:for="{{[1, 2, 3, 4, 5]}}" wx:key="{{index}}">
+    <template is="{{item % 2 == 0 ? 'even' : 'odd'}}"/>
+</block>
+
+<view class="marginTop">绑定事件，bindtap</view>
+<view id="tapTest" data-hi="WeChat" bindtap="tapName"> Click me! </view>
+
+<view class="marginTop">bind事件绑定不会阻止冒泡事件向上冒泡，catch事件绑定可以阻止冒泡事件向上冒泡。</view>
+<view>事件可以通过data-hi的方式给标签定义属性</view>
+
+<view class="marginTop">引用其他页面的组件</view>
+<import src="../../components/helloModel.wxml" />
+<template is="HSB" data="{{text: '瓜皮'}}"/>
+
+<view class="marginTop">include 可以引用整个文件，除了template</view>
+<include src="../../components/helloModel.wxml"/>
+
+<view class="marginTop">引用外部的js，wxs的module是储存的变量</view>
+<wxs src="../../components/helloModel.wxs" module="pp" />
+<view>{{pp.hello}}</view>
+
+<view class="marginTop">直接写也可以用</view>
+<wxs module="asd">
+module.exports = {
+  hello: 'guapi'
+}
+</wxs>
+<view>{{asd.hello}}</view>

@@ -1,0 +1,2 @@
+var qwe = 'this is qwe';
+module.exports.hello = 'this is hello'

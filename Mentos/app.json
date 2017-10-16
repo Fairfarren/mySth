@@ -1,0 +1,29 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/hello/hello"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "首页",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color":"black",
+    "selectedColor":"black",
+    "backgroundColor":"white",
+    "position": "top",
+    "list":[
+      {
+        "pagePath": "pages/index/index",
+        "text": "绑定数据"
+      },
+      {
+        "pagePath": "pages/hello/hello",
+        "text": "标签"
+      }
+    ]
+  }
+}

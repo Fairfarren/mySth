@@ -1,0 +1,96 @@
+<swiper 
+  indicator-dots="{{true}}"
+  indicator-color="white"
+  indicator-active-color="red"
+  autoplay="{{true}}"
+  current="1"
+  circular="{{true}}"
+  style="text-align:center;"
+>
+  <swiper-item wx:for="{{swiperImg}}" wx:key="{{index}}">
+    <image src="{{item}}" style="width:100%"/>
+  </swiper-item>
+</swiper>
+
+
+<slider bindchange="intervalChange" show-value min="500" max="2000"/> interval
+<slider bindchange="durationChange" show-value min="1000" max="10000"/> duration
+
+<movable-area style="height: 200px;width: 200px;background: red;">
+    <movable-view style="height: 50px; width: 50px; background: blue;" direction="all" out-of-bounds="true">
+    </movable-view>
+</movable-area>
+
+<!-- <video id="myVideo" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400" controls="{{false}}" event-model="bubble">
+  <cover-view class="controls">
+    <cover-view class="play" bindtap="play">
+      <cover-image class="img" src="/path/to/icon_play" />
+    </cover-view>
+    <cover-view class="pause" bindtap="pause">
+      <cover-image class="img" src="/path/to/icon_pause" />
+    </cover-view>
+    <cover-view class="time">00:00</cover-view>
+  </cover-view>
+</video> -->
+
+
+<view>
+  icon:success, success_no_circle, info, warn, waiting, cancel, download, search, clear
+</view>
+<view>
+<icon type="success"/>
+</view>
+
+<rich-text  bindtap="tap"></rich-text>
+
+<progress percent="60" color="pink" active="{{true}}" show-info="{{true}}"/>
+
+
+<view class="section">
+  <view class="section__title">普通选择器</view>
+  <picker 
+    value="{{index}}" 
+    range="{{arr}}"
+    bindchange="changeSelector"
+  >
+    <view class="picker">
+      当前选择：{{arr[index]}}
+    </view>
+  </picker>
+</view>
+
+<view class="section">
+  <view class="section__title">多项选择器</view>
+  <picker 
+    mode="multiSelector" 
+    value="{{multiIndex}}" 
+    range="{{arr2}}"
+    bindchange="changeMultiSelector"
+  >
+    <view class="picker">
+      当前选择：{{arr2[0][multiIndex[0]]}},{{arr2[1][multiIndex[1]]}},{{arr2[2][multiIndex[2]]}}
+    </view>
+  </picker>
+</view>
+
+<view class="section">
+  <view class="section__title">日期选择器</view>
+  <picker 
+    mode="date" 
+    value="{{date}}" 
+    start="2015-09-01" 
+    end="2017-09-01"
+    bindchange="bindDateChange"
+  >
+    <view class="picker">
+      当前选择: {{date}}
+    </view>
+  </picker>
+</view>
+
+<view class="body-view">
+    <switch checked />
+    <switch />
+</view>
+
+<map id="map" longitude="113.324520" latitude="23.099994" scale="14" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="width: 100%; height: 300px;"></map>

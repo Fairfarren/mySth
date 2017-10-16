@@ -1,0 +1,4 @@
+<template name="HSB">
+  <text>Hello {{text}}</text>
+</template>
+<view>Hello World</view>
