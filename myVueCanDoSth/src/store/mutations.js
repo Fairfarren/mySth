@@ -1,8 +1,7 @@
-export const increment = (state) => {
-      // 变更状态
-      state.text = 'DSB'
+//全局方法
+export const ageUp = (state)=> {
+    state.age++;
 }
-
-export const qwe = (state) => {
-	state.text = 'qwe'
+export const ageDown = (state)=> {
+    state.age--;
 }
