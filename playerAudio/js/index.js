@@ -52,9 +52,7 @@ class CreateAudio {
             // console.log(this.audio.currentTime);
             //进度条
             this.$lineSpan.style.width = `${(this.audio.currentTime / this.audio.duration) * 100}%`
-        },1000)
-        
-        
+        },500)
     }
     pause () {
         this.audio.pause();
