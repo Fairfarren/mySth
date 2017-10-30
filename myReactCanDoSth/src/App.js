@@ -14,6 +14,8 @@ import {
 
 import Hello from './components/hello'
 import World from './components/world'
+import Children1 from './components/children1'
+import Children2 from './components/children2'
 
 //路由
 import Dom1 from './views/Dom1'
@@ -24,7 +26,8 @@ import Dom3 from './views/Dom3'
 class App extends Component {
   state = {
     title: 'world',
-    page: true
+    page: true,
+    inputValue: 1
   }
   qwe = () => {
     this.setState({
@@ -42,6 +45,27 @@ class App extends Component {
     }else{
       return <World />
     }
+  }
+  fairthChange = (e) => {
+    this.setState({
+      inputValue: e.target.value
+    })
+  }
+  upF = (value) => {
+    console.log(value);
+    this.setState({
+      inputValue: value
+    })
+  }
+  downF = (value) => {
+    this.setState({
+      inputValue: value
+    })
+  }
+  childrenChangeInput = (value) => {
+    this.setState({
+      inputValue: value
+    })
   }
   render() {
     return (
@@ -72,6 +96,16 @@ class App extends Component {
             <Route path="/:id" render={ (location) => (<div>Hello React-router.id = {location.match.params.id}</div>)}/>
           </Switch>
           <Prompt message={ ()=>{ console.log('bye')}} />
+          <div>
+            <input name="children" value={this.state.inputValue} onChange={this.fairthChange}/>
+          </div>
+          <Children1 
+            title={this.state.inputValue}
+            onUp={this.upF}
+            onDown={this.downF}/>
+          <Children2 
+            title={this.state.inputValue}
+            onInputChange={this.childrenChangeInput}/>
         </div>
       </Router>
     );
