@@ -14,3 +14,10 @@ export const goDown = (text) => {
         text
     }
 }
+
+export const goListAjax = (text) => {
+    return {
+        type: 'listAjax',
+        text
+    }
+}

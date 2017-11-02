@@ -6,11 +6,30 @@ import Hello from './views/hello'
 import World from './views/world'
 import Show from './views/show'
 
+import axios from 'axios'
+import { connect } from 'react-redux';
+import { goListAjax } from './redux/action/index'
+
 class App extends Component {
   state = {
-    upDownShow: true
+    upDownShow: true,
+    listShow: false
+  }
+  componentDidMount () {
+    const dispatch = this.props;
+    axios.get('http://photo-sync.herokuapp.com/photos?callback=?')
+    .then( (res)=> {
+      // console.log(res.data);
+      dispatch.ListAjax({
+        list: [1,2,3,4,5]
+      })
+      this.setState({
+        listShow: true
+      })
+    })
   }
   render() {
+    const dispatch = this.props;
     return (
       <div className="App">
         <header className="App-header">
@@ -36,11 +55,32 @@ class App extends Component {
               <Show />
             </div>
           }
-          
         </div>
+        <ul>
+          {
+            this.state.listShow 
+            ? dispatch.list.map( (value) => {
+                return <li key={value}>{value}</li>
+              })
+            : <li><p>加载中</p></li> 
+          }
+        </ul>
       </div>
     );
   }
 }
 
-export default App;
+function mapState(state,ownProps){
+  return state
+}
+//声明方法，点击的时候去获取return的方法
+function mapDispatch (dispatch, ownProps) {
+  // console.log(ownProps);
+  return {
+      ListAjax:(text) => {
+          dispatch(goListAjax(text))
+      }
+  }
+}
+
+export default connect(mapState, mapDispatch)(App);

@@ -10,10 +10,9 @@ export default (state, action) => {
                 text
             });
         case 'down':
-            return Object.assign({}, state, {
-                age: state.age-1,
-                text
-            })
+            return {...state, ...{age: state.age-1}}
+        case 'listAjax':
+            return Object.assign({}, state, text)
         default: 
             return state;
     }
