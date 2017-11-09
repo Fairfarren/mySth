@@ -25,7 +25,7 @@
             >li:first-child {
                 width: 238px;
                 background: {
-                    image: url('../../static/images/home/8.png');
+                    image: url('../../static/images/8.png');
                     position: left center;
                     repeat: no-repeat;
                 }
@@ -42,7 +42,7 @@
                 &:hover {
                     right: 0;
                     background: {
-                        image: url('../../static/images/home/8-hover.png');
+                        image: url('../../static/images/8-hover.png');
                     }
                 }
             }
@@ -52,13 +52,13 @@
                 top: 90px;
                 cursor: pointer;
                 background: {
-                    image: url('../../static/images/home/9.png');
+                    image: url('../../static/images/9.png');
                     position: right center;
                     repeat: no-repeat;
                 }
                 &:hover {
                     background: {
-                        image: url('../../static/images/home/9-hover.png');
+                        image: url('../../static/images/9-hover.png');
                     }
                 }
             }
@@ -70,13 +70,13 @@
     <div id="rightPhone">
         <ul>
             <li>
-                <!-- <img src="static/images/home/8.png" alt=""> -->
+                <!-- <img src="static/images/8.png" alt=""> -->
                 <p>400-990-6556</p>
             </li>
             <li
                 @click="scroll"
             >
-                <!-- <img src="static/images/home/9.png" alt=""> -->
+                <!-- <img src="static/images/9.png" alt=""> -->
             </li>
         </ul>
     </div>

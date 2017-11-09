@@ -102,7 +102,7 @@
       <li class="left">
         <div>
           <span>
-            <img src="static/images/home/0.png" alt="">
+            <img src="static/images/0.png" alt="">
           </span>
           <span>
             汝课堂
@@ -140,11 +140,11 @@
       </li>
       <li class="right">
         <p>
-          <img src="static/images/home/6.png" alt="">
+          <img src="static/images/6.png" alt="">
           汝课堂公众号
         </p>
         <p>
-          <img src="static/images/home/5.png" alt="">
+          <img src="static/images/5.png" alt="">
         </p>
       </li>
     </ul>

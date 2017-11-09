@@ -159,10 +159,10 @@
 			></div>
 			<div class="drawer">
 				<div class="left" @click="clickButton(-1)">
-					<img src="../../static/images/home/1.png" alt="">
+					<img src="../../static/images/1.png" alt="">
 				</div>
 				<div class="right" @click="clickButton(+1)">
-					<img src="../../static/images/home/2.png" alt="">
+					<img src="../../static/images/2.png" alt="">
 				</div>
 				<ul class="dot">
 					<li>
@@ -185,9 +185,9 @@ export default {
 		return {
 			bg: {
 				img: [
-					require('../../static/images/home/WechatIMG5.jpeg'),
-					require('../../static/images/home/WechatIMG5.jpeg'),
-					require('../../static/images/home/WechatIMG5.jpeg')
+					require('../../static/images/WechatIMG5.jpeg'),
+					require('../../static/images/WechatIMG5.jpeg'),
+					require('../../static/images/WechatIMG5.jpeg')
 				],
 				url: [
 					'','',''

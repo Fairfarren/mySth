@@ -26,7 +26,8 @@
     position: fixed;
     background-color: #fff;
     transition: all 0.3s;
-    box-shadow: 0 -5px 10px #888888;
+    /* box-shadow: 0 -5px 10px #888888; */
+    border-bottom: 1px solid #3399ff;
   }
   #body {
     margin-top: 56px;

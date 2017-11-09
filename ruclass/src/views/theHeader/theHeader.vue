@@ -22,9 +22,9 @@ $navHeight: 56px;
     > .logoNav {
       float: left;
       display: table;
-	  height: 100%;
+	  	height: 100%;
       > div {
-		height:100%;
+				height:100%;
         display: inline-table;
         vertical-align: middle;
         a {
@@ -34,9 +34,9 @@ $navHeight: 56px;
             vertical-align: bottom;
           }
           b {
-			line-height: $navHeight;
+						line-height: $navHeight;
             @include fontSize(30px, #020202);
-			font-family: 'FZZZHONGJW  GB1 0';
+						font-family: 'FZZZHONGJW  GB1 0';
           }
         }
       }
@@ -82,7 +82,7 @@ $navHeight: 56px;
 .navButton a {
   @include fontSize(18px, #666666);
 }
-.navColor a {
+.navButton .navColor {
   @include fontSize(18px, #3399ff);
 }
 </style>
@@ -94,23 +94,23 @@ $navHeight: 56px;
                 <li class="logoNav">
                     <div>
                         <router-link to="/home">
-                            <img src="../../../static/images/home/0.png" alt="">
+                            <img src="../../../static/images/0.png" alt="">
                             <b>汝课堂</b>
                         </router-link>
                     </div>
 										<div class="navButton">
-											<span :class="routerName.home" class="navColorButton" >
-												<router-link to="/home">首页</router-link>
+											<span class="navColorButton" >
+												<router-link to="/home" active-class="navColor">首页</router-link>
 											</span>
-											<span :class="routerName.class" class="navColorButton" >
-												<router-link to="/class">课程</router-link>
+											<span class="navColorButton" >
+												<router-link to="/class" active-class="navColor">课程</router-link>
 											</span>
 										</div>
 								</li>
                 <li class="userImg">
                     <span class="user">
 										<router-link to="/user">
-											<img src="../../../static/images/home/userImg.png" alt="">
+											<img src="../../../static/images/userImg.png" alt="">
 										</router-link>
                     </span>
                 </li>
@@ -126,31 +126,20 @@ export default {
 		return {
 		title: "header",
 		routerName: {
-			home: "navColor",
+			home: "",
 			class: "",
 		},
 		};
 	},
 	methods: {
-		navColor() {
-			const urlHash = this.$route.fullPath.split('/')[0] || window.location.hash.split('/')[1];
-			for (let val in this.routerName) {
-				if (this.routerName.hasOwnProperty(val)) {
-				this.routerName[val] = "";
-				}
-			}
-			this.routerName[urlHash] = "navColor";
-		}
+		
 	},
 	mounted() {
-		setTimeout( () => {
-			this.navColor();
-		},10)
 		
 	},
 	watch: {
 		// 如果路由有变化，会再次执行该方法
-		'$route': 'navColor'
+		// '$route': 'navColor'
 	},
 };
 </script>

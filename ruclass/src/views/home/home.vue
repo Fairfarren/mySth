@@ -66,12 +66,12 @@
           width: 14px;
           height: 14px;
           background: {
-            image: url('../../../static/images/home/4.png')
+            image: url('../../../static/images/4.png')
           }
         }
         input:checked+label {
           background: {
-            image: url('../../../static/images/home/3.png')
+            image: url('../../../static/images/3.png')
           }
         }
       }
@@ -82,7 +82,7 @@
     width: 100%;
     background: {
       color: #ededed;
-      // image: url('../../../static/images/home/wenliku.com-1087-pattern.gif')
+      // image: url('../../../static/images/wenliku.com-1087-pattern.gif')
     }
     padding: 50px 0;
     >ul {
@@ -252,28 +252,28 @@ export default {
           className: '课程1',
           money: '0',
           publishing: '我1',
-          img: 'static/images/home/43393846_p0.jpg',
-          url: '/home'
+          img: 'static/images/43393846_p0.jpg',
+          url: '/class/recording'
         },
         {
           className: '课程2',
           money: '119.9',
           publishing: '我2',
-          img: 'static/images/home/43393846_p0.jpg',
+          img: 'static/images/43393846_p0.jpg',
           url: '/home'
         },
         {
           className: '课程3',
           money: '129.9',
           publishing: '我3',
-          img: 'static/images/home/43393846_p0.jpg',
+          img: 'static/images/43393846_p0.jpg',
           url: '/home'
         },
         {
           className: '课程4',
           money: '139.9',
           publishing: '我4',
-          img: 'static/images/home/43393846_p0.jpg',
+          img: 'static/images/43393846_p0.jpg',
           url: '/home'
         }
       ],
@@ -282,56 +282,56 @@ export default {
           className: '课程1',
           money: '0',
           publishing: '我1',
-          img: 'static/images/home/43393846_p0.jpg',
+          img: 'static/images/43393846_p0.jpg',
           url: '/home'
         },
         {
           className: '课程2',
           money: '119.9',
           publishing: '我2',
-          img: 'static/images/home/43393846_p0.jpg',
+          img: 'static/images/43393846_p0.jpg',
           url: '/home'
         },
         {
           className: '课程3',
           money: '129.9',
           publishing: '我3',
-          img: 'static/images/home/43393846_p0.jpg',
+          img: 'static/images/43393846_p0.jpg',
           url: '/home'
         },
         {
           className: '课程4',
           money: '139.9',
           publishing: '我4',
-          img: 'static/images/home/43393846_p0.jpg',
+          img: 'static/images/43393846_p0.jpg',
           url: '/home'
         },
         {
           className: '课程1',
           money: '19.9',
           publishing: '我1',
-          img: 'static/images/home/43393846_p0.jpg',
+          img: 'static/images/43393846_p0.jpg',
           url: '/home'
         },
         {
           className: '课程2',
           money: '119.9',
           publishing: '我2',
-          img: 'static/images/home/43393846_p0.jpg',
+          img: 'static/images/43393846_p0.jpg',
           url: '/home'
         },
         {
           className: '课程3',
           money: '129.9',
           publishing: '我3',
-          img: 'static/images/home/43393846_p0.jpg',
+          img: 'static/images/43393846_p0.jpg',
           url: '/home'
         },
         {
           className: '课程4',
           money: '139.9',
           publishing: '我4',
-          img: 'static/images/home/43393846_p0.jpg',
+          img: 'static/images/43393846_p0.jpg',
           url: '/home'
         }
       ],

@@ -3,8 +3,6 @@ import Router from 'vue-router'
 // import HelloWorld from '@/components/HelloWorld'
 
 //模块
-
-
 Vue.use(Router)
 
 export default new Router({
@@ -16,6 +14,10 @@ export default new Router({
     {
       path: '/home',
       component: resolve => require(['@/views/home/home'], resolve)
+    },
+    {
+      path: '/class/recording',
+      component: resolve => require(['@/views/class/recording'], resolve)
     }
   ]
 })

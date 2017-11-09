@@ -82,7 +82,7 @@
             <div class="cardContent">
                 <div class="cardImg">
                     <img v-lazy="data.img" alt="">
-                    <img src="static/images/home/10.png" alt="">
+                    <img src="static/images/10.png" alt="">
                 </div>
                 <ul class="cardHover">
                     <li>
