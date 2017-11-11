@@ -33,6 +33,9 @@
     <div>
       <router-link to="/vuex">vuex</router-link>
     </div>
+    <div>
+      <router-link to="/video">video</router-link>
+    </div>
   </div>
 </template>
 

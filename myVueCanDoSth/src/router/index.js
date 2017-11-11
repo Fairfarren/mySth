@@ -28,6 +28,8 @@ import InfiniteLoading from '@/components/infiniteLoading/infiniteLoading'
 import Axios2 from '@/components/axios2/axios2'
 //vuex
 import ModelVuex from '@/components/vuex/vuex'
+//video
+import Video from '@/components/video/video'
 
 Vue.use(Router)
 
@@ -113,6 +115,11 @@ export default new Router({
     {
       path: '/vuex',
       component: ModelVuex
+    },
+    //video
+    {
+      path: '/video',
+      component: Video
     }
   ]
 })
