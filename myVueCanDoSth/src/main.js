@@ -14,7 +14,6 @@ import 'videojs-flash'
 import 'videojs-contrib-hls/dist/videojs-contrib-hls'
 
 
-
 import VueLazyload from 'vue-lazyload'
 
 Vue.use(VueLazyload, {
@@ -25,7 +24,6 @@ Vue.use(VueLazyload, {
 })
 //无限滚动
 Vue.use(infiniteScroll)
-
 
 Vue.use(VueVideoPlayer)
 
