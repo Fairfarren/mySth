@@ -32,6 +32,8 @@ import ModelVuex from '@/components/vuex/vuex'
 import Video from '@/components/video/video'
 //md5
 import Md5 from '@/components/md5/md5'
+//location
+import Location from '@/components/location/location'
 
 Vue.use(Router)
 
@@ -126,6 +128,10 @@ export default new Router({
     {
       path: '/md5',
       component: Md5
+    },
+    {
+      path: '/location',
+      component: Location
     }
   ]
 })

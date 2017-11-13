@@ -22,7 +22,7 @@ export default {
     },
     filters: {
         goMd5 (value) {
-            let text = `${value}jet_cloud2020`
+            let text = `${value}蛤蟆皮`
             text = md5(text).toUpperCase();
             return text
         }

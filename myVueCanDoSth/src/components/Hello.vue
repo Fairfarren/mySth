@@ -39,6 +39,9 @@
     <div>
       <router-link to="/md5">md5</router-link>
     </div>
+    <div>
+      <router-link to="/location">location</router-link>
+    </div>
   </div>
 </template>
 

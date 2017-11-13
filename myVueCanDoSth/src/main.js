@@ -14,7 +14,6 @@ import 'videojs-flash'
 import 'videojs-contrib-hls/dist/videojs-contrib-hls'
 
 
-
 import VueLazyload from 'vue-lazyload'
 
 Vue.use(VueLazyload, {
