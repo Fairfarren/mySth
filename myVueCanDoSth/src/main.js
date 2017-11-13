@@ -14,6 +14,7 @@ import 'videojs-flash'
 import 'videojs-contrib-hls/dist/videojs-contrib-hls'
 
 
+
 import VueLazyload from 'vue-lazyload'
 
 Vue.use(VueLazyload, {
@@ -27,7 +28,8 @@ Vue.use(infiniteScroll)
 
 Vue.use(VueVideoPlayer)
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
 // Vue.use(axios);
 /* eslint-disable no-new */
 new Vue({

@@ -12,13 +12,25 @@
 </style>
 <template>
     <div id="video">
-        <!-- <video-player id="my_video_1" class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions">
-        </video-player> -->
-        <video id="my_video_1" class="video-js vjs-sublime-skin vjs-big-play-centered" width="500px" height="300px"
+        <video-player id="my_video_1" class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions"
+        @play="onPlayerPlay($event)"
+        @pause="onPlayerPause($event)"
+        @ended="onPlayerEnded($event)"
+        @waiting="onPlayerWaiting($event)"
+        @playing="onPlayerPlaying($event)"
+        @loadeddata="onPlayerLoadeddata($event)"
+        @timeupdate="onPlayerTimeupdate($event)"
+        @canplay="onPlayerCanplay($event)"
+        @canplaythrough="onPlayerCanplaythrough($event)"
+
+        @statechanged="playerStateChanged($event)"
+        @ready="playerReadied">
+        >
+        </video-player>
+        <!-- <video id="my_video_1" class="video-js vjs-sublime-skin vjs-big-play-centered vjs-custom-skin" width="500px" height="300px"
             controls preload="none"
         >
-        <div>阿斯蒂芬</div>
-        </video>
+        </video> -->
         <div class="action">
             <ul>
                 <li class="play">
@@ -58,7 +70,7 @@ export default {
                 // videojs options
                 autoplay: false,//自动播放
                 muted: false,//静音播放
-                controls: false,// 是否显示控制栏
+                controls: true,// 是否显示控制栏
                 sourceOrder: true,
                 flash: { hls: { withCredentials: false } },
                 html5: { hls: { withCredentials: false } },
@@ -74,14 +86,14 @@ export default {
                     src: 'http://playertest.longtailvideo.com/adaptive/bipbop/gear4/prog_index.m3u8'
                     }
                 ],
-                poster: "static/62843266_p0.jpg"
-                // controlBar: {
-                    // timeDivider: false, // 时间分割线
-                    // durationDisplay: false, // 总时间
-                    // progressControl: false, // 进度条
-                    // customControlSpacer: false, // 未知
-                    // fullscreenToggle: true // 全屏
-                // },
+                poster: "static/62843266_p0.jpg",
+                controlBar: {
+                    timeDivider: true, // 时间分割线
+                    durationDisplay: true, // 总时间
+                    progressControl: true, // 进度条
+                    customControlSpacer: true, // 未知
+                    fullscreenToggle: true // 全屏
+                },
             }
         }
     },
@@ -103,18 +115,32 @@ export default {
         muted () {
             this.thisVideo.muted = !this.thisVideo.muted;
             this.thisVideo.dom.muted(this.thisVideo.muted);
+        },
+
+        // listen event
+        onPlayerPlay(player) {
+            // console.log('player play!', player)
+        },
+        onPlayerPause(player) {
+            // console.log('player pause!', player)
+        },
+        // ...player event
+    
+        // or listen state event
+        playerStateChanged(playerCurrentState) {
+            // console.log('player current update state', playerCurrentState)
+        },
+    
+        // player is ready
+        playerReadied(player) {
+            console.log('the player is readied', player)
+            // you can use it to do something...
+            // player.[methods]
         }
     },
     mounted () {
-        this.thisVideo.dom = videojs('my_video_1', this.playerOptions);
-        this.thisVideo.dom.on('play', () => {
-            this.thisVideo.nowTime = this.thisVideo.dom.currentTime();
-            console.log(this.thisVideo.dom.bufferedPercent());
-        })
-        this.thisVideo.dom.on('ready', () => {
-            this.thisVideo.allTime = this.thisVideo.dom.duration();
-            
-        })
+        console.log('this is current player instance object', this.player)
+      
     }
 }
 </script>

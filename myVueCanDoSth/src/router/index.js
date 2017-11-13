@@ -30,6 +30,8 @@ import Axios2 from '@/components/axios2/axios2'
 import ModelVuex from '@/components/vuex/vuex'
 //video
 import Video from '@/components/video/video'
+//md5
+import Md5 from '@/components/md5/md5'
 
 Vue.use(Router)
 
@@ -120,6 +122,10 @@ export default new Router({
     {
       path: '/video',
       component: Video
+    },
+    {
+      path: '/md5',
+      component: Md5
     }
   ]
 })
