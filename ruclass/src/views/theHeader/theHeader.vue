@@ -92,26 +92,26 @@ $navHeight: 56px;
         <div class="nav">
             <ul>
                 <li class="logoNav">
-                    <div>
-                        <router-link to="/home">
-                            <img src="../../../static/images/0.png" alt="">
-                            <b>汝课堂</b>
-                        </router-link>
-                    </div>
-										<div class="navButton">
-											<span class="navColorButton" >
-												<router-link to="/home" active-class="navColor">首页</router-link>
-											</span>
-											<span class="navColorButton" >
-												<router-link to="/class" active-class="navColor">课程</router-link>
-											</span>
-										</div>
+									<div>
+										<router-link to="/home">
+											<img src="../../../static/images/0.png" alt="">
+											<b>汝课堂</b>
+										</router-link>
+									</div>
+									<div class="navButton">
+										<span class="navColorButton" >
+											<router-link to="/home" active-class="navColor">首页</router-link>
+										</span>
+										<span class="navColorButton" >
+											<router-link to="/class" active-class="navColor">课程</router-link>
+										</span>
+									</div>
 								</li>
                 <li class="userImg">
-                    <span class="user">
-										<router-link to="/user">
-											<img src="../../../static/images/userImg.png" alt="">
-										</router-link>
+                    <span class="user" @click.stop="userUpDataTF">
+											<router-link to="">
+												<img src="../../../static/images/userImg.png" alt="">
+											</router-link>
                     </span>
                 </li>
             </ul>
@@ -132,7 +132,12 @@ export default {
 		};
 	},
 	methods: {
-		
+		//判断登录没有
+		userUpDataTF () {
+			const user = this.$store.state.USER;
+			user.name && this.$router.push('/user');
+			user.name || this.$store.commit('PUPUP_SHOW_SIGNINUP');
+		}
 	},
 	mounted() {
 		

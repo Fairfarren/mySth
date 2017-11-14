@@ -1,4 +1,4 @@
-<style>
+<style lang="scss">
   *{
     margin: 0;
     padding: 0;
@@ -30,23 +30,42 @@
     border-bottom: 1px solid #3399ff;
   }
   #body {
-    margin-top: 56px;
+    /* margin-top: 56px; */
   }
+  .el-input-group__append, .el-input-group__prepend {
+        padding: 0 10px;
+        background: {
+            color: #fff;
+        }
+    }
 </style>
 
 <template>
   <div id="app">
-    <div id="theHeader">
-      <theHeader></theHeader>
+    
+    <div id="theHeader" v-if="$store.state.DETAILED_SHOW">
+      <keep-alive>
+        <theHeader></theHeader>
+      </keep-alive>
     </div>
-    <div id="body">
+    
+    <div id="body" :style="{marginTop: $store.state.DETAILED_SHOW_MARGIN}">
       <router-view></router-view>
+      <transition name="el-fade-in-linear">
+        <popup v-if="$store.state.POPUP_SHOW.show"></popup>
+      </transition>
     </div>
-    <div id="theFooter">
-      <theFooter></theFooter>
+
+    <div id="theFooter" v-if="$store.state.DETAILED_SHOW">
+      <keep-alive>
+        <theFooter></theFooter>
+      </keep-alive>
     </div>
-    <div id="rightPhone">
-      <rightPhone></rightPhone>
+
+    <div id="rightPhone" v-if="$store.state.DETAILED_SHOW">
+      <keep-alive>
+        <rightPhone></rightPhone>
+      </keep-alive>
     </div>
   </div>
 </template>
@@ -55,30 +74,41 @@
 import TheHeader from '@/views/theHeader/theHeader';
 import TheFooter from '@/views/theFooter/theFooter'
 import rightPhone from '@/components/rightPhone'
+import Popup from '@/views/popup/index'
+import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
 
 export default {
   name: 'app',
   data () {
     return {
-      value: [20, 50]
+      value: [20, 50],
+      marginTop: {
+        margin: '56px 0 0 0'
+      }
     }
   },
   components: {
-    TheHeader, TheFooter, rightPhone
+    TheHeader, TheFooter, rightPhone, Popup,
+    CollapseTransition
   },
   methods: {
-    
+    watchDetailedShow () {
+      const url = this.$route.path.split('/');
+      console.log(url);
+      if(url.length >= 2) {
+        if(url[1] == 'class' && url[2] == 'detailed') {
+          this.$store.commit('WATCH_DETAILED_SHOW_FALSE')
+        }else {
+          this.$store.commit('WATCH_DETAILED_SHOW_TRUE')
+        }
+      }
+    }
   },
   mounted () {
-    // window.addEventListener("scroll", (event) => {
-    //     var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-    //     if(scrollTop > 56) {
-    //       this.navFixed.position = 'fixed';
-    //     }else{
-    //       this.navFixed.position = '';
-    //     }
-    //     // console.log(scrollTop);            
-    // });
+    
+  },
+  watch: {
+    '$route':'watchDetailedShow'
   }
 }
 </script>

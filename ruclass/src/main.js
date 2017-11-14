@@ -6,12 +6,19 @@ import router from './router'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+// import './assets/style.scss'
 
 import Vuex from 'vuex'
 //引用vuex的配置
 import store from './store/index'
 //懒加载
 import VueLazyload from 'vue-lazyload'
+//视频
+import VueVideoPlayer from 'vue-video-player'
+import 'video.js/dist/video-js.css'
+import 'vue-video-player/src/custom-theme.css'
+import 'videojs-flash'
+import 'videojs-contrib-hls/dist/videojs-contrib-hls'
 
 Vue.use(VueLazyload, {
   preLoad: 1,//预加载高度的比例
@@ -19,6 +26,7 @@ Vue.use(VueLazyload, {
   attempt: 1,//尝试次数
   listenEvents: [ 'scroll' ]//监听事件
 })
+Vue.use(VueVideoPlayer);
 
 Vue.config.productionTip = false
 

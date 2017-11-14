@@ -8,6 +8,14 @@
 
 11 - 8 : vue-lazyload
 
+11 - 13 : videojs-contrib-hls
+
+11 - 13 : videojs-flash
+
+11 - 13 : vue-video-player
+
+11 - 14 : md5
+
 
 ## 配置
 

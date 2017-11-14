@@ -20,7 +20,7 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
-    extensions: ['.js', '.vue', '.json'],
+    extensions: ['.js', '.vue', '.json', '.scss'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
@@ -54,10 +54,10 @@ module.exports = {
           name: utils.assetsPath('media/[name].[hash:7].[ext]')
         }
       },
-      {
-        test: /\.scss$/,
-        loaders: ["style", "css", "sass"]
-      },
+      // {
+      //   test: /\.scss$/,
+      //   loaders: ["style", "css", "sass", "scss"]
+      // },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
