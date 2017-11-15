@@ -13,12 +13,13 @@ export const WATCH_DETAILED_SHOW_FALSE = (state) => {
 
 //关闭弹窗
 export const CLOSE_PUPUP = (state) => {
-    console.log(0)
     state.POPUP_SHOW.show = false;
+    // console.log(state.POPUP_SHOW.show)
 }
 
 //登录注册弹出框
 export const PUPUP_SHOW_SIGNINUP = (state) => {
     state.POPUP_SHOW.show = true;
     state.POPUP_SHOW.who = 'signInUp';
+    // console.log(state.POPUP_SHOW.show)
 }

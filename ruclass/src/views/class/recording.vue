@@ -344,12 +344,12 @@
     <div id="recording">
         <div class="navigation">
             <span>
-                <router-link to="/class/all">
+                <router-link to="/class">
                     全部课程
                 </router-link>
             </span>
             <span>
-                <router-link to="/class/all">
+                <router-link to="/class">
                     >无人机培训
                 </router-link>
             </span>

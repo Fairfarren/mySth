@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.17.1",
     "element-ui": "^2.0.3",
     "md5": "^2.2.1",
     "videojs-contrib-hls": "^5.12.2",

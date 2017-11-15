@@ -16,12 +16,17 @@ export default new Router({
       component: resolve => require(['@/views/home/home'], resolve)
     },
     {
+      path: '/class',
+      component: resolve => require(['@/views/class/all'], resolve)
+    },
+    {
       path: '/class/recording/:id',
       component: resolve => require(['@/views/class/recording'], resolve)
     },
     {
       path: '/class/detailed/:id',
       component: resolve => require(['@/views/class/detailed'], resolve)
-    }
+    },
+    
   ]
 })

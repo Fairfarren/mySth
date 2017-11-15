@@ -108,10 +108,20 @@ $navHeight: 56px;
 									</div>
 								</li>
                 <li class="userImg">
-                    <span class="user" @click.stop="userUpDataTF">
-											<router-link to="">
-												<img src="../../../static/images/userImg.png" alt="">
-											</router-link>
+                    <span class="user">
+											<el-dropdown @command="handleCommand">
+												<router-link to="" class="el-dropdown-link">
+													<img src="../../../static/images/userImg.png" alt="">
+												</router-link>
+												<el-dropdown-menu slot="dropdown" v-if="$store.state.USER.name">
+													<el-dropdown-item>我的课程</el-dropdown-item>
+													<el-dropdown-item>我的订单</el-dropdown-item>
+													<el-dropdown-item>退出</el-dropdown-item>
+												</el-dropdown-menu >
+												<el-dropdown-menu slot="dropdown" v-else>
+													<el-dropdown-item command="0">登录</el-dropdown-item>
+												</el-dropdown-menu>
+											</el-dropdown>
                     </span>
                 </li>
             </ul>
@@ -124,19 +134,19 @@ export default {
 	name: "theHeader",
 	data() {
 		return {
-		title: "header",
-		routerName: {
-			home: "",
-			class: "",
-		},
+			title: "header",
+			routerName: {
+				home: "",
+				class: "",
+			},
 		};
 	},
 	methods: {
-		//判断登录没有
-		userUpDataTF () {
-			const user = this.$store.state.USER;
-			user.name && this.$router.push('/user');
-			user.name || this.$store.commit('PUPUP_SHOW_SIGNINUP');
+		//头像下拉点击事件
+		handleCommand (command) {
+			if(command == 0) {
+				this.$store.commit('PUPUP_SHOW_SIGNINUP');
+			}
 		}
 	},
 	mounted() {

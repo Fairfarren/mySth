@@ -21,28 +21,39 @@
     }
     
 }
-
 </style>
 
 <template>
     <div id="popup" @click.self="$store.commit('CLOSE_PUPUP')">
         <!-- 登录注册 -->
-        <signInUp></signInUp>
+        <signInUp v-show="signInUpOrfGrM.index == 0" @forGet="goToForGet"></signInUp>
+        <!-- 忘记密码，重置密码  -->
+        <fGrM v-show="signInUpOrfGrM.index == 1" @signUp="goToSign"></fGrM>
     </div>
 </template>
 
 <script>
 
-import SignInUp from '@/components/signInUp';
+// import SignInUp from '@/components/signInUp';
 
 export default {
-
     components: {
-        SignInUp
+        SignInUp: resolve => require(['@/components/signInUp'], resolve),
+        FGrM: resolve => require(['@/components/fGrM'], resolve)
     },
     data () {
         return {
-
+            signInUpOrfGrM: {
+                index: 0
+            }
+        }
+    },
+    methods: {
+        goToForGet () {
+            this.signInUpOrfGrM.index = 1;
+        },
+        goToSign () {
+            this.signInUpOrfGrM.index = 0;
         }
     },
     mounted () {

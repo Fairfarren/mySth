@@ -5,7 +5,9 @@ const state = {
         show: false,
         who: 'signInUp'
     },
-    USER: {},
+    USER: {
+        name: '123'
+    },
 
 }
 

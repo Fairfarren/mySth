@@ -33,11 +33,18 @@
     /* margin-top: 56px; */
   }
   .el-input-group__append, .el-input-group__prepend {
-        padding: 0 10px;
-        background: {
-            color: #fff;
-        }
+    padding: 0 10px;
+    background: {
+      color: #fff;
     }
+  } 
+  //过度
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .3s
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
+    opacity: 0
+  }
 </style>
 
 <template>
@@ -51,8 +58,10 @@
     
     <div id="body" :style="{marginTop: $store.state.DETAILED_SHOW_MARGIN}">
       <router-view></router-view>
-      <transition name="el-fade-in-linear">
-        <popup v-if="$store.state.POPUP_SHOW.show"></popup>
+      <transition name="fade">
+        <!-- <keep-alive> -->
+          <popup v-if="$store.state.POPUP_SHOW.show"></popup>
+        <!-- </keep-alive> -->
       </transition>
     </div>
 
@@ -71,11 +80,11 @@
 </template>
 
 <script>
-import TheHeader from '@/views/theHeader/theHeader';
-import TheFooter from '@/views/theFooter/theFooter'
-import rightPhone from '@/components/rightPhone'
-import Popup from '@/views/popup/index'
-import CollapseTransition from 'element-ui/lib/transitions/collapse-transition';
+// import TheHeader from '';
+// import TheFooter from '@/views/theFooter/theFooter'
+// import RightPhone from '@/components/rightPhone'
+// import Popup from '@/views/popup/index'
+
 
 export default {
   name: 'app',
@@ -88,8 +97,10 @@ export default {
     }
   },
   components: {
-    TheHeader, TheFooter, rightPhone, Popup,
-    CollapseTransition
+    TheHeader: resolve => require(['@/views/theHeader/theHeader'], resolve), 
+    TheFooter: resolve => require(['@/views/theFooter/theFooter'],resolve), 
+    RightPhone: resolve => require(['@/components/rightPhone'], resolve), 
+    Popup: resolve => require(['@/views/popup/index'], resolve)
   },
   methods: {
     watchDetailedShow () {
