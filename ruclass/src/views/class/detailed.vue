@@ -86,6 +86,125 @@
                     }
                 }
             }
+            >.catalog {
+                overflow: auto;
+                background: {
+                    color: #26262b;
+                }
+                >ul {
+                    margin: {
+                        bottom: 50px;
+                    }
+                    >li {
+                        @include fontSize(16px, #cccccc);
+                        @include transition(0.3s);
+                        line-height: 40px;
+                        padding: 0 30px;
+                        cursor: pointer;
+                        box-sizing: border-box;
+                        margin: 0 auto;
+                        >img {
+                            display: none;
+                        }
+                        >span:nth-child(2) {
+                            display: inline-block;
+                            width: 10rem;
+                        }
+                        >span:last-child {
+                            float: right;
+                        }
+                        &:hover {
+                            color: #3399ff;
+                        }
+                    }
+                    >li:first-child {
+                        @include fontSize(20px, #ffffff);
+                    }
+                    >.colorLi {
+                        color: #3399ff;
+                        box-shadow: 0 0 10px 0px #fff inset;
+                        >img {
+                            display: inline-block;
+                            vertical-align: middle;
+                            margin: {
+                                right: 5px;
+                                left: 20px;
+                            }
+                        }
+                    }
+                }
+            }
+            >.discuss {
+                background: {
+                    color: #26262b;
+                }
+                >.sayAll {
+                    width: 100%;
+                    overflow: auto;
+                    box-sizing: border-box;
+                    padding: {
+                        top: 30px;
+                    }
+                    >li {
+                        display: table;
+                        width: 100%;
+                        box-sizing: border-box;
+                        padding: 0 30px;
+                        margin: {
+                            bottom: 20px;
+                        }
+                        >div {
+                            display: table-cell;
+                            vertical-align: top;
+                        }
+                        >div:first-child {
+                            padding: {
+                                right: 30px;
+                            }
+                            >img {
+                                width: 48px;
+                                height: 48px;
+                            }
+                        }
+                        >div:last-child {
+                            padding: {
+                                bottom: 20px;
+                            }
+                            border-bottom: 1px solid #434343;
+                            >p:nth-child(1) {
+                                @include fontSize(24px, #ffffff);
+                                line-height: 48px;
+                                >span {
+                                    @include fontSize(18px, #cccccc);
+                                    margin: {
+                                        left: 20px;
+                                    }
+                                }
+                            }
+                            >p {
+                                @include fontSize(22px, #cccccc);
+                            }
+                        }
+                    }
+                }
+                >.saySth {
+                    box-sizing: border-box;
+                    height: 150px;
+                    padding: 20px;
+                    border-top: 1px solid #434343;
+                    >textarea {
+                        width: 100%;
+                        height: 100%;
+                        resize: none;
+                        border: 0;
+                        outline: none;
+                        @include fontSize(18px, #cccccc);
+                        background: {
+                            color: #26262b;
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -123,18 +242,51 @@
                         @click="choose.index = 1"
                     >讨论</span>
                 </div>
-                <div class="catalog" v-show="choose.index == 0">
-                    <ul>
+                <div 
+                    class="catalog" 
+                    v-show="choose.index == 0"
+                    :style="{height:listStyle.catalogHeight}"
+                >
+                    <ul v-for="value in [1,2,3]" :key="value">
                         <li>
                             <h3>章节1：导读</h3>
                         </li>
-                        <li>
-                            
+                        <li 
+                            v-for="value in [1,2,3,4,5,6,7,8,9,1,2,3,4,5]" 
+                            :key="value"
+                            :class="{colorLi: value == 1}"
+                        >
+                            <img src="static/images/duibian1.png" alt="">
+                            <span>[录播]课时1：艺术的魅力</span>
+                            <span>13:13</span>
                         </li>
                     </ul>
-                </div class="discuss">
-                <div v-show="choose.index == 1">
-                    1
+                </div>
+                <div class="discuss" v-show="choose.index == 1">
+                    <ul 
+                        class="sayAll"
+                        :style="{height: listStyle.sayAllHeight}"
+                    >
+                        <li
+                            v-for="value in [1,2,3,4,5,6,7]" :key="value"
+                        >
+                            <div>
+                                <img src="static/images/userImg.png" alt="">
+                            </div>
+                            <div>
+                                <p>
+                                    曼妥思
+                                    <span>13分钟前</span>
+                                </p>
+                                <p>
+                                    来看就按收到了；副科级卡萨丁分卡惊世毒妃
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="saySth">
+                        <textarea name="" id="" placeholder="我想说..."></textarea>
+                    </div>
                 </div>
             </div>
         </div>
@@ -153,8 +305,15 @@ export default {
             videoStyle: {
                 height: ''
             },
+            listStyle: {
+                catalogHeight: '',
+                sayAllHeight: ''
+            },
             choose: {
                 index: 0,
+            },
+            form: {
+                text: ''
             },
             goBack: '/class/recording/'+ this.$route.params.id +'',
             playerOptions: {
@@ -191,6 +350,8 @@ export default {
     mounted () {
         this.detailedStyle.height = `${document.documentElement.clientHeight}px`;
         this.videoStyle.height = `${document.documentElement.clientHeight - 152}px`;
+        this.listStyle.catalogHeight = `${document.documentElement.clientHeight - 152 - 60}px`
+        this.listStyle.sayAllHeight = `${document.documentElement.clientHeight - 152 - 60 - 150}px`
     }
 }
 </script>
