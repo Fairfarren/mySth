@@ -27,6 +27,25 @@ export default new Router({
       path: '/class/detailed/:id',
       component: resolve => require(['@/views/class/detailed'], resolve)
     },
-    
+    {
+      path: '/about',
+      component: resolve => require(['@/views/about/about'], resolve)
+    },
+    {
+      path: '/contact',
+      component: resolve => require(['@/views/contact/contact'], resolve)
+    },
+    {
+      path: '/myClassAndOrder/:page',
+      component:  resolve => require(['@/views/myClassAndOrder/myClassAndOrder'], resolve)
+    },
+    {
+      path: '/paySth/:id',
+      component: resolve => require(['@/views/pay/pay'], resolve)
+    },
+    {
+      path: '/okPay/:id',
+      component: resolve => require(['@/views/pay/okPay'], resolve)
+    }
   ]
 })

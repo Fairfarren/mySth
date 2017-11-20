@@ -402,8 +402,13 @@
                         <span>已购买</span>
                     </li>
                     <li>
-                        <span>加入学习</span>
-                        <span>立即学习</span>
+                        <span @click="openPopup">加入学习</span>
+                        <router-link 
+                            :to="`/class/detailed/${$route.params.id}`"
+                            tag="span"
+                        >
+                            立即学习
+                        </router-link>
                     </li>
                 </ul>
             </div>
@@ -489,6 +494,14 @@ export default {
     data () {
         return {
             spanColor: 0
+        }
+    },
+    methods: {
+        openPopup () {
+            this.$router.push({query: {
+                index: 3
+            }})
+            this.$store.commit('PUPUP_SHOW_SIGNINUP');
         }
     }
 }

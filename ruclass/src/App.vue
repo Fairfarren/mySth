@@ -1,4 +1,8 @@
 <style lang="scss">
+  @mixin fontSize($size, $color) {
+    font-size: $size - 2;
+    color: $color;
+  }
   *{
     margin: 0;
     padding: 0;
@@ -38,12 +42,54 @@
       color: #fff;
     }
   } 
+  // 进度条
+  .el-pager li.active {
+    color: #fff;
+    border-radius: 4px;
+    background: {
+      color: #3399ff;
+    }
+  }
+  .el-dialog, .el-pager li {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 22px;
+    font-weight: normal;
+    color: #fff;
+    border-radius: 4px;
+    margin: 0 5px;
+    background: {
+      color: #e5e5e5;
+    }
+  }
+  .el-pager li.btn-quicknext, .el-pager li.btn-quickprev {
+    color: #fff;
+    line-height: 40px;
+  }
   //过度
   .fade-enter-active, .fade-leave-active {
     transition: opacity .3s
   }
   .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
     opacity: 0
+  }
+  //编辑资料
+  .qwe .el-form-item__label{
+    @include fontSize(20px, #666666); 
+  }
+  .qwe:first-child .el-form-item__label {
+    &::before {
+      content: '*';
+      color: #ff1111;
+      margin: {
+        right: 5px;
+      }
+    }
+  }
+  //播放器
+  .vjs-custom-skin > .video-js {
+    height: 100%;
   }
 </style>
 
@@ -105,7 +151,6 @@ export default {
   methods: {
     watchDetailedShow () {
       const url = this.$route.path.split('/');
-      console.log(url);
       if(url.length >= 2) {
         if(url[1] == 'class' && url[2] == 'detailed') {
           this.$store.commit('WATCH_DETAILED_SHOW_FALSE')

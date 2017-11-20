@@ -253,7 +253,7 @@ export default {
           money: '0',
           publishing: '我1',
           img: 'static/images/43393846_p0.jpg',
-          url: '/class/recording'
+          url: '/class/recording/9980'
         },
         {
           className: '课程2',

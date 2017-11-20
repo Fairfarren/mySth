@@ -49,3 +49,7 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+//回到顶部
+router.afterEach((to, from, next) => {
+  window.scrollTo(0, 0);
+});

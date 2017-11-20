@@ -6,9 +6,10 @@ const state = {
         who: 'signInUp'
     },
     USER: {
-        name: '123'
+        name: 'lyk',
+        img: 'static/images/11.png',
     },
-
+    
 }
 
 export default state;

@@ -17,6 +17,9 @@
         padding: 40px;
     }
     .title {
+        margin: {
+            bottom: 35px;
+        }
         >span:nth-child(1) {
             @include fontSize(28px, #ffffff);
             margin: {
@@ -38,10 +41,54 @@
     }
     .content {
         $height: 790px;
+        display: table;
+        width: 100%;
+        >div {
+            display: table-cell;
+            vertical-align: top;
+        }
+        >.video {
+            padding: {
+                right: 30px;
+            }
+            >div {
+                height: 100%;
+                >div {
+                    height: 100%;
+                }
+            }
+        }
         >.list {
             width: 400px;
+            >div:nth-child(1) {
+                width: 100%;
+                overflow: hidden;
+                >span {
+                    display: inline-block;
+                    width: 50%;
+                    height: 60px;
+                    line-height: 60px;
+                    box-sizing: border-box;
+                    text-align: center;
+                    cursor: pointer;
+                    padding: 0;
+                    border: 0;
+                    float: left;
+                    @include fontSize(24px, #7b7b8a);
+                    @include transition(0.3s);
+                    background: {
+                        color: #444450;
+                    }
+                }
+                >.colorSpan {
+                    background: {
+                        color: #26262b;
+                    }
+                }
+            }
         }
     }
+    
 </style>
 
 <template>
@@ -55,24 +102,42 @@
                 </router-link>
             </span>
         </div>
-        <el-row class="content" :gutter="20">
-            <el-col class="video" :span="16">
-                <video-player id="my_video_1" class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions"
-                
+        <div class="content">
+            <div class="video" :style="{height: videoStyle.height}">
+                <video-player 
+                    id="my_video_1" 
+                    class="vjs-custom-skin" 
+                    ref="videoPlayer" 
+                    :options="playerOptions"
                 >
                 </video-player>
-            </el-col>
-            <el-col class="list">
+           </div>
+            <div class="list" :style="{height: videoStyle.height}">
                 <div>
-                    <span>目录</span>
-                    <span>讨论</span>
+                    <span 
+                        :class="{colorSpan: choose.index == 0}"
+                        @click="choose.index = 0"
+                    >目录</span>
+                    <span
+                        :class="{colorSpan: choose.index == 1}"
+                        @click="choose.index = 1"
+                    >讨论</span>
                 </div>
-                <ul>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </el-col>
-        </el-row>
+                <div class="catalog" v-show="choose.index == 0">
+                    <ul>
+                        <li>
+                            <h3>章节1：导读</h3>
+                        </li>
+                        <li>
+                            
+                        </li>
+                    </ul>
+                </div class="discuss">
+                <div v-show="choose.index == 1">
+                    1
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -84,6 +149,12 @@ export default {
         return {
             detailedStyle: {
                 height: ''
+            },
+            videoStyle: {
+                height: ''
+            },
+            choose: {
+                index: 0,
             },
             goBack: '/class/recording/'+ this.$route.params.id +'',
             playerOptions: {
@@ -119,6 +190,7 @@ export default {
     },
     mounted () {
         this.detailedStyle.height = `${document.documentElement.clientHeight}px`;
+        this.videoStyle.height = `${document.documentElement.clientHeight - 152}px`;
     }
 }
 </script>

@@ -121,13 +121,13 @@
             <li>
               <p>
                 <span>
-                  <router-link to="/aboutUs">关于我们</router-link>
+                  <router-link to="/about">关于我们</router-link>
                 </span>
                 <span>
-                  <router-link to="/aboutUs">联系我们</router-link>
+                  <router-link to="/contact">联系我们</router-link>
                 </span>
                 <span>
-                  <router-link to="/aboutUs">服务协议</router-link>
+                  <router-link to="">服务协议</router-link>
                 </span>
               </p>
               <p>

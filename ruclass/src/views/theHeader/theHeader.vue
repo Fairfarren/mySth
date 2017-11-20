@@ -63,9 +63,10 @@ $navHeight: 56px;
 	  span {
 			display: inline-block;
 			height: $navHeight;
-			a {
+			span {
 				height: $navHeight;
 				line-height: $navHeight;
+				cursor: pointer;
 				img {
 					width: 44px;
 					height: 44px;
@@ -110,12 +111,12 @@ $navHeight: 56px;
                 <li class="userImg">
                     <span class="user">
 											<el-dropdown @command="handleCommand">
-												<router-link to="" class="el-dropdown-link">
-													<img src="../../../static/images/userImg.png" alt="">
-												</router-link>
+												<span class="el-dropdown-link">
+													<img src="../../../static/images/userImg.png" alt="" @click="signUpOrSignIn">
+												</span>
 												<el-dropdown-menu slot="dropdown" v-if="$store.state.USER.name">
-													<el-dropdown-item>我的课程</el-dropdown-item>
-													<el-dropdown-item>我的订单</el-dropdown-item>
+													<el-dropdown-item command="myClass">我的课程</el-dropdown-item>
+													<el-dropdown-item command="myOrder">我的订单</el-dropdown-item>
 													<el-dropdown-item>退出</el-dropdown-item>
 												</el-dropdown-menu >
 												<el-dropdown-menu slot="dropdown" v-else>
@@ -144,17 +145,28 @@ export default {
 	methods: {
 		//头像下拉点击事件
 		handleCommand (command) {
-			if(command == 0) {
+			command == 0 && ( () => {
 				this.$store.commit('PUPUP_SHOW_SIGNINUP');
+			})()
+			switch (command) {
+				case 'myClass': this.$router.push('/myClassAndOrder/1');break;
+				case 'myOrder': this.$router.push('/myClassAndOrder/2');break;
 			}
+		},
+		//登陆或是打开编辑资料
+		signUpOrSignIn () {
+			this.$store.state.USER.name.length > 0 ? ( () => {
+				this.$router.push('/myClassAndOrder/0');
+			})() : ( () => {
+				this.$store.commit('PUPUP_SHOW_SIGNINUP')
+			})()
 		}
 	},
 	mounted() {
 		
 	},
 	watch: {
-		// 如果路由有变化，会再次执行该方法
-		// '$route': 'navColor'
+		
 	},
 };
 </script>
