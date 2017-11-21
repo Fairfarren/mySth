@@ -35,6 +35,7 @@ Vue.use(VueVideoPlayer);
 //线下
 axios.defaults.baseURL = 'http://192.168.3.28:5000';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.withCredentials = true;
 Vue.prototype.axios = axios;
 
 Vue.config.productionTip = false

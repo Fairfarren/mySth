@@ -112,12 +112,12 @@ $navHeight: 56px;
                     <span class="user">
 											<el-dropdown @command="handleCommand">
 												<span class="el-dropdown-link">
-													<img src="../../../static/images/userImg.png" alt="" @click="signUpOrSignIn">
+													<img :src="$store.state.USER.img" alt="" @click="signUpOrSignIn" style="width:44px;height:44px;" alt="加载失败">
 												</span>
 												<el-dropdown-menu slot="dropdown" v-if="$store.state.USER.name">
 													<el-dropdown-item command="myClass">我的课程</el-dropdown-item>
 													<el-dropdown-item command="myOrder">我的订单</el-dropdown-item>
-													<el-dropdown-item>退出</el-dropdown-item>
+													<el-dropdown-item command="loginOut">退出</el-dropdown-item>
 												</el-dropdown-menu >
 												<el-dropdown-menu slot="dropdown" v-else>
 													<el-dropdown-item command="0">登录</el-dropdown-item>
@@ -151,6 +151,7 @@ export default {
 			switch (command) {
 				case 'myClass': this.$router.push('/myClassAndOrder/1');break;
 				case 'myOrder': this.$router.push('/myClassAndOrder/2');break;
+				case 'loginOut': this.loginOut();break;
 			}
 		},
 		//登陆或是打开编辑资料
@@ -160,6 +161,48 @@ export default {
 			})() : ( () => {
 				this.$store.commit('PUPUP_SHOW_SIGNINUP')
 			})()
+		},
+		//注销
+		loginOut () {
+			// this.axios.delete('/api/logout').then( (res) => {
+			// 	if(res.data.status_code == 200) {
+			// 		this.$router.push('/home');
+			// 		this.$store.commit('LOGIN_OUT_SUCCESS');
+			// 	}else {
+			// 		this.$alert(res.data.msg,'错误',{
+			// 			type: 'warning'
+			// 		})
+			// 	}
+			// }).catch( (erroe) => {
+			// 	this.$alert('网络连接超时或网络错误','错误',{
+			// 		type: 'warning'
+			// 	})
+			// })
+			this.axios({
+				url: '/api/logout',
+				method: 'delete',
+				headers: {
+						'Authorization': sessionStorage.token,
+				}
+			}).then( (res)=>{
+				if(res.data.status_code == 200) {
+					this.$router.push('/home');
+					this.$store.commit('LOGIN_OUT_SUCCESS');
+					this.$message({
+						message: '退出成功',
+						type: 'success'
+					});
+				}else {
+					this.$alert(res.data.msg,'错误',{
+						type: 'warning'
+					})
+				}
+			}).catch( (err)=>{
+				console.log(err);
+				this.$alert('网络连接超时或网络错误','错误',{
+					type: 'warning'
+				})
+			})
 		}
 	},
 	mounted() {

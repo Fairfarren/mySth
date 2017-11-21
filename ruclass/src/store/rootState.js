@@ -6,8 +6,8 @@ const state = {
         who: 'signInUp'
     },
     USER: {
-        name: 'lyk',
-        img: 'static/images/11.png',
+        name: '',
+        img: 'static/images/userImg.png',
     },
     
 }

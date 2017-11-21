@@ -475,7 +475,6 @@ export default {
         sginIn () {
             const phoneNumber = this.ruleForm.phoneNumber + '';
             const phonePsw = this.ruleForm.phonePsw + '';
-            console.log(phoneNumber,phonePsw)
             this.axios.post('/api/login', {
                 "mobile": phoneNumber,
                 "password": phonePsw
@@ -486,12 +485,14 @@ export default {
                         type: 'success'
                     });
                     this.$store.commit('CLOSE_PUPUP');
+                    this.$store.commit('LOGIN_SUCCESS', res.data.data);
                 }else {
                     this.$alert(res.data.msg,'错误',{
                         type: 'warning'
                     })
                 }
-            }).catch( (erroe) => {
+            }).catch( (error) => {
+                console.log(error)
                 this.$alert('网络连接超时或网络错误','错误',{
                     type: 'warning'
                 })

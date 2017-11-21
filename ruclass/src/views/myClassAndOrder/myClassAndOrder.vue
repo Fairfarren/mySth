@@ -117,7 +117,7 @@
                 <ul>
                     <li :class="{colorSpan: show.index == 0}">
                         <p>
-                            <img :src="$store.state.USER.img" alt="">
+                            <img :src="$store.state.USER.img" alt="头像加载失败">
                         </p>
                         <p>
                             {{$store.state.USER.name}}
@@ -167,6 +167,25 @@ export default {
                 title: '我的课程'
             }
         }
+    },
+    computed: {
+        
+    },
+    methods: {
+        //判断是否登录
+        loginOrOut () {
+            this.$store.state.USER.name.length <= 0 && ( () => {
+                this.$alert('请先登录', '提示', {
+                    confirmButtonText: '确定',
+                    callback: action => {
+                        this.$router.push('/home')
+                    }
+                });
+            })();
+        },
+    },
+    mounted () {
+        this.loginOrOut();
     },
     watch: {
         'show.index' (value) {

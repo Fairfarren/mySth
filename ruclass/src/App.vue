@@ -161,7 +161,7 @@ export default {
     }
   },
   mounted () {
-    
+    this.$store.commit('LOGIN_OR_NOT');
   },
   watch: {
     '$route':'watchDetailedShow'

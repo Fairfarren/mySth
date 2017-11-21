@@ -125,7 +125,7 @@ export default {
        submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
-                    console.log(123)
+                    this.addPhoneNumber();
                 } else {
                     console.log('error submit!!');
                     return false;
@@ -175,6 +175,34 @@ export default {
                 }
             },1000)
         },
+        //添加手机号
+        addPhoneNumber () {
+            this.axios({
+                url: '/api/bind_mobile',
+                method: 'put',
+                headers: {
+                    'Authorization': sessionStorage.token,
+                },
+                data: {
+                    mobile: this.ruleForm.phoneNumber,
+                    code: this.ruleForm.code
+                }
+            }).then( (res)=>{
+                if(res.data.status_code == 201) {
+                    this.$store.commit('USER_PHONE_NUMBER', this.ruleForm.phoneNumber);
+                    this.$store.commit('CLOSE_PUPUP');
+                }else {
+                    this.$alert(res.data.msg,'错误',{
+						type: 'warning'
+					})
+                }
+            }).catch( (err)=>{
+                console.log(err);
+                this.$alert('网络连接超时或网络错误','错误',{
+					type: 'warning'
+				})
+            })
+        }
     }
 }
 </script>
