@@ -142,8 +142,14 @@
                     <el-col :span="2">
                         <el-button 
                             style="width: 100%;padding-left:10px;padding-right:10px;"
+                            v-if="ruleForm01.addShow"
                             @click="openPopup"
                         >添加</el-button>
+                        <el-button 
+                            style="width: 100%;padding-left:10px;padding-right:10px;"
+                            v-else
+                            @click="openPopupChange"
+                        >修改</el-button>
                     </el-col>
                 </el-row>
             </el-form-item>
@@ -183,7 +189,8 @@ export default {
                     day: ''
                 },
                 sex: '2',
-                img: 'static/images/43393846_p0.jpg'
+                img: 'static/images/43393846_p0.jpg',
+                addShow: true
             },
             rules01: {
                 name: [
@@ -205,6 +212,12 @@ export default {
         openPopup () {
             this.$router.push({ query: {
                 index: 2
+            } })
+            this.$store.commit('PUPUP_SHOW_SIGNINUP')
+        },
+        openPopupChange () {
+            this.$router.push({ query: {
+                index: 4
             } })
             this.$store.commit('PUPUP_SHOW_SIGNINUP')
         },
@@ -282,6 +295,11 @@ export default {
                     this.ruleForm01.name = res.data.data.username || this.$store.state.USER.name;
                     this.ruleForm01.sex = res.data.data.sex;
 
+                    setTimeout( () => {
+                        this.$store.state.USER.phoneNumber && ( () => {this.ruleForm01.addShow = false})();
+                    },10)
+                    
+
                     this.ruleForm01.time.year = res.data.data.birthday.split('-')[0];
                     setTimeout( () => {
                         this.ruleForm01.time.moon = res.data.data.birthday.split('-')[1];
@@ -334,7 +352,7 @@ export default {
             }).then( (res)=>{
                 if(res.data.status_code == 201) {
                     this.$message({
-                        message: '登录成功',
+                        message: '修改成功',
                         type: 'success'
                     });
                     //重新获取

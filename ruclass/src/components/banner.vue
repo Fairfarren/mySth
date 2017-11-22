@@ -13,6 +13,7 @@
 	}
 	#banner {
 		width: 100%;
+		cursor: pointer;
 	}
 	.box {
 		width: 100%;
@@ -158,10 +159,10 @@
 				:style="{ backgroundImage: 'url(' + bg.img[index] + ')' }"
 			></div>
 			<div class="drawer">
-				<div class="left" @click="clickButton(-1)">
+				<div class="left" @click.stop="clickButton(-1)">
 					<img src="../../static/images/1.png" alt="">
 				</div>
-				<div class="right" @click="clickButton(+1)">
+				<div class="right" @click.stop="clickButton(+1)">
 					<img src="../../static/images/2.png" alt="">
 				</div>
 				<ul class="dot">
@@ -181,18 +182,19 @@
 <script>
 export default {
 	name: "banner",
+	props: ['bg'],
 	data () {
 		return {
-			bg: {
-				img: [
-					require('../../static/images/WechatIMG5.jpeg'),
-					require('../../static/images/WechatIMG5.jpeg'),
-					require('../../static/images/WechatIMG5.jpeg')
-				],
-				url: [
-					'','',''
-				]
-			},
+			// bg: {
+			// 	img: [
+			// 		require('../../static/images/WechatIMG5.jpeg'),
+			// 		require('../../static/images/WechatIMG5.jpeg'),
+			// 		require('../../static/images/WechatIMG5.jpeg')
+			// 	],
+			// 	url: [
+			// 		'','',''
+			// 	]
+			// },
 			index: 0,
 			time: ''
 		}
@@ -216,7 +218,7 @@ export default {
 			clearInterval(this.time);
 		},
 		goToPath () {
-
+			this.$router.push(this.bg.url[this.index])
 		}
 	},
 	mounted () {

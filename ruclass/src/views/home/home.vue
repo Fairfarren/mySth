@@ -118,7 +118,7 @@
 
 <template>
     <div id="home">
-			<banner></banner>
+			<banner :bg="bg"></banner>
       <!-- 精选 -->
       <div class="homeList">
         <div>
@@ -134,7 +134,7 @@
       <!-- 课程推荐 -->
       <div class="homeList" style="background-color: #f4f4f4;">
         <div>
-          <h3>课程推荐</h3>
+          <h3>{{ recommendChose.title }}</h3>
           <div class="chose">
             <ul>
               <li>
@@ -175,7 +175,7 @@
       <!-- 名师课堂 -->
       <div class="homeList">
         <div>
-          <h3>名师课堂</h3>
+          <h3>{{ teacherChose.title }}</h3>
           <div class="chose">
             <ul>
               <li>
@@ -207,7 +207,7 @@
           </div>
           <div class="cardList">
             <el-row :gutter="20" id="card">
-              <cardMore v-for="data in recommendData" :key="data.classname" :data="data"></cardMore>
+              <cardMore v-for="data in teacherData" :key="data.classname" :data="data"></cardMore>
             </el-row>
           </div>
         </div>
@@ -247,101 +247,46 @@ export default {
   },
   data () {
     return {
+      bg: {
+        img:[],
+        url:[]
+      },
       selectedData:[
-        {
-          className: '课程1',
-          money: '0',
-          publishing: '我1',
-          img: 'static/images/43393846_p0.jpg',
-          url: '/class/recording/9980'
-        },
-        {
-          className: '课程2',
-          money: '119.9',
-          publishing: '我2',
-          img: 'static/images/43393846_p0.jpg',
-          url: '/home'
-        },
-        {
-          className: '课程3',
-          money: '129.9',
-          publishing: '我3',
-          img: 'static/images/43393846_p0.jpg',
-          url: '/home'
-        },
-        {
-          className: '课程4',
-          money: '139.9',
-          publishing: '我4',
-          img: 'static/images/43393846_p0.jpg',
-          url: '/home'
-        }
+        // {
+        //   className: '课程1',
+        //   money: '0',
+        //   publishing: '我1',
+        //   img: 'static/images/43393846_p0.jpg',
+        //   url: '/class/recording/9980'
+        // }
       ],
       recommendData:[
-        {
-          className: '课程1',
-          money: '0',
-          publishing: '我1',
-          img: 'static/images/43393846_p0.jpg',
-          url: '/home'
-        },
-        {
-          className: '课程2',
-          money: '119.9',
-          publishing: '我2',
-          img: 'static/images/43393846_p0.jpg',
-          url: '/home'
-        },
-        {
-          className: '课程3',
-          money: '129.9',
-          publishing: '我3',
-          img: 'static/images/43393846_p0.jpg',
-          url: '/home'
-        },
-        {
-          className: '课程4',
-          money: '139.9',
-          publishing: '我4',
-          img: 'static/images/43393846_p0.jpg',
-          url: '/home'
-        },
-        {
-          className: '课程1',
-          money: '19.9',
-          publishing: '我1',
-          img: 'static/images/43393846_p0.jpg',
-          url: '/home'
-        },
-        {
-          className: '课程2',
-          money: '119.9',
-          publishing: '我2',
-          img: 'static/images/43393846_p0.jpg',
-          url: '/home'
-        },
-        {
-          className: '课程3',
-          money: '129.9',
-          publishing: '我3',
-          img: 'static/images/43393846_p0.jpg',
-          url: '/home'
-        },
-        {
-          className: '课程4',
-          money: '139.9',
-          publishing: '我4',
-          img: 'static/images/43393846_p0.jpg',
-          url: '/home'
-        }
+        // {
+        //   className: '课程1',
+        //   money: '0',
+        //   publishing: '我1',
+        //   img: 'static/images/43393846_p0.jpg',
+        //   url: '/home'
+        // }
+      ],
+      teacherData: [
+        // {
+        //   className: '课程1',
+        //   money: '0',
+        //   publishing: '我1',
+        //   img: 'static/images/43393846_p0.jpg',
+        //   url: '/home'
+        // }
       ],
       recommendChose: {
         allOrNote: 'all',
-        checked: []
+        checked: [],
+        title: '课程推荐'
       },
       teacherChose: {
         allOrNote: 'all',
-        checked: []
+        checked: [],
+        title: '名师讲堂'
       },
       // 合作
       cooperation: [
@@ -393,10 +338,64 @@ export default {
     }
   },
   methods: {
+    //首页数据
+    homeAjax () {
+      this.axios.get('/api/index').then( (res) => {
+        if(res.data.status_code == 200) {
+          //banner
+          res.data.banners_list.map( (value, index) => {
+            this.bg.img[index] = value.img;
+            this.bg.url[index] = `/class/recording/${value.course_id}`;
+          })
 
+          //精选
+          res.data.selection_list.map( (value, index) => {
+            this.selectedData[index] = {
+              className: value.name,
+              money: value.price,
+              publishing: value.publisher,
+              img: value.img,
+              url: `/class/recording/${value.id}`
+            }
+          })
+
+          //分类
+          this.recommendChose.title = res.data.course_list[0].category;
+          res.data.course_list[0].course.map( (value, index) => {
+            this.recommendData[index] = {
+              className: value.name,
+              money: value.price,
+              publishing: value.publisher,
+              img: value.img,
+              url: `/class/recording/${value.id}`
+            }
+          })
+          
+          this.teacherChose.title = res.data.course_list[1].category;
+          res.data.course_list[1].course.map( (value, index) => {
+            this.teacherData[index] = {
+              className: value.name,
+              money: value.price,
+              publishing: value.publisher,
+              img: value.img,
+              url: `/class/recording/${value.id}`
+            }
+          })
+        }else {
+          this.$alert(res.data.msg,'错误',{
+            type: 'warning'
+          })
+        }
+      }).catch( (error) => {
+        console.log(error);
+        this.$alert('网络连接超时或网络错误','错误',{
+          type: 'warning'
+        })
+      })
+    }
   },
   mounted () {
-
+    this.homeAjax();
   }
 };
 </script>

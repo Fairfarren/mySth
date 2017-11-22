@@ -33,6 +33,8 @@
         <add-phone-number v-show="signInUpOrfGrM.index == 2"></add-phone-number>
         <!-- 购买课程 -->
         <pay-class v-show="signInUpOrfGrM.index == 3"></pay-class>
+        <!-- 修改手机号 -->
+        <change-phone-number v-show="signInUpOrfGrM.index == 4"></change-phone-number>
     </div>
 </template>
 
@@ -44,7 +46,8 @@ export default {
         SignInUp: resolve => require(['@/components/signInUp'], resolve),
         FGrM: resolve => require(['@/components/fGrM'], resolve),
         AddPhoneNumber: resolve => require(['@/components/addPhoneNumber'], resolve),
-        PayClass: resolve => require(['@/components/payClass'], resolve)
+        PayClass: resolve => require(['@/components/payClass'], resolve),
+        ChangePhoneNumber: resolve => require(['@/components/changePhoneNumber'], resolve)
     },
     data () {
         return {

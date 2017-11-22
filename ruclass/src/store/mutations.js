@@ -38,7 +38,7 @@ export const LOGIN_OR_NOT = state => {
 }
 //登录成功
 export const LOGIN_SUCCESS = (state, user) => {
-    console.log(user);
+    // console.log(user);
     user.user_info.username ? ( () => {
         state.USER.name = user.user_info.username;
     })() : ( () => {

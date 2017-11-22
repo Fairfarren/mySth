@@ -360,14 +360,14 @@
         <div class="overview">
             <div class="left">
                 <router-link to="">
-                    <img v-lazy="'static/images/43393846_p0.jpg'" alt="">
+                    <img v-lazy="classSth.img" alt="">
                     <img src="static/images/10.png" alt="">
                 </router-link>
             </div>
             <div class="right">
                 <ul>
                     <li>
-                        <h4>如何好好说话金牌主持人</h4>
+                        <h4>{{ classSth.name }}</h4>
                         <span>
                             <img src="static/images/13.png" alt="">
                             <span>已分享</span>
@@ -379,33 +379,37 @@
                     </li>
                     <li>
                         <span>
-                            美美婚礼
+                            {{ classSth.publisher }}
                         </span>
                         <span>
                             讲师：
-                            <span>如故</span>
+                            <span>{{ classSth.lecturer }}</span>
                         </span>
                     </li>
                     <li>
                         <span>
-                            报名人数：3366人
+                            报名人数：{{ classSth.count }}人
                         </span>
                     </li>
                     <li>
                         <span>
-                            上课时间：2010/11/11--2010/22/22
+                            上课时间：{{ classSth.time }}
                         </span>
                     </li>
                     <li>
-                        <span>免费</span>
-                        <span>￥123.123</span>
-                        <span>已购买</span>
+                        <span v-if="classSth.is_toll">免费</span>
+                        <span v-if="classSth.price != 0 && !classSth.is_toll">￥{{ classSth.price }}</span>
+                        <span v-if="!classSth.is_toll">已购买</span>
                     </li>
                     <li>
-                        <span @click="openPopup">加入学习</span>
+                        <span 
+                            @click="openPopup"
+                            v-if="!classSth.is_buy"
+                        >加入学习</span>
                         <router-link 
                             :to="`/class/detailed/${$route.params.id}`"
                             tag="span"
+                            v-else
                         >
                             立即学习
                         </router-link>
@@ -493,7 +497,18 @@ export default {
     name: 'recording',
     data () {
         return {
-            spanColor: 0
+            spanColor: 0,
+            classSth: {
+                desc: '',
+                name: '',
+                img: '',
+                price: '',
+                is_toll: '',
+                publisher: '',
+                time: '',
+                count: '',
+                is_buy: ''
+            }
         }
     },
     methods: {
@@ -502,7 +517,43 @@ export default {
                 index: 3
             }})
             this.$store.commit('PUPUP_SHOW_SIGNINUP');
+        },
+        //获取课程详情信息
+        ajaxRecording () {
+            this.axios({
+                url: `/api/course_info?course_id=${this.$route.params.id}`,
+                method: 'get',
+                headers: {
+                    'Authorization': sessionStorage.token,
+                }
+            }).then( (res) => {
+                if( res.data.status_code == 200) {
+                    this.classSth = {
+                        desc: res.data.data.desc,
+                        name: res.data.data.name,
+                        img: res.data.data.img,
+                        price: res.data.data.price,
+                        is_toll: res.data.data.is_toll,
+                        publisher: res.data.data.publisher,
+                        time: res.data.data.time,
+                        count: res.data.data.count,
+                        is_buy: res.data.data.is_buy
+                    }
+                }else {
+                    this.$alert(res.data.msg,'错误',{
+                    type: 'warning'
+                })
+                }
+            }).catch( (error) => {
+                console.log(error);
+                this.$alert('网络连接超时或网络错误','错误',{
+                    type: 'warning'
+                })
+            })
         }
+    },
+    mounted () {
+        this.ajaxRecording();
     }
 }
 </script>

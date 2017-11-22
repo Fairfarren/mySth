@@ -159,7 +159,10 @@ export default {
 			this.$store.state.USER.name.length > 0 ? ( () => {
 				this.$router.push('/myClassAndOrder/0');
 			})() : ( () => {
-				this.$store.commit('PUPUP_SHOW_SIGNINUP')
+				this.$store.commit('PUPUP_SHOW_SIGNINUP');
+				this.$router.push({query: {
+					index: 0
+				}})
 			})()
 		},
 		//注销

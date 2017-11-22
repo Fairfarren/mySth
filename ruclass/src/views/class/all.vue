@@ -117,7 +117,7 @@
                 <div class="chose">
                     <ul>
                         <li>
-                            <span>分类：</span>
+                            <span>{{category.title1}}：</span>
                         </li>
                         <li>
                             <span 
@@ -125,18 +125,15 @@
                                 @click="upLoadData.classification = -1"
                             >全部</span>
                             <span
-                                :class="{colorSpan: upLoadData.classification == 0}"
-                                @click="upLoadData.classification = 0"
-                            >职业考证</span>
-                            <span
-                                :class="{colorSpan: upLoadData.classification == 1}"
-                                @click="upLoadData.classification = 1"
-                            >婚庆培训</span>
+                                v-for="(data, index) in category.title1_list" :key="data.name"
+                                :class="{colorSpan: upLoadData.classification == index}"
+                                @click="upLoadData.classification = index"
+                            >{{data}}</span>
                         </li>
                     </ul>
                     <ul>
                         <li>
-                            <span>类别：</span>
+                            <span>{{category.title2}}：</span>
                         </li>
                         <li>
                             <span 
@@ -144,17 +141,10 @@
                                 @click="upLoadData.category = -1"
                             >全部</span>
                             <span
-                                :class="{colorSpan: upLoadData.category == 0}"
-                                @click="upLoadData.category = 0"
-                            >公考求职</span>
-                            <span
-                                :class="{colorSpan: upLoadData.category == 1}"
-                                @click="upLoadData.category = 1"
-                            >法学院</span>
-                            <span
-                                :class="{colorSpan: upLoadData.category == 2}"
-                                @click="upLoadData.category = 2"
-                            >财会金融</span>
+                                v-for="(data, index) in category.title2_list" :key="data.name"
+                                :class="{colorSpan: upLoadData.category == index}"
+                                @click="upLoadData.category = index"
+                            >{{data}}</span>
                         </li>
                     </ul>
                 </div>
@@ -199,6 +189,15 @@
                         <cardMore v-for="data in recommendData" :key="data.classname" :data="data"></cardMore>
                     </el-row>
                 </div>
+                <div>
+                    <el-pagination
+                        layout="->, pager "
+                        :total="category.count"
+                        :page-size="category.per_page"
+                        @current-change="getPage"
+                    >
+                    </el-pagination>
+                </div>
             </div>
         </div>
     </div>
@@ -223,88 +222,86 @@ export default {
                 broadcast: []
             },
             recommendData:[
-                {
-                    className: '课程1',
-                    money: '0',
-                    publishing: '我1',
-                    img: '',
-                    url: '/home'
-                },
-                {
-                    className: '课程2',
-                    money: '119.9',
-                    publishing: '我2',
-                    img: 'static/images/43393846_p0.jpg',
-                    url: '/home'
-                },
-                {
-                    className: '课程3',
-                    money: '129.9',
-                    publishing: '我3',
-                    img: 'static/images/43393846_p0.jpg',
-                    url: '/home'
-                },
-                {
-                className: '课程4',
-                money: '139.9',
-                publishing: '我4',
-                img: 'static/images/43393846_p0.jpg',
-                url: '/home'
-                },
-                {
-                className: '课程1',
-                money: '19.9',
-                publishing: '我1',
-                img: 'static/images/43393846_p0.jpg',
-                url: '/home'
-                },
-                {
-                className: '课程2',
-                money: '119.9',
-                publishing: '我2',
-                img: 'static/images/43393846_p0.jpg',
-                url: '/home'
-                },
-                {
-                className: '课程3',
-                money: '129.9',
-                publishing: '我3',
-                img: 'static/images/43393846_p0.jpg',
-                url: '/home'
-                },
-                {
-                className: '课程4',
-                money: '139.9',
-                publishing: '我4',
-                img: 'static/images/43393846_p0.jpg',
-                url: '/home'
-                }
+                // {
+                //     className: '课程1',
+                //     money: '0',
+                //     publishing: '我1',
+                //     img: '',
+                //     url: '/home'
+                // },
             ],
+            category: {
+                title1: '分类',
+                title2: '类别',
+                title1_list: [
+                   
+                ],
+                title2_list: [
+                    
+                ],
+                page: 1,
+                count: 2,
+                per_page: 10
+            }
         }
     },
     methods: {
         //第一次进来初始化数据
         ajaxAll () {
             //全部课程
-            this.axios.get('/api/course').then( (res) => {
-                console.log(res.data);
+            this.axios.get(`/api/course`).then( (res) => {
+                if( res.data.status_code == 200 ) {
+                    res.data.course_list.map(  (value, index) => {
+                        this.recommendData.splice(index, 1, {
+                            className: value.name,
+                            money: value.price,
+                            publishing: value.publisher,
+                            img: value.img,
+                            url: `/class/recording/${value.id}`
+                        })
+                    })
+                    this.category.count = res.data.page_info.count;
+                    this.category.per_page = res.data.page_info.per_page;
+                    // console.log();
+                }else {
+                    this.$alert(res.data.msg,'错误',{
+                        type: 'warning'
+                    })
+                }
             }).catch( (error) => {
+                console.log(erroe);
                 this.$alert('网络连接超时或网络错误','错误',{
                     type: 'warning'
                 })
             })
             //获取分类
             this.axios.get('/api/category').then( (res) => {
-                console.log(res.data);
+                if(res.data.status_code == 200) {
+                    res.data.category_list.map( (value, index) => {
+                        this.category[`title${index+1}`] = value.name;
+                        value.small_list.map( (text, ind) => {
+                            this.category[`title${index+1}_list`][ind] = text;
+                        })
+                    })
+                }else {
+                    this.$alert(res.data.msg,'错误',{
+                        type: 'warning'
+                    })
+                }
             }).catch( (error) => {
+                console.log(error);
                 this.$alert('网络连接超时或网络错误','错误',{
                     type: 'warning'
                 })
             })
+        },
+        //改变页数
+        getPage (num) {
+            this.category.page = num;
         }
     },
     mounted () {
-        // this.ajaxAll();
+        this.ajaxAll();
     }
 }
 </script>
