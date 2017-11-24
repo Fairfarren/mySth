@@ -486,6 +486,7 @@ export default {
                     });
                     this.$store.commit('CLOSE_PUPUP');
                     this.$store.commit('LOGIN_SUCCESS', res.data.data);
+                    location.reload([false])
                 }else {
                     this.$alert(res.data.msg,'错误',{
                         type: 'warning'

@@ -192,9 +192,21 @@ export default {
                     this.$store.commit('USER_PHONE_NUMBER', this.ruleForm.phoneNumber);
                     this.$store.commit('CLOSE_PUPUP');
                 }else {
-                    this.$alert(res.data.msg,'错误',{
-						type: 'warning'
-					})
+                    if(res.data.msg == 'invalid token') {
+                        this.$alert('请先登录','错误',{
+                            type: 'warning',
+                            callback: () => {
+                                this.$store.commit('PUPUP_SHOW_SIGNINUP');
+                                this.$router.push({query: {
+                                    index: 0
+                                }})
+                            }
+                        })
+                    }else {
+                        this.$alert(res.data.msg,'错误',{
+                            type: 'warning'
+                        })
+                    }   
                 }
             }).catch( (err)=>{
                 console.log(err);

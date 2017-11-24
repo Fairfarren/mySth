@@ -311,9 +311,21 @@ export default {
                     this.$store.commit('SET_USER_INFO', res.data.data);
                     this.$store.commit('USER_PHONE_NUMBER', res.data.data.mobile);
                 }else {
-                    this.$alert(res.data.msg,'错误',{
-						type: 'warning'
-					})
+                    if(res.data.msg == 'invalid token') {
+                        this.$alert('请先登录','错误',{
+                            type: 'warning',
+                            callback: () => {
+                                this.$store.commit('PUPUP_SHOW_SIGNINUP');
+                                this.$router.push({query: {
+                                    index: 0
+                                }})
+                            }
+                        })
+                    }else {
+                        this.$alert(res.data.msg,'错误',{
+                            type: 'warning'
+                        })
+                    }
                 }
             }).catch( (err)=>{
                 console.log(err);
@@ -358,9 +370,21 @@ export default {
                     //重新获取
                     this.getUser();
                 }else {
-                    this.$alert(res.data.msg,'错误',{
-						type: 'warning'
-					})
+                    if(res.data.msg == 'invalid token') {
+                        this.$alert('请先登录','错误',{
+                            type: 'warning',
+                            callback: () => {
+                                this.$store.commit('PUPUP_SHOW_SIGNINUP');
+                                this.$router.push({query: {
+                                    index: 0
+                                }})
+                            }
+                        })
+                    }else {
+                        this.$alert(res.data.msg,'错误',{
+                            type: 'warning'
+                        })
+                    }
                 }
             }).catch( (err)=>{
                 console.log(err);

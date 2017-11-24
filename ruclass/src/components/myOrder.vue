@@ -89,7 +89,7 @@
 <template>
     <div id="myOrder">
         <!-- 没有信息 -->
-        <div class="noSth" v-show="list.length == 0">
+        <div class="noSth" v-show="order_list.length == 0">
             <p>
                 <img src="static/images/23.png" alt="">
             </p>
@@ -98,7 +98,7 @@
             </p>
         </div>
         <!-- 有信息 -->
-        <div class="haveSth" v-show="list.length > 0">
+        <div class="haveSth" v-show="order_list.length > 0">
             <ul>
                 <li>
                     <div>
@@ -121,53 +121,54 @@
                 </li>
             </ul>
             <ul>
-                <li v-for="value in [1,2,3,4]" :key="value">
+                <li v-for="value in order_list" :key="value.course_name">
                     <div>
                         <div>
                             <p>
-                                Exce数据分析实战
+                                {{ value.course_name }}
                             </p>
                             <p>
-                                订单编号：10012321123
+                                订单编号：{{ value.out_trade_no }}
                             </p>
                             <p>
-                                下单时间：2019-10-10
+                                下单时间：{{ value.date.split(' ')[0] }}
                             </p>
                         </div>
                     </div>
                     <div>
                         <div>
-                            <p>399.00</p>
+                            <p>￥{{ value.pay_type }}</p>
                         </div>
                     </div>
                     <div>
                         <div>
-                            <p>399.00</p>
+                            <p>￥{{ value.total_fee }}</p>
                         </div>
                     </div>
                     <div>
                         <div>
                             <p>支付成功</p>
-                            <p>待支付</p>
-                            <p>订单失效</p>
+                            <!-- <p>待支付</p>
+                            <p>订单失效</p> -->
                         </div>
                         
                     </div>
                     <div>
                         <!-- <el-button type="primary">继续支付</el-button> -->
-                        <p>
+                        <!-- <p>
                             <el-button type="primary">重新购买</el-button>
                         </p>
                         <p>
                             <el-button type="text">取消订单</el-button>
-                        </p>
+                        </p> -->
                     </div>
                 </li>
             </ul>
             <div>
                 <el-pagination
                     layout="->, pager "
-                    :total="500"
+                    :total="ajaxUpData.count"
+                    :page-size="ajaxUpData.per_page"
                     @current-change="getPage"
                 >
                 </el-pagination>
@@ -184,12 +185,56 @@ export default {
     data () {
         return {
             list: [1],
+            ajaxUpData: {
+                page: 1
+            },
+            order_list: []
         }
     },
     methods: {
         getPage (page) {
-            console.log(page)
+            this.ajaxUpData.page = page;
+        },
+        //获取订单
+        getOrderAjax () {
+            this.axios({
+                url: `/api/people/order?page=${this.ajaxUpData.page}`,
+                method: 'get',
+                headers: {
+                    'Authorization': sessionStorage.token,
+                }
+            }).then( (res) => {
+                if( res.data.status_code == 200) {
+                    this.ajaxUpData.count = res.data.page_info.count;
+                    this.ajaxUpData.per_page = res.data.page_info.per_page;
+                    this.order_list = res.data.order_list;
+                }else {
+                    if(res.data.msg == 'invalid token') {
+                        this.$alert('请先登录','错误',{
+                            type: 'warning',
+                            callback: () => {
+                                this.$store.commit('PUPUP_SHOW_SIGNINUP');
+                                this.$router.push({query: {
+                                    index: 0
+                                }})
+                            }
+                        })
+                    }else {
+                        this.$alert(res.data.msg,'错误',{
+                            type: 'warning'
+                        })
+                    }
+                }
+            }).catch( (error) => {
+                console.log(error);
+                this.$alert('网络连接超时或网络错误','错误',{
+                    type: 'warning'
+                })
+            })
         }
+    },
+    mounted () {
+        this.getOrderAjax();
     }
 }
 </script>

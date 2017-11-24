@@ -117,23 +117,23 @@
                 <div class="chose">
                     <ul>
                         <li>
-                            <span>{{category.title1}}：</span>
+                            <span>分类：</span>
                         </li>
                         <li>
                             <span 
                                 :class="{colorSpan: upLoadData.classification == -1}"
-                                @click="upLoadData.classification = -1"
+                                @click="upLoadData.classification = -1;upLoadData.category = -1"
                             >全部</span>
                             <span
-                                v-for="(data, index) in category.title1_list" :key="data.name"
+                                v-for="(data, index) in category.title1" :key="data"
                                 :class="{colorSpan: upLoadData.classification == data}"
-                                @click="upLoadData.classification = data"
+                                @click="upLoadData.classification = data;upLoadData.category = -1"
                             >{{data}}</span>
                         </li>
                     </ul>
                     <ul>
                         <li>
-                            <span>{{category.title2}}：</span>
+                            <span>类别：</span>
                         </li>
                         <li>
                             <span 
@@ -141,7 +141,7 @@
                                 @click="upLoadData.category = -1"
                             >全部</span>
                             <span
-                                v-for="(data, index) in category.title2_list" :key="data.name"
+                                v-for="(data, index) in category.title2[upLoadData.classification]" :key="data.name"
                                 :class="{colorSpan: upLoadData.category == data}"
                                 @click="upLoadData.category = data"
                             >{{data}}</span>
@@ -231,14 +231,8 @@ export default {
                 // },
             ],
             category: {
-                title1: '分类',
-                title2: '类别',
-                title1_list: [
-                   
-                ],
-                title2_list: [
-                    
-                ],
+                title1: [],
+                title2: {},
                 page: 1,
                 count: 2,
                 per_page: 10
@@ -301,11 +295,13 @@ export default {
             this.axios.get('/api/category').then( (res) => {
                 if(res.data.status_code == 200) {
                     res.data.category_list.map( (value, index) => {
-                        this.category[`title${index+1}`] = value.name;
+                        this.category.title1[index] = value.name;
+                        this.category.title2[value.name] = [];
                         value.small_list.map( (text, ind) => {
-                            this.category[`title${index+1}_list`][ind] = text;
+                            this.category.title2[value.name][ind] = text;
                         })
                     })
+
                 }else {
                     this.$alert(res.data.msg,'错误',{
                         type: 'warning'

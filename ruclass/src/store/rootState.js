@@ -15,7 +15,8 @@ const state = {
         publisher: '',
         lecturer: '',
         time: '',
-        price: ''
+        price: '',
+        dCode: ''
     }
 }
 

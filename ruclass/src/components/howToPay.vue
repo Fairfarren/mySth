@@ -113,47 +113,56 @@ export default {
     methods: {
         //支付
         goToPayAjax (how) {
-            console.log(123);
-            this.axios({
-                url: '/api/buy/course',
-                method: 'post',
-                headers: {
-                    'Authorization': sessionStorage.token,
-                },
-                data: {
-                    course_id: this.$route.params.id,
-                    pay_type: how
-                }
-            }).then( (res) => {
-                if( res.data.status_code == 201 ) {
-                    if( how == 'wx' ) {
-                        this.$router.push(`/paySth/${this.$route.params.id}`)
+            //微信支付
+            if( how == 'wx' ) {
+                this.$router.push({ 
+                    path: `/paySth/${this.$route.params.id}`,
+                    query: {
+                        how: 'wx'
                     }
-                    if( how == 'alipay' ) {
+                });
+                this.$store.commit('CLOSE_PUPUP');
+            }
+            //支付宝支付
+            if( how == 'alipay' ) {
+                this.axios({
+                    url: '/api/buy/course',
+                    method: 'post',
+                    headers: {
+                        'Authorization': sessionStorage.token,
+                    },
+                    data: {
+                        course_id: this.$route.params.id,
+                        pay_type: how
+                    }
+                }).then( (res) => {
+                    if( res.data.status_code == 201 ) {
                         window.location.href = res.data.data.pay_url;
+                    }else {
+                        if(res.data.msg == 'invalid token') {
+                        this.$alert('请先登录','错误',{
+                            type: 'warning',
+                            callback: () => {
+                                this.$store.commit('PUPUP_SHOW_SIGNINUP');
+                                this.$router.push({query: {
+                                    index: 0
+                                }})
+                            }
+                        })
+                    }else {
+                        this.$alert(res.data.msg,'错误',{
+                            type: 'warning'
+                        })
                     }
-                    
-                }else {
+                    }
+                }).catch( (error) => {
                     this.$alert(res.data.msg,'错误',{
                         type: 'warning'
                     })
-                }
-            }).catch( (error) => {
-                this.$alert(res.data.msg,'错误',{
-                    type: 'warning'
                 })
-            })
+            }
         },
-        //轮流刷新，判断微信支付是否完成
-        wxPay (order) {
-            this.axios({
-                url: `/api/wx_order`,
-                method: 'get',
-                headers: {
-                    'Authorization': sessionStorage.token,
-                }
-            })
-        }
+        
     },
     
 }

@@ -108,7 +108,7 @@
                         }
                         >span:nth-child(2) {
                             display: inline-block;
-                            width: 10rem;
+                            width: 16rem;
                         }
                         >span:last-child {
                             float: right;
@@ -214,7 +214,7 @@
     <div id="detailed" :style="detailedStyle">
         <div class="title">
             <span>第一章</span>
-            <span>课时4：计算机基础学习</span>
+            <span>课时4：{{ getVideoSth.name }}</span>
             <span>
                 <router-link :to="goBack">
                     返回课程详情
@@ -247,17 +247,17 @@
                     v-show="choose.index == 0"
                     :style="{height:listStyle.catalogHeight}"
                 >
-                    <ul v-for="value in [1,2,3]" :key="value">
+                    <ul v-for="(value, index) in getListSth" :key="value.chapter">
                         <li>
-                            <h3>章节1：导读</h3>
+                            <h3>章节{{ index + 1 }}：{{ value.chapter }}</h3>
                         </li>
                         <li 
-                            v-for="value in [1,2,3,4,5,6,7,8,9,1,2,3,4,5]" 
-                            :key="value"
-                            :class="{colorLi: value == 1}"
+                            v-for="(val, ind) in value.lesson" 
+                            :key="val.id"
+                            :class="{colorLi: ind == 1}"
                         >
                             <img src="static/images/duibian1.png" alt="">
-                            <span>[录播]课时1：艺术的魅力</span>
+                            <span>[录播]课时{{ ind + 1 }}：{{ val.name }}</span>
                             <span>13:13</span>
                         </li>
                     </ul>
@@ -315,6 +315,8 @@ export default {
             form: {
                 text: ''
             },
+            getVideoSth: {},
+            getListSth: [],
             goBack: '/class/recording/'+ this.$route.params.id +'',
             playerOptions: {
                 // videojs options
@@ -329,7 +331,7 @@ export default {
                 // playbackRates: [0.7, 1.0, 1.5, 2.0],
                 sources: [{ // 流配置，数组形式，会根据兼容顺序自动切换
                     type: 'video/mp4',
-                    src: 'https://cdn.iruyue.tv/v/big_buck_bunny1.mp4'
+                    src: ''
                     }, {
                     withCredentials: false,
                     type: 'application/x-mpegURL',
@@ -356,6 +358,33 @@ export default {
                 headers: {
                     'Authorization': sessionStorage.token,
                 },
+            }).then( (res) => {
+                if(res.data.status_code == 200) {
+                    this.getVideoSth = res.data.data.detail;
+                    this.getListSth = res.data.data.lesson_list;
+                    this.playerOptions.sources[0].src = res.data.data.detail.video
+                }else {
+                    if(res.data.msg == 'invalid token') {
+                        this.$alert('请先登录','错误',{
+                            type: 'warning',
+                            callback: () => {
+                                this.$store.commit('PUPUP_SHOW_SIGNINUP');
+                                this.$router.push({query: {
+                                    index: 0
+                                }})
+                            }
+                        })
+                    }else {
+                        this.$alert(res.data.msg,'错误',{
+                            type: 'warning'
+                        })
+                    }
+                }
+            }).catch( (error) => {
+                console.log(error);
+                this.$alert('网络连接超时或网络错误','错误',{
+                    type: 'warning'
+                })
             })
         }
     },

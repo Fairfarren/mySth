@@ -349,8 +349,8 @@
                 </router-link>
             </span>
             <span>
-                <router-link :to="`/class?small=${classSth.small}`">
-                    >{{ classSth.small }}
+                <router-link :to="`/class?category=${classSth.category}`">
+                    >{{ classSth.category }}
                 </router-link>
             </span>
             <span>
@@ -397,8 +397,8 @@
                         </span>
                     </li>
                     <li>
-                        <span v-show="classSth.id_buy ? false : classSth.is_toll ? false : true">免费</span>
-                        <span v-show="classSth.price != 0 && classSth.is_toll">￥{{ classSth.price }}</span>
+                        <span v-show="classSth.price == 0 && classSth.is_toll">免费</span>
+                        <span v-show="!classSth.is_buy && classSth.price != 0">￥{{ classSth.price }}</span>
                         <span v-show="classSth.is_buy">已购买</span>
                     </li>
                     <li>
@@ -514,7 +514,7 @@ export default {
                 time: '',
                 count: '',
                 is_buy: '',
-                small: '',
+                category: '',
                 target: '',//课程目标
                 crowd: '',//使用人群
                 desc: '',//课程简介
@@ -542,7 +542,6 @@ export default {
                 }})
                 this.$store.commit('PUPUP_SHOW_SIGNINUP');
             }
-            
         },
         //获取课程详情信息
         ajaxRecording () {
@@ -563,7 +562,7 @@ export default {
                         time: res.data.data.time,
                         count: res.data.data.count,
                         is_buy: res.data.data.is_buy,
-                        small: res.data.data.small,
+                        category: res.data.data.category,
                         desc: res.data.data.desc,
                         target: res.data.data.target,
                         crowd: res.data.data.crowd,
@@ -573,9 +572,21 @@ export default {
                     this.lesson_list = res.data.data.lesson_list;
                     this.$store.commit('POPUP_PAY_CLASS_STH', this.classSth);
                 }else {
-                    this.$alert(res.data.msg,'错误',{
-                        type: 'warning'
-                    })
+                    if(res.data.msg == 'invalid token') {
+                        this.$alert('请先登录','错误',{
+                            type: 'warning',
+                            callback: () => {
+                                this.$store.commit('PUPUP_SHOW_SIGNINUP');
+                                this.$router.push({query: {
+                                    index: 0
+                                }})
+                            }
+                        })
+                    }else {
+                        this.$alert(res.data.msg,'错误',{
+                            type: 'warning'
+                        })
+                    }
                 }
             }).catch( (error) => {
                 console.log(error);

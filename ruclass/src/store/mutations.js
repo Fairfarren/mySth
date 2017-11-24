@@ -85,3 +85,8 @@ export const POPUP_PAY_CLASS_STH = (state, data) => {
         price: data.price
     }
 }
+//站内支付，储存课程信息
+export const PAY_CLASS_INFORMATION = (state, data) => {
+    //更新订单号
+    state.POPUP_PAY_CLASS.dCode = data.out_trade_no;
+}

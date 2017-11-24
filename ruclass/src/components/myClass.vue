@@ -83,7 +83,7 @@
 <template>
     <div id="myClass">
         <!-- 没有信息 -->
-        <div class="noSth" v-show="list.length == 0">
+        <div class="noSth" v-show="course_list.length == 0">
             <p>
                 <img src="static/images/24.png" alt="">
             </p>
@@ -92,22 +92,27 @@
             </p>
         </div>
         <!-- 有信息 -->
-        <div class="haveSth" v-show="list.length > 0">
+        <div class="haveSth" v-show="course_list.length > 0">
             <ul>
-                <li v-for="value in [1,2,3,4]" :key="value">
+                <li v-for="value in course_list" :key="value.id">
                     <div>
-                        <img src="static/images/43393846_p0.jpg" alt="">
+                        <img v-lazy="value.img" alt="">
                     </div>
                     <div>
-                        <h3>如何好好说话金牌145134513452152352153主持人</h3>
-                        <el-progress class="line" :percentage="70" :show-text="false">123</el-progress>
+                        <h3>{{ value.name }}</h3>
+                        <el-progress class="line" :percentage=" value.schedule.split('/')[0] / value.schedule.split('\/')[1] * 100 " :show-text="false">123</el-progress>
                     </div>
                     <div>
                         <p>
-                            <el-button type="primary">{{ goOnOrAgin(0,10) }}</el-button>
+                            <el-button 
+                                type="primary"
+                                @click="goAgin(value.id)"
+                            >
+                                {{ goOnOrAgin(value.schedule.split('/')[0], value.schedule.split('\/')[1]) }}
+                            </el-button>
                         </p>
                         <p>
-                            已经学习8/12课时
+                            已经学习{{ value.schedule }}课时
                         </p>
                     </div>
                 </li>
@@ -115,7 +120,8 @@
             <div>
                 <el-pagination
                     layout="->, pager "
-                    :total="500"
+                    :total="ajaxUpData.count"
+                    :page-size="ajaxUpData.per_page"
                     @current-change="getPage"
                 >
                 </el-pagination>
@@ -130,10 +136,12 @@ export default {
     name: 'myClass',
     data () {
         return {
-            list: [1],
             ajaxUpData: {
-                page: 1
-            }
+                page: 1,
+                count: 0,
+                per_page: 0
+            },
+            course_list: []
         }
     },
     computed: {
@@ -151,7 +159,53 @@ export default {
             }else {
                 return '重新学习'
             }
+        },
+        //获取数据
+        getMyClassAjax () {
+            this.axios({
+                url: `/api/people/course?page=${this.ajaxUpData.page}`,
+                method: 'get',
+                headers: {
+                    'Authorization': sessionStorage.token,
+                }
+            }).then( (res) => {
+                if( res.data.status_code == 200) {
+                    this.ajaxUpData.count = res.data.page_info.count;
+                    this.ajaxUpData.per_page = res.data.page_info.per_page;
+                    this.course_list = res.data.course_list;
+                }else {
+                    if(res.data.msg == 'invalid token') {
+                        this.$alert('请先登录','错误',{
+                            type: 'warning',
+                            callback: () => {
+                                this.$store.commit('PUPUP_SHOW_SIGNINUP');
+                                this.$router.push({query: {
+                                    index: 0
+                                }})
+                            }
+                        })
+                    }else {
+                        this.$alert(res.data.msg,'错误',{
+                            type: 'warning'
+                        })
+                    }
+                }
+            }).catch( (error) => {
+                console.log(error);
+                this.$alert('网络连接超时或网络错误','错误',{
+                    type: 'warning'
+                })
+            })
+        },
+        //继续学习
+        goAgin (id) {
+            this.$router.push({
+                path: `/class/detailed/${id}`
+            })
         }
+    },
+    mounted () {
+        this.getMyClassAjax();
     }
 }
 </script>

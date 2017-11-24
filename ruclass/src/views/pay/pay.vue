@@ -114,22 +114,18 @@
                 <li>
                     <p>
                         课程名称：
-                        <span>2018高考数学秋季系统拔高班</span>
+                        <span>{{ $store.state.POPUP_PAY_CLASS.name }}</span>
                     </p>
                     <p>
                         订单编号：
-                        <span>171102160046992256</span> 
-                    </p>
-                    <p>
-                        购买时间：
-                        <span>2017年11月02日  17:02:29</span> 
+                        <span>{{ $store.state.POPUP_PAY_CLASS.dCode }}</span> 
                     </p>
                 </li>
                 <li>
                     <hr>
                 </li>
                 <li>
-                    应付金额：<b>¥399.00</b>
+                    应付金额：<b>¥{{ $store.state.POPUP_PAY_CLASS.price }}</b>
                 </li>
             </ul>
             <ul class="howToPay">
@@ -137,23 +133,17 @@
                     <h3>付款方式</h3>
                 </li>
                 <li>
-                    <span 
-                        :class="{choosePay: howToPay.index == 'aliPay'}"
-                        @click="howToPay.index = 'aliPay'"
-                    >
-                        <i><img src="static/images/20.png" alt=""></i>
-                        <img src="static/images/22.png" alt="">
-                    </span>
                     <span
-                        :class="{choosePay: howToPay.index == 'weChatPay'}"
-                        @click="howToPay.index = 'weChatPay'"
+                        :class="{choosePay: howToPay.index == 'wx'}"
+                        v-if="howToPay.index == 'wx'"
+                        @click="howToPay.index = 'wx'"
                     >
                         <i><img src="static/images/20.png" alt=""></i>
                         <img src="static/images/21.png" alt="">
                     </span>
                 </li>
                 <li>
-                    <img :src="howToPay.img[howToPay.index]" alt="">
+                    <img width="200px" height="200px" :src="howToPay.img[howToPay.index]" alt="">
                 </li>
             </ul>
         </div>
@@ -166,13 +156,139 @@ export default {
     data () {
         return {
             howToPay: {
-                index: 'aliPay',
+                index: this.$route.query.how,
                 img: {
-                    aliPay: 'static/images/pay10.png',
-                    weChatPay: 'static/images/pay9.png'
+                    wx: ''
                 }
-            }
+            },
+            classSth: {},
+            timer: ''
         }
+    },
+    methods: {
+        //获取课程详情
+        ajaxRecording () {
+            this.axios({
+                url: `/api/course_info?course_id=${this.$route.params.id}`,
+                method: 'get',
+                headers: {
+                    'Authorization': sessionStorage.token,
+                }
+            }).then( (res) => {
+                if( res.data.status_code == 200) {
+                    this.classSth = {
+                        name: res.data.data.name,
+                        img: res.data.data.img,
+                        price: res.data.data.price,
+                        is_toll: res.data.data.is_toll,
+                        publisher: res.data.data.publisher,
+                        time: res.data.data.time,
+                        count: res.data.data.count,
+                        is_buy: res.data.data.is_buy,
+                        small: res.data.data.small,
+                        desc: res.data.data.desc,
+                        target: res.data.data.target,
+                        crowd: res.data.data.crowd,
+                        lecturer: res.data.data.lecturer,
+                        publisher_desc: res.data.data.publisher_desc
+                    }
+                    this.lesson_list = res.data.data.lesson_list;
+                    this.$store.commit('POPUP_PAY_CLASS_STH', this.classSth);
+                    this.payAjax();
+                }else {
+                    if(res.data.msg == 'invalid token') {
+                        this.$alert('请先登录','错误',{
+                            type: 'warning',
+                            callback: () => {
+                                this.$store.commit('PUPUP_SHOW_SIGNINUP');
+                                this.$router.push({query: {
+                                    index: 0
+                                }})
+                            }
+                        })
+                    }else {
+                        this.$alert(res.data.msg,'错误',{
+                            type: 'warning'
+                        })
+                    }
+                }
+            }).catch( (error) => {
+                console.log(error);
+                this.$alert('网络连接超时或网络错误','错误',{
+                    type: 'warning'
+                })
+            })
+        },
+        //支付接口
+        payAjax () {
+            const how = this.$route.query.how;
+            this.axios({
+                url: '/api/buy/course',
+                method: 'post',
+                headers: {
+                    'Authorization': sessionStorage.token,
+                },
+                data: {
+                    course_id: this.$route.params.id,
+                    pay_type: how
+                }
+            }).then( (res) => {
+                if( res.data.status_code == 200 ) {
+                    this.howToPay.img[how] = res.data.data.qr_code
+                    this.$store.commit('PAY_CLASS_INFORMATION', res.data.data);
+                    setInterval( () => {
+                        this.wxPayOrNot()
+                    }, 3000);
+                }else {
+                    if(res.data.msg == 'invalid token') {
+                        this.$alert('请先登录','错误',{
+                            type: 'warning',
+                            callback: () => {
+                                this.$store.commit('PUPUP_SHOW_SIGNINUP');
+                                this.$router.push({query: {
+                                    index: 0
+                                }})
+                            }
+                        })
+                    }else {
+                        this.$alert(res.data.msg,'错误',{
+                            type: 'warning'
+                        })
+                    }
+                }
+            }).catch( (error) => {
+                this.$alert(res.data.msg,'错误',{
+                    type: 'warning'
+                })
+            })
+        },
+        //微信判断是否支付
+        wxPayOrNot () {
+            this.axios({
+                url: `/api/wx_order?out_trade_no=${this.$store.state.POPUP_PAY_CLASS.dCode}`,
+                method: 'get',
+                headers: {
+                    'Authorization': sessionStorage.token,
+                }
+            }).then( (res) => {
+                if(res.status_code == 201) {
+                    clearInterval(this.timer);
+                    his.$alert('支付成功','提示',{
+                        type: 'success',
+                        callback: () => {
+                            this.$router.push(`/class/recording/${this.$route.params.id}`)
+                        }
+                    })
+                }
+            }).catch( (error) => {
+                this.$alert(res.data.msg,'错误',{
+                    type: 'warning'
+                })
+            })
+        }
+    },
+    mounted () {
+        this.ajaxRecording();
     }
 }
 </script>
