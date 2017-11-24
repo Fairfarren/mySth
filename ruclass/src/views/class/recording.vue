@@ -349,8 +349,8 @@
                 </router-link>
             </span>
             <span>
-                <router-link to="/class">
-                    >无人机培训
+                <router-link :to="`/class?small=${classSth.small}`">
+                    >{{ classSth.small }}
                 </router-link>
             </span>
             <span>
@@ -397,9 +397,9 @@
                         </span>
                     </li>
                     <li>
-                        <span v-if="classSth.is_toll">免费</span>
-                        <span v-if="classSth.price != 0 && !classSth.is_toll">￥{{ classSth.price }}</span>
-                        <span v-if="!classSth.is_toll">已购买</span>
+                        <span v-show="classSth.id_buy ? false : classSth.is_toll ? false : true">免费</span>
+                        <span v-show="classSth.price != 0 && classSth.is_toll">￥{{ classSth.price }}</span>
+                        <span v-show="classSth.is_buy">已购买</span>
                     </li>
                     <li>
                         <span 
@@ -433,30 +433,35 @@
                     <ul>
                         <li>
                             <h4>课程目标</h4>
-                            <p>帮助提高主持人的说话水平。</p>
+                            <p>{{ classSth.target }}</p>
                         </li>
                         <li>
                             <h4>适用人群</h4>
-                            <p>零基础，主持小白，在校学生。</p>
+                            <p>{{ classSth.crowd }}</p>
                         </li>
                         <li>
                             <h4>课程简介</h4>
                             <p>
-                                只要你有Python基础，就可以学习游戏开发！cocos2d是游戏界一款非常牛逼的游戏引擎，受众非常大，使用它开发游戏效率及其高效。本套课程从cocos2d最基本的概念开始讲解，并在每个知识点后都配合了代码实例讲解，让每一位想学习游戏开发的同学都能吸收到其中的知识点。课程知识体系完善，内容非常丰富，包含了cocos2d框架的方方面面：Director类、Layer层、Scene场景、Sprite精灵、根节点CococNode、动画（间隔动画、瞬时动画、关键帧动画）、Menu菜单、碰撞检测、EventDispatcher事件处理框架等等。学会了本套课程的知识点后，再去转C++版本的cocos2dx和JavaScript版本的cocos2d-js也都是轻车熟路的事情，相当于学一套课程掌握了整个游戏引擎。人生苦短，我用Python，再加上杀手级cocos2d游戏引擎，从此让你的游戏开发飞起来！
+                                {{ classSth.desc }}
                             </p>
                         </li>
                     </ul>
                 </div>
                 <div class="list" v-show="spanColor == 1">
-                    <ul v-for="qwe in [1,2,3,4]" :key="qwe">
+                    <ul v-for="lessons in lesson_list" :key="lessons.chapter">
                         <li>
-                            <h4>章节1：导读</h4>
+                            <h4> {{ lessons.chapter }} </h4>
                         </li>
-                        <li v-for="value in [1,2,3,4]" :key="value" :class="{now: value == 2, not: value == 3}">
+                        <!-- <li v-for="value in lesson_list" :key="value" :class="{now: value == 2, not: value == 3}">
                             <span>[直播]</span>
                             <span>课时1：艺术的魅力</span>
                             <span>已结束</span>
-                        </li>
+                        </li> -->
+                        <router-link to="" tag="li" v-for="value in lessons.lesson" :key="value.id">
+                            <span>[直播]</span>
+                            <span>{{ value.name }}</span>
+                            <span>已结束</span>
+                        </router-link>
                     </ul>
                 </div>
             </div>
@@ -467,12 +472,12 @@
                             <img src="static/images/14.png" alt="">
                         </div>
                         <div>
-                            美美婚礼
+                            {{ classSth.publisher }}
                         </div>
                     </li>
                     <li>
                         <p>
-                            现在有人用“绘本”这种称呼来区分一部分图画书，它们多是由独立的绘画作者专门绘制、带有明显个人风格、以画面本身为主的图画书。我们常见一些有图有文的书，尽管这些书的图画画得十分有趣，但这些图画只是文字的补充，是一类具有文字系统功能的图画。这类书多见于教材和教辅类图书。书中的图画不具备“图画语言”功能。图画书与我国传统的连环画、连环漫画相比，后者好比是传统舞台剧，读者只能在一定角度用全中景去看，会产生极大的距离感。低幼图画书却好比是供低幼儿童看的一部电影，它既展示出宽广的视野，又有细节的特写，既有极其有趣的故事情节，又暗藏着起、承、转、合的节奏设计。 一些以图为主的卡通类幼儿图书与图画书也不同。这些图书绘制精美，画面是活动的卡通片的固化，形式上失去活动的魅力，画面情节已被“肢解”难以表达原著内容，书中的图画只是引起对卡通情节回忆的符号。”文字很简单：“狼进了小羊家……”。后面用一整版表现狼打开门进来，所有的小羊都很惊慌，有的藏在大钟里，有的藏在床下，有的藏在门后，还有的藏在沙发后……这画面极大地引起了小读者的兴趣。
+                            {{ classSth.publisher_desc }}
                         </p>
                     </li>
                 </ul>
@@ -497,6 +502,7 @@ export default {
     name: 'recording',
     data () {
         return {
+
             spanColor: 0,
             classSth: {
                 desc: '',
@@ -507,16 +513,36 @@ export default {
                 publisher: '',
                 time: '',
                 count: '',
-                is_buy: ''
-            }
+                is_buy: '',
+                small: '',
+                target: '',//课程目标
+                crowd: '',//使用人群
+                desc: '',//课程简介
+                publisher_desc: ''//旁边一大段
+            },
+            lesson_list: []
         }
     },
     methods: {
         openPopup () {
-            this.$router.push({query: {
-                index: 3
-            }})
-            this.$store.commit('PUPUP_SHOW_SIGNINUP');
+            //判断是否登录
+            if( sessionStorage.token.length <= 0 || !sessionStorage.token) {
+                this.$alert('请先登录','提示',{
+                    type: 'warning',
+                    callback: action => {
+                        this.$router.push({query: {
+                            index: 0
+                        }})
+                        this.$store.commit('PUPUP_SHOW_SIGNINUP');
+                    }
+                })
+            }else {
+                this.$router.push({query: {
+                    index: 3
+                }})
+                this.$store.commit('PUPUP_SHOW_SIGNINUP');
+            }
+            
         },
         //获取课程详情信息
         ajaxRecording () {
@@ -529,7 +555,6 @@ export default {
             }).then( (res) => {
                 if( res.data.status_code == 200) {
                     this.classSth = {
-                        desc: res.data.data.desc,
                         name: res.data.data.name,
                         img: res.data.data.img,
                         price: res.data.data.price,
@@ -537,12 +562,20 @@ export default {
                         publisher: res.data.data.publisher,
                         time: res.data.data.time,
                         count: res.data.data.count,
-                        is_buy: res.data.data.is_buy
+                        is_buy: res.data.data.is_buy,
+                        small: res.data.data.small,
+                        desc: res.data.data.desc,
+                        target: res.data.data.target,
+                        crowd: res.data.data.crowd,
+                        lecturer: res.data.data.lecturer,
+                        publisher_desc: res.data.data.publisher_desc
                     }
+                    this.lesson_list = res.data.data.lesson_list;
+                    this.$store.commit('POPUP_PAY_CLASS_STH', this.classSth);
                 }else {
                     this.$alert(res.data.msg,'错误',{
-                    type: 'warning'
-                })
+                        type: 'warning'
+                    })
                 }
             }).catch( (error) => {
                 console.log(error);

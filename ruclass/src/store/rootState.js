@@ -9,7 +9,14 @@ const state = {
         name: '',
         img: 'static/images/userImg.png',
     },
-    
+    //购买课程弹窗
+    POPUP_PAY_CLASS: {
+        name: '',
+        publisher: '',
+        lecturer: '',
+        time: '',
+        price: ''
+    }
 }
 
 export default state;

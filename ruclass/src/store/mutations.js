@@ -75,3 +75,13 @@ export const SET_USER_INFO = (state, user) => {
 export const USER_PHONE_NUMBER = (state, phoneNumber) => {
     state.USER.phoneNumber = phoneNumber;
 }
+//购买课程弹窗赋值
+export const POPUP_PAY_CLASS_STH = (state, data) => {
+    state.POPUP_PAY_CLASS = {
+        name: data.name,
+        publisher: data.publisher,
+        lecturer: data.lecturer,
+        time: data.time,
+        price: data.price
+    }
+}

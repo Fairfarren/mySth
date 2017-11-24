@@ -126,8 +126,8 @@
                             >全部</span>
                             <span
                                 v-for="(data, index) in category.title1_list" :key="data.name"
-                                :class="{colorSpan: upLoadData.classification == index}"
-                                @click="upLoadData.classification = index"
+                                :class="{colorSpan: upLoadData.classification == data}"
+                                @click="upLoadData.classification = data"
                             >{{data}}</span>
                         </li>
                     </ul>
@@ -142,8 +142,8 @@
                             >全部</span>
                             <span
                                 v-for="(data, index) in category.title2_list" :key="data.name"
-                                :class="{colorSpan: upLoadData.category == index}"
-                                @click="upLoadData.category = index"
+                                :class="{colorSpan: upLoadData.category == data}"
+                                @click="upLoadData.category = data"
                             >{{data}}</span>
                         </li>
                     </ul>
@@ -248,21 +248,36 @@ export default {
     methods: {
         //第一次进来初始化数据
         ajaxAll () {
-            //全部课程
-            this.axios.get(`/api/course`).then( (res) => {
+            //全部课程 ?page=${this.page}&category=${this.upLoadData.category}&small=${this.upLoadData.classification}
+            let category = '';
+            let small = '';
+            if(this.upLoadData.classification != -1) {
+                category = `&category=${this.upLoadData.classification}`;
+            }
+            if(this.upLoadData.category != -1) {
+                small = `&small=${this.upLoadData.category}`;
+            }
+            this.axios.get(`/api/course?page=${this.category.page}${category}${small}`).then( (res) => {
                 if( res.data.status_code == 200 ) {
+                    this.recommendData = [];
                     res.data.course_list.map(  (value, index) => {
-                        this.recommendData.splice(index, 1, {
+                        // this.recommendData.splice(index, 1, {
+                        //     className: value.name,
+                        //     money: value.price,
+                        //     publishing: value.publisher,
+                        //     img: value.img,
+                        //     url: `/class/recording/${value.id}`
+                        // })
+                        this.recommendData[index] = {
                             className: value.name,
                             money: value.price,
                             publishing: value.publisher,
                             img: value.img,
                             url: `/class/recording/${value.id}`
-                        })
+                        }
                     })
                     this.category.count = res.data.page_info.count;
                     this.category.per_page = res.data.page_info.per_page;
-                    // console.log();
                 }else {
                     this.$alert(res.data.msg,'错误',{
                         type: 'warning'
@@ -274,6 +289,14 @@ export default {
                     type: 'warning'
                 })
             })
+        },
+        //改变页数
+        getPage (num) {
+            this.category.page = num;
+            this.ajaxAll();
+        },
+        //获取分类
+        getCategory () {
             //获取分类
             this.axios.get('/api/category').then( (res) => {
                 if(res.data.status_code == 200) {
@@ -295,13 +318,29 @@ export default {
                 })
             })
         },
-        //改变页数
-        getPage (num) {
-            this.category.page = num;
-        }
     },
     mounted () {
-        this.ajaxAll();
+        const query = this.$route.query;
+        if( query.category ) {
+            this.upLoadData.classification = decodeURI(query.category);
+        }
+        if ( query.small ) {
+            this.upLoadData.category = decodeURI(query.small);
+        }
+        setTimeout( () => {
+            this.getCategory();
+            this.ajaxAll();
+        },10)
+    },
+    watch: {
+        'upLoadData.classification' () {
+            this.category.page = 1;
+            this.ajaxAll();
+        },
+        'upLoadData.category' () {
+            this.category.page = 1;
+            this.ajaxAll();
+        }
     }
 }
 </script>

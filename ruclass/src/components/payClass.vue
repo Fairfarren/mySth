@@ -59,6 +59,10 @@
             }
         }
     }
+    .howToPay {
+        position: absolute;
+        width: 100px;
+    }
 }
 </style>
 
@@ -74,22 +78,22 @@
             </div>
             <ul class="content">
                 <li>
-                    <h3>如何好好说话金牌主持人</h3>
+                    <h3>{{ $store.state.POPUP_PAY_CLASS.name }}</h3>
                 </li>
                 <li>
-                    <p>出版方：妹妹婚礼</p>
-                    <p>讲师：如故</p>
-                    <p>直播时间：2017/11/11--2017/12/12</p>
+                    <p>出版方：{{ $store.state.POPUP_PAY_CLASS.publisher }}</p>
+                    <p>讲师：{{ $store.state.POPUP_PAY_CLASS.lecturer }}</p>
+                    <p>直播时间：{{ $store.state.POPUP_PAY_CLASS.time }}</p>
                 </li>
                 <li>
-                    课程价格：<span>￥339.00</span>
+                    课程价格：<span>{{ free }}</span>
                 </li>
                 <li>
                     <el-button 
                         type="primary" 
                         style="width:100%;height:48px;font-size:24px;"
                         @click="goToPay"
-                    >去支付</el-button>
+                    >{{ canStudy }}</el-button>
                 </li>
             </ul>
         </div>
@@ -101,18 +105,91 @@ export default {
     name: 'payClass',
     data () {
         return {
-
+            gridData: [{
+            date: '2016-05-02',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+            date: '2016-05-04',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+            date: '2016-05-01',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+            date: '2016-05-03',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄'
+            }],
+        }
+    },
+    computed: {
+        //是否免费
+        free () {
+            if( this.$store.state.POPUP_PAY_CLASS.price <= 0 ) {
+                return '免费'
+            }else {
+                return `￥${this.$store.state.POPUP_PAY_CLASS.price}`
+            }
+        },
+        //是否可以立即学习
+        canStudy () {
+            if( this.$store.state.POPUP_PAY_CLASS.price <= 0 ) {
+                return '立即学习'
+            }else {
+                return '去支付'
+            }
         }
     },
     methods: {
         goToPay () {
-            // console.log(this.$route)
-            this.$store.commit('CLOSE_PUPUP');
-            this.$router.push({ 
-                path: `/paySth/${this.$route.params.id}`,
-                query: {}
+            if(this.canStudy == '去支付') {
+                // this.$store.commit('CLOSE_PUPUP');
+                // this.$router.push({ 
+                //     path: `/paySth/${this.$route.params.id}`,
+                //     query: {}
+                // })
+                this.$store.commit('CLOSE_PUPUP');
+                this.$router.push({query: {
+                    index: 5
+                }})
+                setTimeout( () => {
+                    this.$store.commit('PUPUP_SHOW_SIGNINUP');
+                }, 200)
+            }else {
+                this.goToStudy();
+            }
+        },
+        //如果是免费，可以立即学习
+        goToStudy () {
+            this.axios({
+                url: '/api/buy/course',
+                method: 'post',
+                headers: {
+                    'Authorization': sessionStorage.token,
+                },
+                data: {
+                    'course_id': this.$route.params.id
+                }
+            }).then( (res) => {
+                if(res.data.status_code == 201) {
+                    this.$store.commit('CLOSE_PUPUP');
+                }else {
+                    this.$alert(res.data.msg,'错误',{
+                        type: 'warning'
+                    })
+                }
+            }).catch( (error) => {
+                console.log(error);
+                this.$alert('网络连接超时或网络错误','错误',{
+                    type: 'warning'
+                })
             })
         }
+    },
+    mounted () {
+        
     }
 }
 </script>

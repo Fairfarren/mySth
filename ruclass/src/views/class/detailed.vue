@@ -347,11 +347,24 @@ export default {
             }
         }
     },
+    methods: {
+        //获取播放信息
+        getVideo () {
+            this.axios({
+                url: `/api/lesson_info?lesson_id=${this.$route.params.id}`,
+                method: 'get',
+                headers: {
+                    'Authorization': sessionStorage.token,
+                },
+            })
+        }
+    },
     mounted () {
         this.detailedStyle.height = `${document.documentElement.clientHeight}px`;
         this.videoStyle.height = `${document.documentElement.clientHeight - 152}px`;
         this.listStyle.catalogHeight = `${document.documentElement.clientHeight - 152 - 60}px`
         this.listStyle.sayAllHeight = `${document.documentElement.clientHeight - 152 - 60 - 150}px`
+        this.getVideo();
     }
 }
 </script>

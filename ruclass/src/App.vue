@@ -42,7 +42,7 @@
       color: #fff;
     }
   } 
-  // 进度条
+  // 分页
   .el-pager li.active {
     color: #fff;
     border-radius: 4px;
@@ -50,7 +50,7 @@
       color: #3399ff;
     }
   }
-  .el-dialog, .el-pager li {
+  .el-pager .number, .el-pager .el-icon {
     width: 40px;
     height: 40px;
     line-height: 40px;
@@ -62,6 +62,9 @@
     background: {
       color: #e5e5e5;
     }
+  }
+  .el-pager .el-icon {
+
   }
   .el-pager li.btn-quicknext, .el-pager li.btn-quickprev {
     color: #fff;
