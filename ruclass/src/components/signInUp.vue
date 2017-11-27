@@ -221,9 +221,9 @@
             </li>
             <li class="othersSign">
                 <span>
-                    <router-link to="">
+                    <a href="http://192.168.3.28:5000/api/oauth?redirect_type=wx">
                         <img src="static/images/20logo.png" alt="">
-                    </router-link>
+                    </a>
                 </span>
             </li>
         </ul>

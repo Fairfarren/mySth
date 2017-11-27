@@ -16,7 +16,8 @@ const state = {
         lecturer: '',
         time: '',
         price: '',
-        dCode: ''
+        dCode: '',
+        payTime: ''
     }
 }
 

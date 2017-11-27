@@ -120,6 +120,10 @@
                         订单编号：
                         <span>{{ $store.state.POPUP_PAY_CLASS.dCode }}</span> 
                     </p>
+                    <p>
+                        购买时间：
+                        <span>{{ $store.state.POPUP_PAY_CLASS.payTime }}</span> 
+                    </p>
                 </li>
                 <li>
                     <hr>
@@ -233,10 +237,14 @@ export default {
                     pay_type: how
                 }
             }).then( (res) => {
-                if( res.data.status_code == 200 ) {
+                if( res.data.status_code == 201 ) {
                     this.howToPay.img[how] = res.data.data.qr_code
-                    this.$store.commit('PAY_CLASS_INFORMATION', res.data.data);
-                    setInterval( () => {
+                    let data = res.data.data;
+                    data.payTime = data.out_trade_no.slice(0,8);
+                    data.payTime = `${data.payTime.slice(0, 4)}-${data.payTime.slice(4, 6)}-${data.payTime.slice(5, 7)}`
+                    data.howPay = this.$route.query.how;
+                    this.$store.commit('PAY_CLASS_INFORMATION', data);
+                    this.timer = setInterval( () => {
                         this.wxPayOrNot()
                     }, 3000);
                 }else {
@@ -257,7 +265,8 @@ export default {
                     }
                 }
             }).catch( (error) => {
-                this.$alert(res.data.msg,'错误',{
+                console.log(error);
+                this.$alert('网络连接超时或网络错误','错误',{
                     type: 'warning'
                 })
             })
@@ -276,12 +285,18 @@ export default {
                     his.$alert('支付成功','提示',{
                         type: 'success',
                         callback: () => {
-                            this.$router.push(`/class/recording/${this.$route.params.id}`)
+                            // this.$router.push(`okPay/${this.$route.params.id}`)
+                            this.$router.push({
+                                path: `okPay/${this.$route.params.id}`,
+                                name: $store.state.POPUP_PAY_CLASS.name,
+                                // time: 
+                            })
                         }
                     })
                 }
             }).catch( (error) => {
-                this.$alert(res.data.msg,'错误',{
+                console.log(error);
+                this.$alert('网络连接超时或网络错误','错误',{
                     type: 'warning'
                 })
             })
@@ -289,6 +304,12 @@ export default {
     },
     mounted () {
         this.ajaxRecording();
+    },
+    beforeRouteLeave (to, from, next) {
+        clearInterval(this.timer);
+        next( () => {
+            
+        })
     }
 }
 </script>

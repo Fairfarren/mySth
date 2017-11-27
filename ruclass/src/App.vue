@@ -161,10 +161,26 @@ export default {
           this.$store.commit('WATCH_DETAILED_SHOW_TRUE')
         }
       }
+    },
+    //判断是否微信登录
+    weChatSigin () {
+      // console.log(this.$route.query);
+      const userId = this.$route.query.token;
+      if( userId ) {
+        const routeQuery = {
+          token: userId,
+          user: {
+            name: '',
+            img: ''
+          }
+        }
+        this.$store.commit('LOGIN_SUCCESS', routeQuery);
+      }
     }
   },
   mounted () {
     this.$store.commit('LOGIN_OR_NOT');
+    this.weChatSigin();
   },
   watch: {
     '$route':'watchDetailedShow'

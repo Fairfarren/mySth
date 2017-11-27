@@ -252,16 +252,16 @@ export default {
         },
         //验证码倒计时
         codeCallBack02 () {
-            this.ruleForm.codeTF = true;
-            this.ruleForm.codeText = '60秒后可重发送';
+            this.ruleForm02.codeTF = true;
+            this.ruleForm02.codeText = '60秒后可重发送';
             let num = 60;
             const timer = setInterval( () => {
                 num--;
-                this.ruleForm.codeText = `${num}秒后可重发`;
+                this.ruleForm02.codeText = `${num}秒后可重发`;
                 if(num <= 0) {
                     clearInterval(timer);
-                    this.ruleForm.codeTF = false;
-                    this.ruleForm.codeText = '发送验证码';
+                    this.ruleForm02.codeTF = false;
+                    this.ruleForm02.codeText = '发送验证码';
                 }
             },1000)
         },

@@ -392,7 +392,7 @@ export default {
           type: 'warning'
         })
       })
-    }
+    },
   },
   mounted () {
     this.homeAjax();

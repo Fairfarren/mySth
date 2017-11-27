@@ -48,6 +48,7 @@
             vertical-align: top;
         }
         >.video {
+            position: relative;
             padding: {
                 right: 30px;
             }
@@ -56,6 +57,13 @@
                 >div {
                     height: 100%;
                 }
+            }
+            >.videoDoSth {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
             }
         }
         >.list {
@@ -228,8 +236,12 @@
                     class="vjs-custom-skin" 
                     ref="videoPlayer" 
                     :options="playerOptions"
+                    @ready="playerReadied"
                 >
                 </video-player>
+                <div class="videoDoSth">
+                    
+                </div>
            </div>
             <div class="list" :style="{height: videoStyle.height}">
                 <div>
@@ -315,6 +327,7 @@ export default {
             form: {
                 text: ''
             },
+            player: {},
             getVideoSth: {},
             getListSth: [],
             goBack: '/class/recording/'+ this.$route.params.id +'',
@@ -386,7 +399,15 @@ export default {
                     type: 'warning'
                 })
             })
-        }
+        },
+        //播放器
+        playerReadied(player) {
+            this.player = player;
+        },
+        //播放
+        // play () {
+        //     this.player.play();
+        // }
     },
     mounted () {
         this.detailedStyle.height = `${document.documentElement.clientHeight}px`;

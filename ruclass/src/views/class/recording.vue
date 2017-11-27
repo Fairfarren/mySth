@@ -370,10 +370,19 @@
                         <h4>{{ classSth.name }}</h4>
                         <span>
                             <img src="static/images/13.png" alt="">
-                            <span>已分享</span>
+                            <!-- <span>已分享</span> -->
                         </span>
-                        <span>
+                        <span 
+                            v-if="!classSth.is_collection" 
+                            @click="collection(true)"
+                        >
                             <img src="static/images/12.png" alt="">
+                        </span>
+                        <span 
+                            v-else
+                            @click="collection(false)"
+                        >
+                            <img src="static/images/12-yes.png" alt="">
                             <span>已收藏</span>
                         </span>
                     </li>
@@ -502,7 +511,6 @@ export default {
     name: 'recording',
     data () {
         return {
-
             spanColor: 0,
             classSth: {
                 desc: '',
@@ -518,7 +526,8 @@ export default {
                 target: '',//课程目标
                 crowd: '',//使用人群
                 desc: '',//课程简介
-                publisher_desc: ''//旁边一大段
+                publisher_desc: '',//旁边一大段
+                is_collection: false
             },
             lesson_list: []
         }
@@ -526,7 +535,12 @@ export default {
     methods: {
         openPopup () {
             //判断是否登录
-            if( sessionStorage.token.length <= 0 || !sessionStorage.token) {
+            if( sessionStorage.token ) {
+                this.$router.push({query: {
+                    index: 3
+                }})
+                this.$store.commit('PUPUP_SHOW_SIGNINUP');
+            }else {
                 this.$alert('请先登录','提示',{
                     type: 'warning',
                     callback: action => {
@@ -536,11 +550,6 @@ export default {
                         this.$store.commit('PUPUP_SHOW_SIGNINUP');
                     }
                 })
-            }else {
-                this.$router.push({query: {
-                    index: 3
-                }})
-                this.$store.commit('PUPUP_SHOW_SIGNINUP');
             }
         },
         //获取课程详情信息
@@ -567,7 +576,8 @@ export default {
                         target: res.data.data.target,
                         crowd: res.data.data.crowd,
                         lecturer: res.data.data.lecturer,
-                        publisher_desc: res.data.data.publisher_desc
+                        publisher_desc: res.data.data.publisher_desc,
+                        is_collection: res.data.data.is_collection
                     }
                     this.lesson_list = res.data.data.lesson_list;
                     this.$store.commit('POPUP_PAY_CLASS_STH', this.classSth);
@@ -594,6 +604,73 @@ export default {
                     type: 'warning'
                 })
             })
+        },
+        //收藏，取消收藏
+        collection (YN) {
+            if (YN) {
+                let data = {
+                    course_id: this.$route.params.id
+                }
+                data = JSON.stringify(data);
+                //收藏
+                this.axios({
+                    url: '/api/collection',
+                    method: 'post',
+                    headers: {
+                        'Authorization': sessionStorage.token,
+                    },
+                    data: data
+                }).then( (res) => {
+                    if(res.data.status_code == 201) {
+                        this.$message({
+                            message: '收藏成功',
+                            type: 'success'
+                        });
+                        this.classSth.is_collection = true;
+                    }else {
+                        this.$alert(res.data.msg,'错误',{
+                            type: 'warning'
+                        })
+                    }
+                }).catch( (error) => {
+                    console.log(error);
+                    this.$alert('网络连接超时或网络错误','错误',{
+                        type: 'warning'
+                    })
+                })
+            }else {
+                let data = {
+                    course_id: this.$route.params.id
+                }
+                data = JSON.stringify(data);
+                //取消收藏
+                this.axios({
+                    url: '/api/collection',
+                    method: 'delete',
+                    headers: {
+                        'Authorization': sessionStorage.token,
+                        'Content-Type': 'application/json'
+                    },
+                    data: data
+                }).then( (res) => {
+                    if(res.data.status_code == 201) {
+                        this.$message({
+                            message: '取消收藏',
+                            type: 'warning'
+                        });
+                        this.classSth.is_collection = false;
+                    }else {
+                        this.$alert(res.data.msg,'错误',{
+                            type: 'warning'
+                        })
+                    }
+                }).catch( (error) => {
+                    console.log(error);
+                    this.$alert('网络连接超时或网络错误','错误',{
+                        type: 'warning'
+                    })
+                })
+            }
         }
     },
     mounted () {

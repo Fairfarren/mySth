@@ -89,4 +89,6 @@ export const POPUP_PAY_CLASS_STH = (state, data) => {
 export const PAY_CLASS_INFORMATION = (state, data) => {
     //更新订单号
     state.POPUP_PAY_CLASS.dCode = data.out_trade_no;
+    //更新订单购买时间
+    state.POPUP_PAY_CLASS.payTime = data.payTime;
 }

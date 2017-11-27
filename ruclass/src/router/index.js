@@ -46,6 +46,10 @@ export default new Router({
     {
       path: '/okPay/:id',
       component: resolve => require(['@/views/pay/okPay'], resolve)
+    },
+    {
+      path: '/okPay',
+      component: resolve => require(['@/views/pay/okPay'], resolve)
     }
   ]
 })
