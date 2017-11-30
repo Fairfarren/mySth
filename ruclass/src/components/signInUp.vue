@@ -221,8 +221,11 @@
             </li>
             <li class="othersSign">
                 <span>
-                    <a href="http://192.168.3.28:5000/api/oauth?redirect_type=wx">
-                        <img src="static/images/20logo.png" alt="">
+                    <a href="javascript:void(0)" @click="wxSignUp">
+                        <img 
+                            src="static/images/20logo.png" 
+                            alt=""
+                        >
                     </a>
                 </span>
             </li>
@@ -487,6 +490,25 @@ export default {
                     this.$store.commit('CLOSE_PUPUP');
                     this.$store.commit('LOGIN_SUCCESS', res.data.data);
                     location.reload([false])
+                }else {
+                    this.$alert(res.data.msg,'错误',{
+                        type: 'warning'
+                    })
+                }
+            }).catch( (error) => {
+                console.log(error)
+                this.$alert('网络连接超时或网络错误','错误',{
+                    type: 'warning'
+                })
+            })
+        },
+        //微信登录
+        wxSignUp () {
+            //http://192.168.3.28:5000/api/oauth?redirect_type=wx
+            this.axios.get(`/api/state?url=${window.location.href}`).then( (res) => {
+                if(res.data.status_code == 200) {
+                    sessionStorage.setItem('state', res.data.state);
+                    window.location.href = 'http://192.168.3.28:5000/api/oauth?redirect_type=wx'
                 }else {
                     this.$alert(res.data.msg,'错误',{
                         type: 'warning'

@@ -46,24 +46,64 @@
         >div {
             display: table-cell;
             vertical-align: top;
+            
         }
-        >.video {
+        .video {
             position: relative;
             padding: {
                 right: 30px;
             }
             >div {
                 height: 100%;
+                position: relative;
                 >div {
                     height: 100%;
+                    
                 }
             }
-            >.videoDoSth {
+            .videoDoSth {
                 width: 100%;
-                height: 100%;
+                height: 50px;
                 position: absolute;
-                top: 0;
+                bottom: 0;
                 left: 0;
+                background: {
+                    // color: rgba(255, 255, 255, 0.6);
+                }
+                >div {
+                    height: 50px;
+                    line-height: 50px;
+                    >span {
+                        @include fontSize(20px, #cccccc);
+                        margin: {
+                            right: 20px;
+                        }
+                        >.nowTime {
+                            color: #fff;
+                        }
+                    }
+                    >span:last-child {
+                        margin: {
+                            right: 0;
+                        }
+                    }
+                }
+                >.left {
+                    float: left;
+                    margin: {
+                        left: 5%;
+                    }
+                }
+                >.right {
+                    float: right;
+                    margin: {
+                        right: 5%;
+                    }
+                }
+                img {
+                    vertical-align: middle;
+                    cursor: pointer;
+                }
             }
         }
         >.list {
@@ -231,16 +271,78 @@
         </div>
         <div class="content">
             <div class="video" :style="{height: videoStyle.height}">
-                <video-player 
-                    id="my_video_1" 
-                    class="vjs-custom-skin" 
-                    ref="videoPlayer" 
-                    :options="playerOptions"
-                    @ready="playerReadied"
-                >
-                </video-player>
-                <div class="videoDoSth">
-                    
+                <div>
+                    <video-player 
+                        id="my_video_1" 
+                        class="vjs-custom-skin" 
+                        ref="videoPlayer" 
+                        :options="playerOptions"
+                        @ready="playerReadied"
+                        @play="play"
+                        @canplaythrough="onPlayerCanplaythrough($event)"
+                        @waiting="onPlayerWaiting($event)"
+
+                        @playing="onPlayerPlaying($event)"
+                        @loadeddata="onPlayerLoadeddata($event)"
+                        @timeupdate="onPlayerTimeupdate($event)"
+                        @canplay="onPlayerCanplay($event)"
+                    >
+                    </video-player>
+                    <!-- <div class="videoDoSth">
+                        <div class="left">
+                            <span class="play">
+                                <img 
+                                    src="static/images/stop.svg" 
+                                    alt="" 
+                                    v-if="playerStatus.play"
+                                    @click="stop"
+                                >
+                                <img 
+                                    src="static/images/play.svg" 
+                                    alt="" 
+                                    v-else
+                                    @click="play"
+                                >
+                            </span>
+                            <span class="time">
+                                <span class="nowTime">{{ playerStatus.nowTime }}</span>
+                                / {{ playerStatus.allTime }}
+                            </span>
+                        </div>
+                        <div class="right">
+                            <span class="listen">
+                                <img 
+                                    src="static/images/nolisten.svg" 
+                                    alt="" 
+                                    v-if="playerStatus.muted"
+                                    @click="hasListen"
+                                >
+                                <img 
+                                    src="static/images/listen.svg" 
+                                    alt="" 
+                                    v-else
+                                    @click="noListen"
+                                >
+                            </span>
+                            <span class="allWindow">
+                                <img 
+                                    src="static/images/smallWindow.svg" 
+                                    alt="" 
+                                    v-if="playerStatus.allWindow"
+                                    @click="allWindow"
+                                >
+                                <img 
+                                    src="static/images/allWinodw.svg" 
+                                    alt="" 
+                                    v-else
+                                    @click="allWindow"
+                                >
+                            </span>
+                        </div>
+                        <div class="line">
+                            <span class="nowLine"></span>
+                        </div>
+                    </div> -->
                 </div>
            </div>
             <div class="list" :style="{height: videoStyle.height}">
@@ -330,6 +432,16 @@ export default {
             player: {},
             getVideoSth: {},
             getListSth: [],
+            playerStatus: {
+                play: false,
+                listen: 0.5,
+                muted: false,
+                allWindow: false,
+                allTime: '00:00:00',
+                nowTime: '00:00:00',
+                ready: false,
+                timer: ''
+            },
             goBack: '/class/recording/'+ this.$route.params.id +'',
             playerOptions: {
                 // videojs options
@@ -345,13 +457,9 @@ export default {
                 sources: [{ // 流配置，数组形式，会根据兼容顺序自动切换
                     type: 'video/mp4',
                     src: ''
-                    }, {
-                    withCredentials: false,
-                    type: 'application/x-mpegURL',
-                    src: 'http://playertest.longtailvideo.com/adaptive/bipbop/gear4/prog_index.m3u8'
                     }
                 ],
-                poster: "static/images/43393846_p0.jpg",
+                // poster: "static/images/43393846_p0.jpg",
                 // controlBar: {
                 //     timeDivider: true, // 时间分割线
                 //     durationDisplay: true, // 总时间
@@ -403,11 +511,76 @@ export default {
         //播放器
         playerReadied(player) {
             this.player = player;
+            this.playerStatus.ready = true;
         },
         //播放
-        // play () {
-        //     this.player.play();
-        // }
+        play () {
+            if( !this.playerStatus.ready ) {
+                return
+            }
+            this.player.play();
+            this.playerStatus.play = true;
+        },
+        //暂停
+        stop () {
+            this.player.pause();
+            this.playerStatus.play = false;
+            clearInterval(this.playerStatus.timer);
+        },
+        //静音
+        noListen () {
+            this.player.muted(true);
+            this.playerStatus.muted = true;
+        },
+        //取消静音
+        hasListen () {
+            this.player.muted(false);
+            this.playerStatus.muted = false;
+        },
+        //全屏
+        allWindow () {
+            this.player.requestFullscreen(true)
+        },
+        //关闭全屏
+        smallWindow () {
+            this.player.exitFullscreen();
+        },
+        //加载完成，可以播放
+        onPlayerCanplaythrough (event) {
+            console.log('onPlayerCanplaythrough');
+            //当前时间
+            const allTime = parseInt(this.player.duration());
+            let allTimeStaus = {
+                s: allTime % 60,
+                m: parseInt(allTime / 60),
+                h: parseInt(allTime / 60 / 60)
+            }
+            this.playerStatus.allTime = `${allTimeStaus.h}:${allTimeStaus.m}:${allTimeStaus.s}`
+            //设置音量
+            this.player.volume(1);
+            console.log(event);
+            
+        },
+        onPlayerPlaying () {
+            console.log('正在播放')
+        },
+        onPlayerLoadeddata () {
+            console.log('onPlayerLoadeddata');
+        },
+        onPlayerTimeupdate () {
+            console.log('onPlayerTimeupdate');
+            //播放时间
+            const time = parseInt(this.player.currentTime());
+            const timeStatus = {
+                s: time % 60 < 10 ? `0${time % 60}` : time % 60,
+                m: parseInt(time / 60),
+                h: parseInt(time / 60 / 60)
+            }
+            this.playerStatus.nowTime = `${timeStatus.h}:${timeStatus.m}:${timeStatus.s}`;
+        },
+        onPlayerCanplay () {
+            console.log('onPlayerCanplay');
+        }
     },
     mounted () {
         this.detailedStyle.height = `${document.documentElement.clientHeight}px`;

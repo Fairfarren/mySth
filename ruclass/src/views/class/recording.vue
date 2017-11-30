@@ -628,9 +628,21 @@ export default {
                         });
                         this.classSth.is_collection = true;
                     }else {
-                        this.$alert(res.data.msg,'错误',{
-                            type: 'warning'
-                        })
+                        if(res.data.msg == 'invalid token') {
+                            this.$alert('请先登录','错误',{
+                                type: 'warning',
+                                callback: () => {
+                                    this.$store.commit('PUPUP_SHOW_SIGNINUP');
+                                    this.$router.push({query: {
+                                        index: 0
+                                    }})
+                                }
+                            })
+                        }else {
+                            this.$alert(res.data.msg,'错误',{
+                                type: 'warning'
+                            })
+                        }
                     }
                 }).catch( (error) => {
                     console.log(error);
@@ -660,9 +672,21 @@ export default {
                         });
                         this.classSth.is_collection = false;
                     }else {
-                        this.$alert(res.data.msg,'错误',{
-                            type: 'warning'
-                        })
+                        if(res.data.msg == 'invalid token') {
+                            this.$alert('请先登录','错误',{
+                                type: 'warning',
+                                callback: () => {
+                                    this.$store.commit('PUPUP_SHOW_SIGNINUP');
+                                    this.$router.push({query: {
+                                        index: 0
+                                    }})
+                                }
+                            })
+                        }else {
+                            this.$alert(res.data.msg,'错误',{
+                                type: 'warning'
+                            })
+                        }
                     }
                 }).catch( (error) => {
                     console.log(error);

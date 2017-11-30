@@ -165,21 +165,57 @@ export default {
     //判断是否微信登录
     weChatSigin () {
       // console.log(this.$route.query);
-      const userId = this.$route.query.token;
-      if( userId ) {
-        const routeQuery = {
-          token: userId,
-          user: {
-            name: '',
-            img: ''
+      let search = '';
+      if(!window.location.search) {
+        return
+      }
+      search = window.location.search.split('?')[1].split('&');
+      let user = {};
+      if( search ) {
+        search.map( (value, index) => {
+          if( value.split('token=')[1] ) {
+            user.token = value.split('token=')[1]
           }
-        }
-        this.$store.commit('LOGIN_SUCCESS', routeQuery);
+          if( value.split('avatar=')[1] ) {
+            user.token = value.split('avatar=')[1]
+          }
+          if( value.split('nick_name=')[1] ) {
+            user.token = value.split('nick_name=')[1]
+          }
+        })
+        sessionStorage.setItem('token', user.token);
+        this.axios({
+          url: `/api/oauth?redirect_type=wx&state=${sessionStorage.state}`,
+          method: 'get',
+          headers: {
+              'Authorization': sessionStorage.token,
+          },
+        }).then( (res) => {
+          if(res.data.status_code) {
+            this.$store.commit('LOGIN_SUCCESS', user);
+            this.$message({
+              message: '登录成功',
+              type: 'success'
+            });
+            this.$router.push('/home');
+          }else {
+            this.$alert(res.data.msg,'错误',{
+              type: 'warning'
+            })
+          }
+        }).catch( (error) => {
+          console.log(error)
+          this.$alert('网络连接超时或网络错误','错误',{
+            type: 'warning'
+          })
+        })
+
+        
       }
     }
   },
   mounted () {
-    this.$store.commit('LOGIN_OR_NOT');
+    // this.$store.commit('LOGIN_OR_NOT');
     this.weChatSigin();
   },
   watch: {
