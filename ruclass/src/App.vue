@@ -1,99 +1,105 @@
 <style lang="scss">
-  @mixin fontSize($size, $color) {
-    font-size: $size - 2;
-    color: $color;
-  }
-  *{
-    margin: 0;
-    padding: 0;
-  }
-  html, body {
-    font-size: 16px;
-    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    /* font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", "Helvetica", "Arial"; */
-    min-width: 1200px;
-  }
-  #body {
-    margin: 0 auto;
-  }
-  a {
-    text-decoration: none;
-  }
-  li {
-    list-style: none;
-  }
-  #theHeader {
-    top: 0;
-    left: 0;
-    z-index: 999;
-    width: 100%;
-    position: fixed;
-    background-color: #fff;
-    transition: all 0.3s;
-    /* box-shadow: 0 -5px 10px #888888; */
-    border-bottom: 1px solid #3399ff;
-  }
-  #body {
-    /* margin-top: 56px; */
-  }
-  .el-input-group__append, .el-input-group__prepend {
-    padding: 0 10px;
-    background: {
-      color: #fff;
-    }
-  } 
-  // 分页
-  .el-pager li.active {
+@mixin fontSize($size, $color) {
+  font-size: $size - 2;
+  color: $color;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  font-size: 16px;
+  font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  /* font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", "Helvetica", "Arial"; */
+  min-width: 1200px;
+}
+#body {
+  margin: 0 auto;
+}
+a {
+  text-decoration: none;
+}
+li {
+  list-style: none;
+}
+#theHeader {
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+  position: fixed;
+  background-color: #fff;
+  transition: all 0.3s;
+  /* box-shadow: 0 -5px 10px #888888; */
+  border-bottom: 1px solid #3399ff;
+}
+#body {
+  /* margin-top: 56px; */
+}
+.el-input-group__append,
+.el-input-group__prepend {
+  padding: 0 10px;
+  background: {
     color: #fff;
-    border-radius: 4px;
-    background: {
-      color: #3399ff;
+  }
+}
+// 分页
+.el-pager li.active {
+  color: #fff;
+  border-radius: 4px;
+  background: {
+    color: #3399ff;
+  }
+}
+.el-pager .number,
+.el-pager .el-icon {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 22px;
+  font-weight: normal;
+  color: #fff;
+  border-radius: 4px;
+  margin: 0 5px;
+  background: {
+    color: #e5e5e5;
+  }
+}
+.el-pager .el-icon {
+}
+.el-pager li.btn-quicknext,
+.el-pager li.btn-quickprev {
+  color: #fff;
+  line-height: 40px;
+}
+//过度
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+//编辑资料
+.qwe .el-form-item__label {
+  @include fontSize(20px, #666666);
+}
+.qwe:first-child .el-form-item__label {
+  &::before {
+    content: "*";
+    color: #ff1111;
+    margin: {
+      right: 5px;
     }
   }
-  .el-pager .number, .el-pager .el-icon {
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 22px;
-    font-weight: normal;
-    color: #fff;
-    border-radius: 4px;
-    margin: 0 5px;
-    background: {
-      color: #e5e5e5;
-    }
-  }
-  .el-pager .el-icon {
-
-  }
-  .el-pager li.btn-quicknext, .el-pager li.btn-quickprev {
-    color: #fff;
-    line-height: 40px;
-  }
-  //过度
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .3s
-  }
-  .fade-enter, .fade-leave-to /* .fade-leave-active in below version 2.1.8 */ {
-    opacity: 0
-  }
-  //编辑资料
-  .qwe .el-form-item__label{
-    @include fontSize(20px, #666666); 
-  }
-  .qwe:first-child .el-form-item__label {
-    &::before {
-      content: '*';
-      color: #ff1111;
-      margin: {
-        right: 5px;
-      }
-    }
-  }
-  //播放器
-  .vjs-custom-skin > .video-js {
-    height: 100%;
-  }
+}
+//播放器
+.vjs-custom-skin > .video-js {
+  height: 100%;
+}
 </style>
 
 <template>
@@ -166,56 +172,64 @@ export default {
     weChatSigin () {
       // console.log(this.$route.query);
       let search = '';
+      if (sessionStorage.token) {
+        let data = sessionStorage.user;
+        // console.log(data);
+        // this.$store.commit('LOGIN_SUCCESS', data);
+      }
       if(!window.location.search) {
         return
       }
-      search = window.location.search.split('?')[1].split('&');
-      let user = {};
+      search = window.location.search.split('?')[1].split('&') ;
+      let user = {
+        token: '',
+        user_info: {}
+      };
+      // console.log(search);
       if( search ) {
         search.map( (value, index) => {
           if( value.split('token=')[1] ) {
-            user.token = value.split('token=')[1]
+            user.token = decodeURI(value.split('token=')[1])
           }
           if( value.split('avatar=')[1] ) {
-            user.token = value.split('avatar=')[1]
+            user.user_info.avatar = unescape(value.split('avatar=')[1])
           }
           if( value.split('nick_name=')[1] ) {
-            user.token = value.split('nick_name=')[1]
+            user.user_info.username = decodeURI(value.split('nick_name=')[1]);
           }
         })
         sessionStorage.setItem('token', user.token);
-        this.axios({
-          url: `/api/oauth?redirect_type=wx&state=${sessionStorage.state}`,
-          method: 'get',
-          headers: {
-              'Authorization': sessionStorage.token,
-          },
-        }).then( (res) => {
-          if(res.data.status_code) {
-            this.$store.commit('LOGIN_SUCCESS', user);
-            this.$message({
-              message: '登录成功',
-              type: 'success'
-            });
-            this.$router.push('/home');
-          }else {
-            this.$alert(res.data.msg,'错误',{
-              type: 'warning'
-            })
-          }
-        }).catch( (error) => {
-          console.log(error)
-          this.$alert('网络连接超时或网络错误','错误',{
-            type: 'warning'
-          })
-        })
-
-        
+        this.$store.commit('LOGIN_SUCCESS', user);
+        // this.axios({
+        //   url: `/api/oauth?redirect_type=wx&state=${sessionStorage.state}`,
+        //   method: 'get',
+        //   headers: {
+        //       'Authorization': sessionStorage.token,
+        //   },
+        // }).then( (res) => {
+        //   if(res.data.status_code) {
+        //     this.$store.commit('LOGIN_SUCCESS', user);
+        //     this.$message({
+        //       message: '登录成功',
+        //       type: 'success'
+        //     });
+            
+        //   }else {
+        //     this.$alert(res.data.msg,'错误',{
+        //       type: 'warning'
+        //     })
+        //   }
+        // }).catch( (error) => {
+        //   console.log(error)
+        //   this.$alert('网络连接超时或网络错误','错误',{
+        //     type: 'warning'
+        //   })
+        // })
       }
     }
   },
   mounted () {
-    // this.$store.commit('LOGIN_OR_NOT');
+    this.$store.commit('LOGIN_OR_NOT');
     this.weChatSigin();
   },
   watch: {

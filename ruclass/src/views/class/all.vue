@@ -1,111 +1,111 @@
 <style lang="scss" scoped>
-    @mixin fontSize($size, $color) {
-        font-size: $size - 2;
-        color: $color;
+@mixin fontSize($size, $color) {
+  font-size: $size - 2;
+  color: $color;
+}
+.homeList {
+  width: 100%;
+  background: {
+    color: #fff;
+  }
+  > div {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 50px 0 25px;
+    > h3 {
+      @include fontSize(28px, #444444);
+      margin: {
+        bottom: 25px;
+      }
     }
-    .homeList {
-        width: 100%;
+  }
+}
+.chose {
+  margin: {
+    bottom: 25px;
+  }
+  > ul {
+    display: table;
+    margin: {
+      bottom: 25px;
+    }
+    > li {
+      display: inline-table;
+      vertical-align: bottom;
+    }
+    > li:nth-child(1) {
+      @include fontSize(22px, #666666);
+      margin: {
+        right: 20px;
+      }
+    }
+    > li:nth-child(2) {
+      @include fontSize(20px, #999999);
+      margin: {
+        right: 10px;
+      }
+      > span {
+        margin: 0 20px;
+        cursor: pointer;
+      }
+    }
+    > li:nth-child(3) {
+      @include fontSize(20px, #666666);
+      input {
+        display: none;
+      }
+      label {
+        display: inline-block;
+        width: 14px;
+        height: 14px;
         background: {
-            color: #fff;
+          image: url("../../../static/images/4.png");
         }
-        >div {
-            width: 1200px;
-            margin: 0 auto;
-            padding: 50px 0 25px;
-            >h3 {
-                @include fontSize(28px, #444444);
-                margin: {
-                    bottom: 25px;
-                }
-            }
+      }
+      input:checked + label {
+        background: {
+          image: url("../../../static/images/3.png");
         }
+      }
     }
-    .chose {
-        margin: {
-            bottom: 25px;
-        }
-        >ul {
-            display: table;
-            margin: {
-                bottom: 25px;
-            }
-            >li {
-                display: inline-table;
-                vertical-align: bottom;
-            }
-            >li:nth-child(1) {
-                @include fontSize(22px, #666666);
-                margin: {
-                    right: 20px;
-                }
-            }
-            >li:nth-child(2) {
-                @include fontSize(20px, #999999);
-                margin: {
-                    right: 10px;
-                }
-                >span {
-                    margin: 0 20px;
-                    cursor: pointer;
-                }
-            }
-            >li:nth-child(3) {
-                @include fontSize(20px, #666666);
-                input {
-                    display: none;
-                }
-                label {
-                    display: inline-block;
-                    width: 14px;
-                    height: 14px;
-                    background: {
-                        image: url('../../../static/images/4.png')
-                    }
-                }
-                input:checked+label {
-                    background: {
-                        image: url('../../../static/images/3.png')
-                    }
-                }
-            }
-            .colorSpan {
-                color: #3399ff;
-                font-weight: bold;
-            }
-        }
+    .colorSpan {
+      color: #3399ff;
+      font-weight: bold;
     }
-    .allHomeList {
-        .chose {
-            >ul {
-                >li:nth-child(1) {
-                    @include fontSize(24px, #333333);
-                    line-height: 40px;
-                }
-                >li:nth-child(2) {
-                    @include fontSize(20px, #666666);
-                    >span {
-                        margin: 0 5px;
-                        display: inline-block;
-                        min-width: 70px;
-                        padding: 0 10px;
-                        box-sizing: border-box;
-                        height: 40px;
-                        line-height: 40px;
-                        cursor: pointer;
-                        text-align: center;
-                    }
-                }
-                .colorSpan {
-                    color: #fff;
-                    background: {
-                        color: #3399ff;
-                    }
-                    border-radius: 4px;
-                    font-weight: normal;
-                }
-            }
+  }
+}
+.allHomeList {
+  .chose {
+    > ul {
+      > li:nth-child(1) {
+        @include fontSize(24px, #333333);
+        line-height: 40px;
+      }
+      > li:nth-child(2) {
+        @include fontSize(20px, #666666);
+        > span {
+          margin: 0 5px;
+          display: inline-block;
+          min-width: 70px;
+          padding: 0 10px;
+          box-sizing: border-box;
+          height: 40px;
+          line-height: 40px;
+          cursor: pointer;
+          text-align: center;
         }
+      }
+      .colorSpan {
+        color: #fff;
+        background: {
+          color: #3399ff;
+        }
+        border-radius: 4px;
+        font-weight: normal;
+      }
     }
+  }
+}
 </style>
 
 <template>
@@ -205,138 +205,145 @@
 
 <script>
 export default {
-    name: 'all',
-    components: {
-        CardMore: resolve => require(['@/components/cardMore'], resolve)
+  name: "all",
+  components: {
+    CardMore: resolve => require(["@/components/cardMore"], resolve)
+  },
+  data() {
+    return {
+      upLoadData: {
+        //分类
+        classification: -1,
+        //类别
+        category: -1,
+        //付费
+        giveMoney: 0,
+        //直播录播
+        broadcast: []
+      },
+      recommendData: [
+        // {
+        //     className: '课程1',
+        //     money: '0',
+        //     publishing: '我1',
+        //     img: '',
+        //     url: '/home'
+        // },
+      ],
+      category: {
+        title1: [],
+        title2: {},
+        page: 1,
+        count: 2,
+        per_page: 10
+      }
+    };
+  },
+  methods: {
+    //第一次进来初始化数据
+    ajaxAll() {
+      //全部课程 ?page=${this.page}&category=${this.upLoadData.category}&small=${this.upLoadData.classification}
+      let category = "";
+      let small = "";
+      if (this.upLoadData.classification != -1) {
+        category = `&category=${this.upLoadData.classification}`;
+      }
+      if (this.upLoadData.category != -1) {
+        small = `&small=${this.upLoadData.category}`;
+      }
+      this.axios
+        .get(`/api/course?page=${this.category.page}${category}${small}`)
+        .then(res => {
+          if (res.data.status_code == 200) {
+            this.recommendData = [];
+            setTimeout(() => {
+                res.data.course_list.map((value, index) => {
+                    this.recommendData.splice(index, 1, {
+                        className: value.name,
+                        money: value.price,
+                        publishing: value.publisher,
+                        img: value.img,
+                        url: `/class/recording/${value.id}`
+                    });
+                    // this.recommendData[index] = {
+                    //     className: value.name,
+                    //     money: value.price,
+                    //     publishing: value.publisher,
+                    //     img: value.img,
+                    //     url: `/class/recording/${value.id}`
+                    // }
+                });
+                this.category.count = res.data.page_info.count;
+                this.category.per_page = res.data.page_info.per_page;
+            }, 10);
+          } else {
+            this.$alert(res.data.msg, "错误", {
+                type: "warning"
+            });
+          }
+        })
+        .catch(error => {
+            console.log(erroe);
+            this.$alert("网络连接超时或网络错误", "错误", {
+                type: "warning"
+            });
+        });
     },
-    data () {
-        return {
-            upLoadData: {
-                //分类
-                classification: -1,
-                //类别
-                category: -1,
-                //付费
-                giveMoney: 0,
-                //直播录播
-                broadcast: []
-            },
-            recommendData:[
-                // {
-                //     className: '课程1',
-                //     money: '0',
-                //     publishing: '我1',
-                //     img: '',
-                //     url: '/home'
-                // },
-            ],
-            category: {
-                title1: [],
-                title2: {},
-                page: 1,
-                count: 2,
-                per_page: 10
-            }
-        }
+    //改变页数
+    getPage(num) {
+      this.category.page = num;
+      this.ajaxAll();
     },
-    methods: {
-        //第一次进来初始化数据
-        ajaxAll () {
-            //全部课程 ?page=${this.page}&category=${this.upLoadData.category}&small=${this.upLoadData.classification}
-            let category = '';
-            let small = '';
-            if(this.upLoadData.classification != -1) {
-                category = `&category=${this.upLoadData.classification}`;
-            }
-            if(this.upLoadData.category != -1) {
-                small = `&small=${this.upLoadData.category}`;
-            }
-            this.axios.get(`/api/course?page=${this.category.page}${category}${small}`).then( (res) => {
-                if( res.data.status_code == 200 ) {
-                    this.recommendData = [];
-                    res.data.course_list.map(  (value, index) => {
-                        // this.recommendData.splice(index, 1, {
-                        //     className: value.name,
-                        //     money: value.price,
-                        //     publishing: value.publisher,
-                        //     img: value.img,
-                        //     url: `/class/recording/${value.id}`
-                        // })
-                        this.recommendData[index] = {
-                            className: value.name,
-                            money: value.price,
-                            publishing: value.publisher,
-                            img: value.img,
-                            url: `/class/recording/${value.id}`
-                        }
-                    })
-                    this.category.count = res.data.page_info.count;
-                    this.category.per_page = res.data.page_info.per_page;
-                }else {
-                    this.$alert(res.data.msg,'错误',{
-                        type: 'warning'
-                    })
-                }
-            }).catch( (error) => {
-                console.log(erroe);
-                this.$alert('网络连接超时或网络错误','错误',{
-                    type: 'warning'
-                })
-            })
-        },
-        //改变页数
-        getPage (num) {
-            this.category.page = num;
-            this.ajaxAll();
-        },
-        //获取分类
-        getCategory () {
-            //获取分类
-            this.axios.get('/api/category').then( (res) => {
-                if(res.data.status_code == 200) {
-                    res.data.category_list.map( (value, index) => {
-                        this.category.title1[index] = value.name;
-                        this.category.title2[value.name] = [];
-                        value.small_list.map( (text, ind) => {
-                            this.category.title2[value.name][ind] = text;
-                        })
-                    })
-
-                }else {
-                    this.$alert(res.data.msg,'错误',{
-                        type: 'warning'
-                    })
-                }
-            }).catch( (error) => {
-                console.log(error);
-                this.$alert('网络连接超时或网络错误','错误',{
-                    type: 'warning'
-                })
-            })
-        },
-    },
-    mounted () {
-        const query = this.$route.query;
-        if( query.category ) {
-            this.upLoadData.classification = decodeURI(query.category);
-        }
-        if ( query.small ) {
-            this.upLoadData.category = decodeURI(query.small);
-        }
-        setTimeout( () => {
-            this.getCategory();
-            this.ajaxAll();
-        },10)
-    },
-    watch: {
-        'upLoadData.classification' () {
-            this.category.page = 1;
-            this.ajaxAll();
-        },
-        'upLoadData.category' () {
-            this.category.page = 1;
-            this.ajaxAll();
-        }
+    //获取分类
+    getCategory() {
+      //获取分类
+      this.axios
+        .get("/api/category")
+        .then(res => {
+          if (res.data.status_code == 200) {
+            res.data.category_list.map((value, index) => {
+              this.category.title1[index] = value.name;
+              this.category.title2[value.name] = [];
+              value.small_list.map((text, ind) => {
+                this.category.title2[value.name][ind] = text;
+              });
+            });
+          } else {
+            this.$alert(res.data.msg, "错误", {
+              type: "warning"
+            });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          this.$alert("网络连接超时或网络错误", "错误", {
+            type: "warning"
+          });
+        });
     }
-}
+  },
+  mounted() {
+    const query = this.$route.query;
+    if (query.category) {
+      this.upLoadData.classification = decodeURI(query.category);
+    }
+    if (query.small) {
+      this.upLoadData.category = decodeURI(query.small);
+    }
+    setTimeout(() => {
+      this.getCategory();
+      this.ajaxAll();
+    }, 10);
+  },
+  watch: {
+    "upLoadData.classification"() {
+      this.category.page = 1;
+      this.ajaxAll();
+    },
+    "upLoadData.category"() {
+      this.category.page = 1;
+      this.ajaxAll();
+    }
+  }
+};
 </script>

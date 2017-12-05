@@ -243,10 +243,11 @@ export default {
                     data.payTime = data.out_trade_no.slice(0,8);
                     data.payTime = `${data.payTime.slice(0, 4)}-${data.payTime.slice(4, 6)}-${data.payTime.slice(5, 7)}`
                     data.howPay = this.$route.query.how;
+                    // console.log(data);
                     this.$store.commit('PAY_CLASS_INFORMATION', data);
-                    this.timer = setInterval( () => {
-                        this.wxPayOrNot()
-                    }, 3000);
+                    // this.timer = setInterval( () => {
+                    //     this.wxPayOrNot()
+                    // }, 3000);
                 }else {
                     if(res.data.msg == 'invalid token') {
                         this.$alert('请先登录','错误',{
@@ -280,15 +281,15 @@ export default {
                     'Authorization': sessionStorage.token,
                 }
             }).then( (res) => {
-                if(res.status_code == 201) {
+                if(res.data.status_code == 200) {
                     clearInterval(this.timer);
-                    his.$alert('支付成功','提示',{
+                    this.$alert('支付成功','提示',{
                         type: 'success',
                         callback: () => {
                             // this.$router.push(`okPay/${this.$route.params.id}`)
                             this.$router.push({
-                                path: `okPay/${this.$route.params.id}`,
-                                name: $store.state.POPUP_PAY_CLASS.name,
+                                path: `/okPay/${this.$route.params.id}`,
+                                // name: this.$store.state.POPUP_PAY_CLASS.name,
                                 // time: 
                             })
                         }

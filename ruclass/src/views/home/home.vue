@@ -292,47 +292,19 @@ export default {
       cooperation: [
         {
           text: '汝乐FM',
-          url: '/hone/123'
+          url: '/home/123'
         },
         {
-          text: '汝乐FM',
-          url: '/hone/123'
+          text: '阿里云',
+          url: '/home/123'
         },
         {
-          text: '汝乐FM',
-          url: '/hone/123'
+          text: '七牛',
+          url: '/home/123'
         },
         {
-          text: '汝乐FM',
-          url: '/hone/123'
-        },
-        {
-          text: '汝乐FM',
-          url: '/hone/123'
-        },
-        {
-          text: '汝乐FM',
-          url: '/hone/123'
-        },
-        {
-          text: '汝乐FM',
-          url: '/hone/123'
-        },
-        {
-          text: '汝乐FM',
-          url: '/hone/123'
-        },
-        {
-          text: '汝乐FM',
-          url: '/hone/123'
-        },
-        {
-          text: '汝乐FM',
-          url: '/hone/123'
-        },
-        {
-          text: '汝乐FM',
-          url: '/hone/123'
+          text: '腾讯视频',
+          url: '/home/123'
         }
       ]
     }
@@ -344,8 +316,8 @@ export default {
         if(res.data.status_code == 200) {
           //banner
           res.data.banners_list.map( (value, index) => {
-            this.bg.img[index] = value.img;
-            this.bg.url[index] = `/class/recording/${value.course_id}`;
+            this.bg.img.splice(index, 1, value.img);
+            this.bg.url.splice(index, 1, `/class/recording/${value.course_id}`)
           })
 
           //精选

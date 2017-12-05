@@ -221,6 +221,7 @@ export default {
                 })
             })
         },
+        
     },
     mounted () {
         this.aiPayFromOrWeChatFrom();

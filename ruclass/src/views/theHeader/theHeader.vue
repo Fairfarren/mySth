@@ -4,7 +4,7 @@
   color: $color;
 }
 //导航高度
-$navHeight: 56px;
+$navHeight: 88px;
 #theHeader {
   width: 100%;
 }
@@ -31,7 +31,10 @@ $navHeight: 56px;
           height: $navHeight;
 					display: inline-block;
           img {
-            vertical-align: bottom;
+            // vertical-align: bottom;
+						margin: {
+							top: 15px;
+						}
           }
           b {
 						line-height: $navHeight;
@@ -96,7 +99,6 @@ $navHeight: 56px;
 									<div>
 										<router-link to="/home">
 											<img src="../../../static/images/0.png" alt="">
-											<b>汝课堂</b>
 										</router-link>
 									</div>
 									<div class="navButton">

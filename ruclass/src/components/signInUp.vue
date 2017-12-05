@@ -505,10 +505,11 @@ export default {
         //微信登录
         wxSignUp () {
             //http://192.168.3.28:5000/api/oauth?redirect_type=wx
+
             this.axios.get(`/api/state?url=${window.location.href}`).then( (res) => {
                 if(res.data.status_code == 200) {
                     sessionStorage.setItem('state', res.data.state);
-                    window.location.href = 'http://192.168.3.28:5000/api/oauth?redirect_type=wx'
+                    window.location.href = `http://www.ruketang.com/api/oauth?redirect_type=wx&state=${sessionStorage.state}`
                 }else {
                     this.$alert(res.data.msg,'错误',{
                         type: 'warning'

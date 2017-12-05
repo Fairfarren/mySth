@@ -173,8 +173,10 @@ export default {
                     'course_id': this.$route.params.id
                 }
             }).then( (res) => {
+                
                 if(res.data.status_code == 201) {
                     this.$store.commit('CLOSE_PUPUP');
+                    location.reload([false])
                 }else {
                     if(res.data.msg == 'invalid token') {
                         this.$alert('请先登录','错误',{

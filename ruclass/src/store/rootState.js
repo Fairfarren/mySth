@@ -1,6 +1,6 @@
 const state = {
     DETAILED_SHOW: true,
-    DETAILED_SHOW_MARGIN: '56px',
+    DETAILED_SHOW_MARGIN: '88px',
     POPUP_SHOW: {
         show: false,
         who: 'signInUp'
