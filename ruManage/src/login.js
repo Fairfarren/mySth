@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import {
     Row,
-    Col,
     Input,
     Icon,
     Button,
@@ -29,7 +28,7 @@ class LoginForm extends Component {
                     email: values.userName,
                     password: values.password
                 }).then(function (res) {
-                    if (res.data.status_code == 200) {
+                    if (res.data.status_code === 200) {
                         sessionStorage.setItem('token', res.data.token);
                         store.user.token = res.data.token;
                     } else {
@@ -64,7 +63,7 @@ class LoginForm extends Component {
                             validateStatus={userNameError ? 'error' : ''}
                             help={userNameError || ''}>
                             {getFieldDecorator('userName', {
-                                rules: [{ required: true, message: '请输入用户名' },],
+                                rules: [{ required: true, message: '请输入用户名' }],
                             })(
                                 <Input
                                     prefix={<Icon type="user" style={{ fontSize: 16 }} />}

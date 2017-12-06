@@ -31,16 +31,16 @@ class TheHeader extends Component {
     render() {
         return (
             <div id="header">
-                <Row type="flex" justify="space-between" align="bottom">
+                <Row type="flex" justify="space-between" align="middle">
                     <Col span={4}>
-                        <img src="" alt="logo" />
+                        <img src={require('../../static/images/0.png')} alt="logo" />
                     </Col>
                     <Col span={1}>
                         <Dropdown overlay={this.menu}>
                             <Icon 
                                 type="user" 
                                 className="userImg" 
-                                style={{color: '#6AB6F1',lineHeight: '64px'}}/>
+                                style={{color: '#6AB6F1'}}/>
                         </Dropdown>
                     </Col>
                 </Row>

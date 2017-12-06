@@ -6,26 +6,45 @@ import { observer } from 'mobx-react';
 import {
 	BrowserRouter as Router,
 	Route,
-	NavLink,
 	Switch,
 	Redirect
 } from 'react-router-dom'
-//路由
-//登录页面
-import LoginView from './login'
-//头部
-import TheHeader from './views/theHeader/theHeader'
-//侧边栏按钮
+
+//异步加载组件
+import Bundle from './bundle'
+//同步加载头部，列表，和登录页
 import SiderList from './views/sider/siderList'
-
-import Class from './views/content/class'
-import Category from './views/content/category'
-import Recommend from './views/content/recommend'
-
+import TheHeader from './views/theHeader/theHeader'
+import LoginView from './login'
 //antd
 import { Layout } from 'antd';
-const { Header, Footer, Sider, Content } = Layout;
+const { Header, Sider, Content } = Layout;
 
+//路由
+//登录
+// const LoginView = (props) => (
+// 	<Bundle load={() => import('./login')}>
+// 		{(Demo) => <Demo {...props} />}
+// 	</Bundle>
+// )
+//内容中心/课程管理
+const TheClass = (props) => (
+	<Bundle load={() => import('./views/content/class')}>
+		{(Demo) => <Demo {...props} />}
+	</Bundle>
+)
+//内容中心/类别管理
+const Category = (props) => (
+	<Bundle load={() => import('./views/content/category')}>
+		{(Demo) => <Demo {...props} />}
+	</Bundle>
+)
+//内容中心/推荐位设置
+const Recommend = (props) => (
+	<Bundle load={() => import('./views/content/recommend')}>
+		{(Demo) => <Demo {...props} />}
+	</Bundle>
+)
 
 @observer
 class App extends Component {
@@ -60,8 +79,8 @@ class App extends Component {
 								{/* 内容 */}
 								<Content>
 									<Switch>
-										<Route path="/" exact render={ ()=>( <Redirect to="/class" />)} />
-										<Route path="/class" component={Class} />
+										<Route path="/" exact render={() => (<Redirect to="/class" />)} />
+										<Route path="/class" render={() => (<TheClass axios={this.props.axios} />)} />
 										<Route path="/category" component={Category} />
 										<Route path="/recommend" component={Recommend} />
 									</Switch>
@@ -75,5 +94,7 @@ class App extends Component {
 		);
 	}
 }
+
+
 
 export default App;

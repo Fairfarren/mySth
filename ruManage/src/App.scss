@@ -74,10 +74,11 @@ li {
 }
 .ant-layout-sider {
 	background: #fff !important;
+	box-shadow: 2px 0 6px -3px rgba(0, 0, 0, 0.4)
 }
 .ant-menu-submenu {
 	background: {
-		color: #ECECEC;
+		color: #F7F7F7;
 	}
 }
 
@@ -108,5 +109,33 @@ li {
 	}
 	background: {
 		color: #fff;
+	}
+}
+.contentHeaderButton {
+	padding: 0 20px;
+	margin: {
+		top: 20px;
+	}
+}
+// 课程管理
+#classListTable {
+	td {
+		img {
+			max-width: 100px;
+		}
+	}
+}
+// 添加课程
+#classImgFile {
+	display: none;
+}
+#classImgFileLabel {
+	width: 50px;
+	height: 50px;
+	padding: 20px 10px;
+	// border: 1px black dashed;
+	i {
+		vertical-align: middle;
+		font-size: 50px;
 	}
 }
