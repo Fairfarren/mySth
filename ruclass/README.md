@@ -1,23 +1,10 @@
-## 安装
+# 安装
 
-11 - 7 : sass
+脚手架：
+>$ create-react-app my-app --scripts-version custom-react-script
 
-11 - 7 : element-ui
+mobx, mobx-react
 
-11 - 7 : vuex
-
-11 - 8 : vue-lazyload
-
-11 - 13 : videojs-contrib-hls
-
-11 - 13 : videojs-flash
-
-11 - 13 : vue-video-player
-
-11 - 14 : md5
-
-11 - 15 : axios
-
-## 配置
-
-11 - 7 : 添加sass配置
+1. 11-30 : `antd`
+1. 11-30 : `react-router-dom`
+1. 12-01 : `axios`
