@@ -40,12 +40,19 @@ class AddClass extends Component {
             name: '暂无数据'
         }],
         //end类别选择
+        //合作机构，讲师
+        publisher: [{
+            id: '-1',
+            name: '暂无数据'
+        }],
+        //end合作机构，讲师
         classImgSrc: '',//课程图片
         time: null,//改变时间
         day: null
     }
     componentDidMount() {
         this.getCategoryAjax();
+        this.getPublisherAjax();
     }
     //弹窗
     showModal = () => {
@@ -54,14 +61,40 @@ class AddClass extends Component {
         });
     }
     handleOk = (e) => {
-        console.log(e);
+        // console.log(e);
         this.addClassSubmitOk();
     }
     handleCancel = (e) => {
-        console.log(e);
+        // console.log(e);
         this.setState({
             visible: false,
         });
+    }
+    //获取机构列表
+    getPublisherAjax = () => {
+        const { axios } = this.props;
+        axios({
+            url: '/admin/publisher',
+            method: 'get',
+            headers: {
+                'Authorization': sessionStorage.token,
+            }
+        }).then((res) => {
+            if (res.status_code === 200) {
+
+            } else {
+                Modal.warning({
+                    title: '警告',
+                    content: res.msg,
+                });
+            }
+        }).catch((error) => {
+            console.log(error);
+            Modal.error({
+                title: '出错了！',
+                content: '网络连接错误或者服务器无响应',
+            });
+        })
     }
     //获取小类，大类直接从父级拿
     getCategoryAjax = (value) => {
@@ -190,7 +223,7 @@ class AddClass extends Component {
             formData.append('small_id', values.small);
             formData.append('publisher_id', values.publisher_id);
             let imgFile = this.refs.classimgFile;
-            formData.append('img', imgFile);
+            formData.append('img', imgFile.files[0]);
             axios({
                 url: '/admin/course',
                 method: 'post',
@@ -203,9 +236,12 @@ class AddClass extends Component {
                 if (res.data.status_code === 200) {
 
                 } else {
+                    this.setState({
+                        submitLoging: false
+                    })
                     Modal.warning({
                         title: '警告',
-                        content: res.msg,
+                        content: res.data.msg,
                     });
                 }
             }).catch((error) => {
@@ -226,6 +262,11 @@ class AddClass extends Component {
             )
         })
         const smallList = this.state.small.map((value, index) => {
+            return (
+                <Option key={index} value={value.id}>{value.name}</Option>
+            )
+        })
+        const publisher = this.state.publisher.map((value, index) => {
             return (
                 <Option key={index} value={value.id}>{value.name}</Option>
             )
@@ -288,12 +329,11 @@ class AddClass extends Component {
                             {...formItemLayout}
                             label="合作机构"
                         >
-                            {getFieldDecorator('currency', {
-                                initialValue: '0',
+                            {getFieldDecorator('publisher', {
+                                initialValue: this.state.publisher[0].id,
                             })(
                                 <Select>
-                                    <Option key="0" value="0">妹妹婚礼</Option>
-                                    <Option key="1" value="1">美美婚礼</Option>
+                                    {publisher}
                                 </Select>
                                 )}
                         </FormItem>
@@ -317,7 +357,7 @@ class AddClass extends Component {
                             label="是否推荐"
                         >
                             {getFieldDecorator('is_selection', {
-                                initialValue: '0',
+                                initialValue: true,
                             })(
                                 <Radio.Group>
                                     <Radio key="0" value={true}>推荐</Radio>

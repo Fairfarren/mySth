@@ -14,7 +14,11 @@ class SiderList extends Component {
         // console.log('click ', e);
     }
     render() {
-        const location = window.location.href.split('/')[3] || 'class';
+        let location = window.location.href.split('/')[3] || 'class';
+        switch(location) {
+            case 'small': location = 'category';break;
+            default: break;
+        }
         return (
             <Menu
                 onClick={this.handleClick}

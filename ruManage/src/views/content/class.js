@@ -22,7 +22,7 @@ const AddClass = (props) => (
 
 class Class extends Component {
     state = {
-        //表格内容
+        //表格格式
         columns: [{
             title: '课程名称',
             dataIndex: 'name',
@@ -89,7 +89,7 @@ class Class extends Component {
                 </div>
             )
         }],
-        data: [],
+        data: [],//表格数据
         page: 1,
         total: 10,
         //下拉菜单
@@ -315,6 +315,9 @@ class Class extends Component {
                         {smallOptions}
                     </Select>
                     <Button type="primary" onClick={() => {
+                        this.setState({
+                            page: 1
+                        })
                         this.getClassListOnClassAjax('haveSmallId')
                     }}>
                         按类查看

@@ -39,6 +39,12 @@ const Category = (props) => (
 		{(Demo) => <Demo {...props} />}
 	</Bundle>
 )
+//内容中心/二级分类列表
+const Small = (props) => (
+	<Bundle load={() => import('./views/content/small')}>
+		{(Demo) => <Demo {...props} />}
+	</Bundle>
+)
 //内容中心/推荐位设置
 const Recommend = (props) => (
 	<Bundle load={() => import('./views/content/recommend')}>
@@ -81,8 +87,9 @@ class App extends Component {
 									<Switch>
 										<Route path="/" exact render={() => (<Redirect to="/class" />)} />
 										<Route path="/class" render={() => (<TheClass axios={this.props.axios} />)} />
-										<Route path="/category" component={Category} />
-										<Route path="/recommend" component={Recommend} />
+										<Route path="/small/:id" render={() => (<Small axios={this.props.axios} />)} />
+										<Route path="/category" render={() => (<Category axios={this.props.axios} />)} />
+										<Route path="/recommend" render={() => (<Recommend axios={this.props.axios} />)} />
 									</Switch>
 								</Content>
 							</Layout>
