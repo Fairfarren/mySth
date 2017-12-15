@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { withRouter } from 'react-router-dom'
+import { withRouter, NavLink } from 'react-router-dom'
 //懒加载组件
 import Bundle from '../../bundle'
 
@@ -11,6 +11,7 @@ import {
     Select,
     Modal
 } from 'antd';
+import { setTimeout } from 'core-js/library/web/timers';
 const Option = Select.Option;
 
 const AddClass = (props) => (
@@ -18,7 +19,11 @@ const AddClass = (props) => (
         {(Demo) => <Demo {...props} />}
     </Bundle>
 )
-
+const ChangeClass = (props) => (
+    <Bundle load={() => import('../../components/changeClass')}>
+        {(Demo) => <Demo {...props} />}
+    </Bundle>
+)
 
 class Class extends Component {
     state = {
@@ -31,28 +36,39 @@ class Class extends Component {
             title: '课程图',
             key: 'img',
             render: (text, record) => (
-                <img src={text.img} alt="课程图"/>
+                <img src={text.img} alt="课程图" />
             )
         }, {
             title: '机构',
             dataIndex: 'publisher',
             key: 'publisher',
+            render: (text, record) => {
+                if (record['publisher']) {
+                    return record['publisher']
+                } else {
+                    return '此课程没有加入机构'
+                }
+            }
         }, {
             title: '讲师',
-            dataIndex: 'teach',
-            key: 'teach'
+            dataIndex: 'lecturer',
+            key: 'lecturer'
         }, {
             title: '学习人数',
-            dataIndex: 'person',
-            key: 'person'
+            dataIndex: 'count',
+            key: 'count'
         }, {
             title: '授课时间',
             dataIndex: 'time',
             key: 'time'
         }, {
-            title: '类别',
-            dataIndex: 'class',
-            key: 'class'
+            title: '大类',
+            dataIndex: 'category',
+            key: 'category'
+        }, {
+            title: '小类',
+            dataIndex: 'small',
+            key: 'small'
         }, {
             title: '价格(元)',
             dataIndex: 'price',
@@ -61,33 +77,52 @@ class Class extends Component {
             title: '编辑',
             key: 'change',
             render: (text, record) => (
-                <a onClick={this.changeClass} type="primary">编辑</a>
+                <a onClick={() => {
+                    this.changeClass(record['id']);
+                }} type="primary">编辑</a>
             )
         }, {
             title: '课时数',
-            dataIndex: 'classNumber',
-            key: 'classNumber'
+            dataIndex: 'lesson_count',
+            key: 'lesson_count'
         }, {
-            title: '查看分课时',
+            title: '查看章节',
             dataIndex: 'lookClassList',
             key: 'lookClassList',
             render: (text, record) => (
-                <a type="primary">查看分课时</a>
+                <NavLink to={`/class/chapter/${record['id']}/${record['name']}`} type="primary">查看章节</NavLink>
             )
         }, {
-            title: '推荐状态',
-            dataIndex: 'status',
-            key: 'status'
+            title: '是否推荐',
+            key: 'is_banner',
+            render: (text, record) => {
+                if (record['is_banner']) {
+                    return '已推荐'
+                } else {
+                    return '没有推荐'
+                }
+            }
         }, {
             title: '操作',
             key: 'action',
-            render: (text, record) => (
-                <div>
-                    <Button type="primary">推荐</Button>
-                    <Button>取消推荐</Button>
-                    <Button type="danger">删除</Button>
-                </div>
-            )
+            render: (text, record) => {
+                if (record['is_banner']) {
+                    return (
+                        <div>
+                            <Button>取消推荐</Button>
+                            <Button type="danger">删除</Button>
+                        </div>
+                    )
+                } else {
+                    return (
+                        <div>
+                            <Button type="primary">推荐</Button>
+                            <Button type="danger">删除</Button>
+                        </div>
+                    )
+                }
+
+            }
         }],
         data: [],//表格数据
         page: 1,
@@ -106,8 +141,12 @@ class Class extends Component {
             categoryIndex: '-1',
             smallIndex: '-1'
         },
+        //列表等待
+        tableListLoading: true,
         //添加课程弹窗
-        addClassVisible: false
+        addClassVisible: false,
+        changeClassVisible: false,
+        classId: 0
     }
     componentDidMount() {
         let obj = this.state.downList;
@@ -135,6 +174,9 @@ class Class extends Component {
         } else {
             url = `/admin/course/page/${this.state.page}`
         }
+        this.setState({
+            tableListLoading: true
+        })
         axios({
             url: url,
             method: 'get',
@@ -144,11 +186,12 @@ class Class extends Component {
         }).then((res) => {
             if (res.data.status_code === 200) {
                 this.setState({
-                    data: []
+                    data: [],
                 })
                 this.setState({
                     data: res.data.course_list,
-                    total: res.data.page_info.count
+                    total: res.data.page_info.count,
+                    tableListLoading: false
                 })
             } else {
                 Modal.warning({
@@ -165,8 +208,11 @@ class Class extends Component {
         })
     }
     //编辑
-    changeClass = (e) => {
-
+    changeClass = (id) => {
+        this.setState({
+            changeClassVisible: true,
+            classId: id
+        })
     }
     //查看分课时
     lookClassList = (e) => {
@@ -326,6 +372,7 @@ class Class extends Component {
                 <div className="contentContent" id="classListTable">
                     {/* 表格 */}
                     <Table
+                        loading={this.state.tableListLoading}
                         rowKey="id"
                         columns={this.state.columns}
                         dataSource={this.state.data}
@@ -338,11 +385,41 @@ class Class extends Component {
                             this.setState({
                                 page: tableList.current
                             })
+                            setTimeout(() => {
+                                this.getClassListOnClassAjax()
+                            }, 10)
                         }} />
                 </div>
                 {/* 弹窗 */}
                 {
-                    this.state.addClassVisible && <AddClass category={this.state.downList.categoryList} axios={this.props.axios} toggle={this.state.addClassVisible} />
+                    this.state.addClassVisible &&
+                    <AddClass
+                        category={this.state.downList.categoryList}
+                        axios={this.props.axios}
+                        toggle={this.state.addClassVisible}
+                        closeModal={() => {
+                            setTimeout(() => {
+                                this.setState({
+                                    addClassVisible: false
+                                })
+                            }, 300)
+                        }}
+                    />
+                }
+                {
+                    this.state.changeClassVisible &&
+                    <ChangeClass
+                        category={this.state.downList.categoryList}
+                        axios={this.props.axios}
+                        toggle={this.state.changeClassVisible}
+                        classId={this.state.classId}
+                        closeModal={() => {
+                            this.setState({
+                                changeClassVisible: false
+                            })
+                        }}
+                        upDataList={this.getClassListOnClassAjax}
+                    />
                 }
 
             </div>

@@ -2,7 +2,8 @@
 import React, { Component } from 'react'
 
 import {
-    NavLink
+    NavLink,
+    withRouter
 } from 'react-router-dom'
 
 import { Menu, Icon } from 'antd';
@@ -14,7 +15,7 @@ class SiderList extends Component {
         // console.log('click ', e);
     }
     render() {
-        let location = window.location.href.split('/')[3] || 'class';
+        let location = this.props.location.pathname.split('/')[1] || 'class';
         switch(location) {
             case 'small': location = 'category';break;
             default: break;
@@ -51,4 +52,4 @@ class SiderList extends Component {
     }
 }
 
-export default SiderList;
+export default withRouter(SiderList);

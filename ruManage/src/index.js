@@ -9,8 +9,12 @@ import store from './mobx/index'
 //antd
 // import DatePicker from 'antd/lib/date-picker';
 import 'antd/dist/antd.css';
+import moment from 'moment'
+import 'moment/locale/zh-cn'
 
 import axios from 'axios'
+
+moment.locale('zh-cn');
 
 //axios设置
 axios.defaults.baseURL = 'http://192.168.3.28:5000';

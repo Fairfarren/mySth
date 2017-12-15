@@ -33,7 +33,7 @@ class TheHeader extends Component {
             <div id="header">
                 <Row type="flex" justify="space-between" align="middle">
                     <Col span={4}>
-                        <img src={require('../../static/images/0.png')} alt="logo" />
+                        <img src={require('../../static/images/0.png')} alt="logo" width="150"/>
                     </Col>
                     <Col span={1}>
                         <Dropdown overlay={this.menu}>

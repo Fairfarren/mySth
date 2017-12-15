@@ -26,6 +26,13 @@ li {
 	margin: 16px;
 }
 
+//返回按钮
+.goBack {
+	margin: {
+		right: 10px !important;
+	}
+}
+
 // 登录
 #login {
 	width: 100%;
@@ -134,4 +141,8 @@ li {
 		vertical-align: middle;
 		font-size: 50px;
 	}
+}
+//课时管理，添加课时
+#upVideo {
+	display: none;
 }

@@ -13,6 +13,11 @@ import {
     DatePicker
 } from 'antd'
 import { setTimeout } from 'core-js/library/web/timers';
+
+import moment from 'moment';
+import 'moment/locale/zh-cn';
+moment.locale('zh-cn');
+
 //表单方法
 const FormItem = Form.Item;
 const formItemLayout = {
@@ -29,7 +34,7 @@ function hasErrors(fieldsError) {
 }
 //end表单方法
 
-class AddClass extends Component {
+class ChangeClass extends Component {
     state = {
         submitLoging: false,
         //弹窗
@@ -58,12 +63,28 @@ class AddClass extends Component {
         //end合作机构，讲师
         classImgSrc: '',//课程图片
         time: null,//改变时间
-        day: null
+        day: null,
+        //课程内容获取到的一些
+        name: '',
+        publisherChange: '',
+        lecturerChange: '',
+        lecturerChange_id: '',
+        date: '',
+        categoryChange: '',
+        smallChange: '',
+        smallChange_id: '',
+        price: '',
+        target: '',
+        crowd: '',
+        desc: ''
+
     }
     componentDidMount() {
-        this.getCategoryAjax();
-        this.getPublisherAjax();
-        this.getPersonalAjax();
+        const { axios } = this.props;
+        axios.all([this.getCategoryAjax(), this.getPublisherAjax(), this.getPersonalAjax()])
+            .then(axios.spread((res01, res02, res03) => {
+
+            }));
     }
     //弹窗
     showModal = () => {
@@ -81,6 +102,67 @@ class AddClass extends Component {
             visible: false,
         });
         this.props.closeModal();
+    }
+    //获取课程详情
+    getClassDetailed = () => {
+        const { axios } = this.props;
+        axios({
+            url: `/admin/course/${this.props.classId}`,
+            method: 'get',
+            headers: {
+                'Authorization': sessionStorage.token,
+            }
+        }).then((res) => {
+            if (res.data.status_code === 200) {
+                this.setState({
+                    name: res.data.data.name,
+                    publisherChange: res.data.data.publisher,
+                    lecturerChange: res.data.data.lecturer,
+                    lecturerChange_id: res.data.data.lecturer_id + '',
+                    date: res.data.data.date,
+                    categoryChange: res.data.data.category,
+                    smallChange: res.data.data.small,
+                    smallChange_id: res.data.data.small_id + '',
+                    price: res.data.data.price,
+                    target: res.data.data.target,
+                    crowd: res.data.data.crowd,
+                    desc: res.data.data.desc,
+                    classImgSrc: res.data.data.img,
+                    isPersonal: res.data.data.publisher ? false : true
+                })
+                let arrLectuer = this.state.lecturer;
+                arrLectuer.unshift({
+                    id: res.data.data.lecturer_id + '',
+                    name: res.data.data.lecturer
+                })
+                let arrSmall = this.state.small;
+                arrSmall.unshift({
+                    id: res.data.data.small_id + '',
+                    name: res.data.data.small
+                })
+                setTimeout(() => {
+                    this.setState({
+                        small: arrSmall,
+                        lecturer: arrLectuer
+                    })
+                    this.props.form.setFieldsValue({
+                        lecturer: this.state.lecturer[0].id,
+                        small: this.state.small[0].id
+                    })
+                }, 10)
+            } else {
+                Modal.warning({
+                    title: '警告',
+                    content: res.msg,
+                });
+            }
+        }).catch((error) => {
+            console.log(error);
+            Modal.error({
+                title: '出错了！',
+                content: '网络连接错误或者服务器无响应',
+            });
+        })
     }
     //获取机构列表
     getPublisherAjax = () => {
@@ -166,6 +248,10 @@ class AddClass extends Component {
                     this.props.form.setFieldsValue({
                         lecturer: this.state.lecturer[0].id
                     })
+                    //没有lecturerChange说明没有获取过详情
+                    if (!this.state.lecturerChange) {
+                        this.getClassDetailed();
+                    }
                 }, 10)
             } else {
                 Modal.warning({
@@ -336,31 +422,35 @@ class AddClass extends Component {
                 })
                 let formData = new FormData();
                 formData.append('name', values.name);
-                let time = `${state.day} ${state.time}`
+                let time = state.day ? `${state.day} ${state.time}` : state.date
                 formData.append('time', time);
                 formData.append('target', values.target);
                 formData.append('crowd', values.crowd);
-                let isToll = '';
-                if (values.price <= 0) {
-                    isToll = true;
+                if (values.price > 0) {
+                    // isToll = true;
+                    formData.append('is_toll', true);
+                    formData.append('price', values.price);
                 } else {
-                    isToll = false;
+                    // isToll = false;
+                    formData.append('is_toll', false);
                 }
-                formData.append('is_toll', isToll);
+                
                 formData.append('desc', values.desc);
-                if( state.isPersonal ) {
+                if (state.isPersonal) {
                     formData.append('lecturer_id', values.isPersonal);
-                }else {
+                } else {
                     formData.append('lecturer_id', values.lecturer);
                 }
-                formData.append('is_selection', values.is_selection);
+                // formData.append('is_selection', values.is_selection);//是否推荐
                 formData.append('small_id', values.small);
                 // formData.append('publisher_id', values.publisher_id);
                 let imgFile = this.refs.classimgFile;
-                formData.append('img', imgFile.files[0]);
+                if (imgFile.files[0]) {
+                    formData.append('img', imgFile.files[0]);
+                }
                 axios({
-                    url: '/admin/course',
-                    method: 'post',
+                    url: `/admin/course/${this.props.classId}`,
+                    method: 'put',
                     headers: {
                         'Authorization': sessionStorage.token,
                         'Content-Type': 'multipart/form-data'
@@ -371,9 +461,12 @@ class AddClass extends Component {
                         const that = this;
                         Modal.success({
                             title: '成功',
-                            content: '添加成功',
+                            content: '修改成功',
                             onOk() {
-                                that.handleCancel();
+                                that.setState({
+                                    visible: false,
+                                });
+                                that.props.closeModal();
                                 that.props.upDataList();
                             }
                         })
@@ -431,7 +524,7 @@ class AddClass extends Component {
         return (
             <div>
                 <Modal
-                    title="添加课程"
+                    title="修改课程"
                     visible={this.state.visible}
                     onOk={this.handleOk}
                     onCancel={this.handleCancel}
@@ -446,7 +539,8 @@ class AddClass extends Component {
                             {getFieldDecorator('name', {
                                 rules: [{
                                     required: true, message: '请输入课程标题',
-                                }]
+                                }],
+                                initialValue: this.state.name
                             })(
                                 <Input placeholder="请输入课程标题" />
                                 )}
@@ -473,7 +567,7 @@ class AddClass extends Component {
                             label="课程来源"
                         >
                             {getFieldDecorator('publisher_id', {
-                                initialValue: '0'
+                                initialValue: this.state.publisherChange ? '0' : '1'
                             })(
                                 <Radio.Group onChange={(e) => {
                                     const value = e.target.value;
@@ -496,10 +590,10 @@ class AddClass extends Component {
                             this.state.isPersonal ?
                                 <FormItem
                                     {...formItemLayout}
-                                    label="合作讲师"
+                                    label="个人讲师"
                                 >
                                     {getFieldDecorator('isPersonal', {
-                                        initialValue: this.state.isLecturer_list[0].id,
+                                        initialValue: this.state.lecturerChange_id,
                                     })(
                                         <Select>
                                             {isLecturer_list}
@@ -512,7 +606,7 @@ class AddClass extends Component {
                                         label="合作机构"
                                     >
                                         {getFieldDecorator('publisher', {
-                                            initialValue: this.state.publisher[0].id,
+                                            initialValue: this.state.publisherChange,
                                         })(
                                             <Select onChange={this.getLecturerAjax}>
                                                 {publisher}
@@ -536,7 +630,7 @@ class AddClass extends Component {
                         }
 
 
-                        <FormItem
+                        {/* <FormItem
                             {...formItemLayout}
                             label="是否推荐"
                         >
@@ -548,7 +642,7 @@ class AddClass extends Component {
                                     <Radio key="1" value={false}>不推荐</Radio>
                                 </Radio.Group>
                                 )}
-                        </FormItem>
+                        </FormItem> */}
 
                         <FormItem
                             {...formItemLayout}
@@ -569,8 +663,20 @@ class AddClass extends Component {
                             label="授课时间"
                             hasFeedback
                         >
-                            <DatePicker onChange={this.dayChange} />
-                            <TimePicker TimePicker onChange={this.timeChange} />
+                            {
+                                this.state.date.length > 0 &&
+                                <div>
+                                    <DatePicker
+                                        defaultValue={moment(this.state.date.split(' ')[0], 'YYYY-MM-DD')}
+                                        onChange={this.dayChange}
+                                    />
+                                    <TimePicker
+                                        defaultValue={moment(this.state.date.split(' ')[1], 'HH:mm:ss')}
+                                        TimePicker
+                                        onChange={this.timeChange}
+                                    />
+                                </div>
+                            }
                         </FormItem>
 
                         <FormItem
@@ -578,7 +684,7 @@ class AddClass extends Component {
                             label="选择大类"
                         >
                             {getFieldDecorator('category', {
-                                initialValue: this.state.category[0].id,
+                                initialValue: this.state.categoryChange,
                             })(
                                 <Select onChange={this.getCategoryAjax}>
                                     {categoryList}
@@ -607,7 +713,8 @@ class AddClass extends Component {
                             {getFieldDecorator('price', {
                                 rules: [{
                                     required: true, message: '输入价格',
-                                }]
+                                }],
+                                initialValue: this.state.price
                             })(
                                 <Input placeholder="输入价格" type="number" />
                                 )}
@@ -621,7 +728,8 @@ class AddClass extends Component {
                             {getFieldDecorator('target', {
                                 rules: [{
                                     required: true, message: '输入课程目标',
-                                }]
+                                }],
+                                initialValue: this.state.target
                             })(
                                 <Input placeholder="输入课程目标" />
                                 )}
@@ -635,7 +743,8 @@ class AddClass extends Component {
                             {getFieldDecorator('crowd', {
                                 rules: [{
                                     required: true, message: '输入适合人群',
-                                }]
+                                }],
+                                initialValue: this.state.crowd
                             })(
                                 <Input placeholder="输入适合人群" />
                                 )}
@@ -649,7 +758,8 @@ class AddClass extends Component {
                             {getFieldDecorator('desc', {
                                 rules: [{
                                     required: true, message: '请输入课程简介',
-                                }]
+                                }],
+                                initialValue: this.state.desc
                             })(
                                 <Input type="textarea" style={{ resize: 'none' }} />
                                 )}
@@ -685,4 +795,4 @@ class AddClass extends Component {
 }
 
 
-export default Form.create()(AddClass);
+export default Form.create()(ChangeClass);

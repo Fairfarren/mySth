@@ -4,7 +4,7 @@ import { observer } from 'mobx-react';
 
 //router
 import {
-	BrowserRouter as Router,
+	HashRouter as Router,
 	Route,
 	Switch,
 	Redirect
@@ -33,6 +33,18 @@ const TheClass = (props) => (
 		{(Demo) => <Demo {...props} />}
 	</Bundle>
 )
+//内容中心/课程管理/章节管理
+const Chapter = (props) => (
+	<Bundle load={() => import('./views/content/chapter')}>
+		{(Demo) => <Demo {...props} />}
+	</Bundle>
+)
+//内容中心/课程管理/章节管理/课时管理
+const ClassHour = (props) => (
+	<Bundle load={() => import('./views/content/classHour')}>
+		{(Demo) => <Demo {...props} />}
+	</Bundle>
+)
 //内容中心/类别管理
 const Category = (props) => (
 	<Bundle load={() => import('./views/content/category')}>
@@ -51,6 +63,7 @@ const Recommend = (props) => (
 		{(Demo) => <Demo {...props} />}
 	</Bundle>
 )
+
 
 @observer
 class App extends Component {
@@ -86,9 +99,11 @@ class App extends Component {
 								<Content>
 									<Switch>
 										<Route path="/" exact render={() => (<Redirect to="/class" />)} />
-										<Route path="/class" render={() => (<TheClass axios={this.props.axios} />)} />
-										<Route path="/small/:id" render={() => (<Small axios={this.props.axios} />)} />
-										<Route path="/category" render={() => (<Category axios={this.props.axios} />)} />
+										<Route path="/class" exact render={() => (<TheClass axios={this.props.axios} />)} />
+										<Route path="/class/chapter/:classId/:className" exact render={() => (<Chapter axios={this.props.axios} />)} />
+										<Route path="/class/chapter/:classId/classHour/:chapterId/:chapterName" exact render={() => (<ClassHour axios={this.props.axios}/>)}/>
+										<Route path="/category" exact render={() => (<Category axios={this.props.axios} />)} />
+										<Route path="/category/small/:categoryId/:categoryName" exact render={() => (<Small axios={this.props.axios} />)} />
 										<Route path="/recommend" render={() => (<Recommend axios={this.props.axios} />)} />
 									</Switch>
 								</Content>

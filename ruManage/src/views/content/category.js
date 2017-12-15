@@ -1,21 +1,30 @@
 import React, { Component } from 'react'
-import { 
+import {
     withRouter,
     NavLink
 } from 'react-router-dom'
 
 //ui框架
 import {
-    Input,
-    Row,
-    Col,
     Table,
     Button,
     Modal,
     Popconfirm
 } from 'antd';
 
-const Search = Input.Search;
+//懒加载组件
+import Bundle from '../../bundle'
+const AddCategory = (props) => (
+    <Bundle load={() => import('../../components/addCategory')}>
+        {(Demo) => <Demo {...props} />}
+    </Bundle>
+)
+
+const ChangeCategory = (props) => (
+    <Bundle load={() => import('../../components/changeCategory')}>
+        {(Demo) => <Demo {...props} />}
+    </Bundle>
+)
 
 class Category extends Component {
     state = {
@@ -27,32 +36,71 @@ class Category extends Component {
             key: 'name'
         }, {
             title: '分类别数',
-            dataIndex: 'smallNumber',
-            key: 'smallNumber'
+            dataIndex: 'count',
+            key: 'count'
         }, {
             title: '编辑',
             dataIndex: 'change',
             key: 'change',
             render: (text, record) => (
                 <a onClick={() => {
-                    console.log(record);
+                    this.setState({
+                        changeCategoryVisible: true,
+                        changeCategoryJson: JSON.stringify(record)
+                    })
                 }} type="primary">编辑</a>
             )
         }, {
             title: '查看分类别',
             dataIndex: 'id',
             key: 'id',
-            render: (text, record) => (
-                <NavLink to={`/small/${text}`}>查看分类别</NavLink>
-            )
+            render: (text, record) => {
+                return (
+                    <NavLink to={`/category/small/${record['id']}/${record['name']}`}>查看分类别</NavLink>
+                )
+            }
         }, {
             title: '推荐状态',
-            dataIndex: 'recommend',
-            key: 'recommend'
+            key: 'is_index',
+            render: (text, record) => {
+                if (record['is_index']) {
+                    return '已推荐'
+                } else {
+                    return '未推荐'
+                }
+            }
         }, {
             title: '推荐至首页',
-            dataIndex: 'qwe',
-            key: 'qwe'
+            key: 'qwe',
+            render: (text, record) => {
+                const true_index =
+                    <Popconfirm title="确定取消推荐?"
+                        onConfirm={() => {
+
+                        }}
+                        onCancel={() => {
+
+                        }}
+                        okText="Yes" cancelText="No">
+                        <Button type="danger">取消推荐</Button>
+                    </Popconfirm>
+                const false_index =
+                    <Popconfirm title="确定推荐?"
+                        onConfirm={() => {
+
+                        }}
+                        onCancel={() => {
+
+                        }}
+                        okText="Yes" cancelText="No">
+                        <Button>推荐</Button>
+                    </Popconfirm>
+                if (record['is_index']) {
+                    return true_index
+                } else {
+                    return false_index
+                }
+            }
         }, {
             title: '删除',
             dataIndex: 'delete',
@@ -67,7 +115,12 @@ class Category extends Component {
                 </Popconfirm>
             )
         }],
-        data: []//表格数据
+        data: [],//表格数据
+        //列表等待
+        tableListLoading: true,
+        addCategoryVisible: false,
+        changeCategoryVisible: false,
+        changeCategoryJson: ''
     }
     componentDidMount() {
         this.getCategoryAjax();
@@ -75,6 +128,9 @@ class Category extends Component {
     //获取大类列表
     getCategoryAjax = () => {
         const { axios } = this.props;
+        this.setState({
+            tableListLoading: true
+        })
         axios({
             url: '/admin/category',
             method: 'get',
@@ -87,12 +143,15 @@ class Category extends Component {
                 res.data.category_list.forEach((value, index) => {
                     arr.push({
                         id: value.id + '',
-                        name: value.name
+                        name: value.name,
+                        count: value.count,
+                        is_index: value.is_index
                     })
                 })
                 setTimeout(() => {
                     this.setState({
-                        data: arr
+                        data: arr,
+                        tableListLoading: false
                     })
                 }, 10)
             } else {
@@ -124,24 +183,18 @@ class Category extends Component {
                     类别管理
                 </div>
                 <div className="contentContent">
-                    <Button>
+                    <Button onClick={() => {
+                        this.setState({
+                            addCategoryVisible: true
+                        })
+                    }}>
                         添加类别
                     </Button>
                 </div>
                 <div className="contentContent">
-                    <Row gutter={20}>
-                        <Col span={6}>
-                            <Search
-                                placeholder="输入要查找的名称"
-                                onSearch={value => console.log(value)}
-                                enterButton
-                            />
-                        </Col>
-                    </Row>
-                </div>
-                <div className="contentContent">
                     {/* 表格 */}
                     <Table
+                        loading={this.state.tableListLoading}
                         rowKey="id"
                         columns={this.state.columns}
                         dataSource={this.state.data}
@@ -156,6 +209,34 @@ class Category extends Component {
                             })
                         }} />
                 </div>
+                {/* 弹窗 */}
+                {
+                    this.state.addCategoryVisible &&
+                    <AddCategory
+                        axios={this.props.axios}
+                        toggle={this.state.addCategoryVisible}
+                        closeModal={() => {
+                            this.setState({
+                                addCategoryVisible: false
+                            })
+                        }}
+                        upDataList={this.getCategoryAjax}
+                    />
+                }
+                {
+                    this.state.changeCategoryVisible &&
+                    <ChangeCategory
+                        axios={this.props.axios}
+                        toggle={this.state.changeCategoryVisible}
+                        closeModal={() => {
+                            this.setState({
+                                changeCategoryVisible: false
+                            })
+                        }}
+                        upDataList={this.getCategoryAjax}
+                        changeCategoryJson={this.state.changeCategoryJson}
+                    />
+                }
             </div>
         )
     }
