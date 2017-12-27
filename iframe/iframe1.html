@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="name" value="this is name">
+    <br>
+    <button onclick="getTitle()">get title</button>
+    <script>
+        function getTitle() {
+            var parentHtml = window.parent.document.getElementById('title');
+            console.log(parentHtml);
+            var iframe2 = window.parent.document.getElementById('iframe2').contentWindow.document.getElementById('cloneName');
+            iframe2.value = parentHtml.innerText;
+        }
+    </script>
+</body>
+</html>

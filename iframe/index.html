@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="title">iframe</h1>
+    <div style="border-bottom:1px solid black;">
+        <iframe src="iframe1.html" id="iframe1" name="aa" frameborder="0"></iframe>
+    </div>
+    <div>
+        <iframe src="iframe2.html" id="iframe2" name="bb" frameborder="0"></iframe>
+    </div>
+    
+    <button onclick="get()">click</button>
+    <script>
+        function get() {
+            var iframe1 = document.getElementById('iframe1').contentWindow;
+            var iframe2 = document.getElementById('iframe2').contentWindow;
+            console.log(iframe1.document.getElementById('name'));
+        }
+    </script>
+</body>
+</html>
