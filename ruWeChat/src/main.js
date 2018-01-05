@@ -13,7 +13,9 @@ import {
   Field,
   Swipe,
   SwipeItem,
-  Lazyload
+  Lazyload,
+  Toast,
+  Waterfall
 } from 'vant'
 
 Vue.use(Tabbar)
@@ -24,6 +26,7 @@ Vue.use(Col)
 Vue.use(Field)
 Vue.use(Swipe)
 Vue.use(SwipeItem)
+Vue.use(Waterfall)
 Vue.use(Lazyload, {
   preLoad: 1.3,
   loading: 'static/loading-bars.svg',
@@ -35,6 +38,7 @@ axios.defaults.baseURL = 'http://www.ruketang.com'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.withCredentials = true
 Vue.prototype.axios = axios
+Vue.prototype.Toast = Toast
 
 Vue.config.productionTip = false
 

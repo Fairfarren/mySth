@@ -1,2 +1,0 @@
-webpackJsonp([4],{"7biW":function(e,a,t){"use strict";Object.defineProperty(a,"__esModule",{value:!0});var n={render:function(){var e=this,a=e.$createElement,t=e._self._c||a;return t("div",{attrs:{id:"search"}},[t("van-search",{attrs:{placeholder:"请输入商品名称"},model:{value:e.value,callback:function(a){e.value=a},expression:"value"}})],1)},staticRenderFns:[]},r=t("8AGX")({data:function(){return{value:""}}},n,!1,function(e){t("g0yf")},"data-v-a674300c",null);a.default=r.exports},g0yf:function(e,a){}});
-//# sourceMappingURL=4.cb2a5dc5800cf6f212e6.js.map

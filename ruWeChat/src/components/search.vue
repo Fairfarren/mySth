@@ -5,10 +5,13 @@
 }
 #search {
   width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
+  // position: fixed;
+  // top: 0;
+  // left: 0;
   text-align: center;
+  border: {
+    bottom: 1px solid #eeeeee;
+  }
   background: {
     color: #fff;
   }
@@ -50,7 +53,7 @@
     <van-row >
       <van-col span="7">
         <router-link to="/">
-          <img style="width: 8rem;" src="static/images/logo.png" alt="">
+          <img style="width: 8rem;vertical-align: middle;" src="static/images/logo.png" alt="">
         </router-link>
       </van-col>
       <van-col span="17">

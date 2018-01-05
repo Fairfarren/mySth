@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <div id="bodyDiv">
-      <router-view />
+      <transition name="fade" mode="out-in">
+        <router-view />
+      </transition>
     </div>
     <div id="footerDiv">
       <the-footer />
@@ -17,11 +19,7 @@ export default {
   },
   mounted () {
     var fontSize = 16
-    if ('ontouchstart' in window) {
-      fontSize = window.innerWidth / 750 * 16
-    } else {
-      document.getElementsByTagName('body')[0].style.maxWidth = '750px'
-    }
+    fontSize = window.innerWidth / 750 * 16 > 16 ? 16 : window.innerWidth / 750 * 16
     document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px'
   }
 }
@@ -41,5 +39,26 @@ li {
 html, body {
   font-family: Helvetica Neue For Number,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif;
   min-height: 100vh;
+}
+body {
+  max-width: 750px;
+  margin: 0 auto;
+}
+.divDFixedTop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  z-index: 10;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s
+  /* -webkit-transition: all 0.5;
+  -o-transition: all 0.5;
+  -moz-transition: all 0.5; */
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0
 }
 </style>

@@ -58,7 +58,9 @@
 
 <template>
   <div id="home">
-		<Search />
+    <div class="divDFixedTop">
+		  <Search />
+    </div>
     <Banner :banner="banner"/>
     <!-- 精选 -->
     <div class="selected">
@@ -87,7 +89,6 @@
 </template>
 
 <script>
-import { Toast } from 'vant'
 
 export default {
   components: {
@@ -122,11 +123,11 @@ export default {
           // 推荐
           this.recommend = res.data.course_list
         } else {
-          Toast.fail('网络链接错误')
+          this.Toast.fail(res.data.msg)
         }
       }).catch((error) => {
         console.log(error)
-        Toast.fail('网络链接错误')
+        this.Toast.fail('网络链接错误')
       })
     }
   },

@@ -8,6 +8,10 @@ export default new Router({
     {
       path: '/',
       component: resolve => require(['@/views/home/home'], resolve)
+    },
+    {
+      path: '/classification',
+      component: resolve => require(['@/views/class/all'], resolve)
     }
   ]
 })

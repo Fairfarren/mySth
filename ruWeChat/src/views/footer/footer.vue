@@ -67,6 +67,61 @@ export default {
     return {
       active: 0
     }
+  },
+  mounted () {
+    const routePath = this.$route.path
+    const urlName = routePath.split('/')[1]
+    switch (urlName) {
+      case 'classification' :
+        this.active = 1
+        break
+      case 'class' :
+        this.active = 2
+        break
+      case 'user' :
+        this.active = 3
+        break
+      default:
+        this.active = 0
+    }
+  },
+  watch: {
+    '$route.path' (value) {
+      const urlName = value.split('/')[1]
+      switch (urlName) {
+        case 'classification' :
+          this.active = 1
+          break
+        case 'class' :
+          this.active = 2
+          break
+        case 'user' :
+          this.active = 3
+          break
+        default:
+          this.active = 0
+      }
+    },
+    'active' (value) {
+      const routePathLength = this.$route.path.split('/').length
+      if (routePathLength > 2) return
+      switch (value) {
+        case 0 :
+          this.$router.push('/')
+          break
+        case 1 :
+          this.$router.push('/classification')
+          break
+        case 2 :
+          this.$router.push('/class')
+          break
+        case 3 :
+          this.$router.push('/user')
+          break
+        default :
+          break
+      }
+    }
   }
 }
 </script>
