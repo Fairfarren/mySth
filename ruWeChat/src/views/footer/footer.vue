@@ -3,6 +3,11 @@
     font-size: $size;
     color: $color;
   }
+  #footer {
+    background: {
+      color: #f7f7fa;
+    }
+  }
   .van-tabbar-item--active {
     color: #333333;
   }
@@ -16,11 +21,14 @@
     height: auto;
   }
   .van-tabbar--fixed {
+    background: {
+      color: #f7f7fa;
+    }
   }
 </style>
 
 <template>
-  <div>
+  <div id="footer">
     <van-tabbar v-model="active">
       <van-tabbar-item icon="wap-home">
         <router-link to="/" tag="span">首页</router-link>
@@ -41,9 +49,9 @@
       </van-tabbar-item>
 
       <van-tabbar-item icon="records">
-        <router-link to="/class" tag="span">课程</router-link>
+        <router-link to="/myclass" tag="span">课程</router-link>
         <template slot="icon" slot-scope="props">
-          <router-link to="/class">
+          <router-link to="/myclass">
             <img :src="props.active ? 'static/images/icon_07.png' : 'static/images/icon_03.png'" />
           </router-link>
         </template>
@@ -75,7 +83,7 @@ export default {
       case 'classification' :
         this.active = 1
         break
-      case 'class' :
+      case 'myclass' :
         this.active = 2
         break
       case 'user' :
@@ -89,17 +97,20 @@ export default {
     '$route.path' (value) {
       const urlName = value.split('/')[1]
       switch (urlName) {
+        case '':
+          this.active = 0
+          break
         case 'classification' :
           this.active = 1
           break
-        case 'class' :
+        case 'myclass' :
           this.active = 2
           break
         case 'user' :
           this.active = 3
           break
         default:
-          this.active = 0
+          break
       }
     },
     'active' (value) {
@@ -113,7 +124,7 @@ export default {
           this.$router.push('/classification')
           break
         case 2 :
-          this.$router.push('/class')
+          this.$router.push('/myclass')
           break
         case 3 :
           this.$router.push('/user')

@@ -12,6 +12,14 @@ export default new Router({
     {
       path: '/classification',
       component: resolve => require(['@/views/class/all'], resolve)
+    },
+    {
+      path: '/myclass',
+      component: resolve => require(['@/views/class/myClass'], resolve)
+    },
+    {
+      path: '/user',
+      component: resolve => require(['@/views/user/user'], resolve)
     }
   ]
 })

@@ -6,17 +6,20 @@
   a {
     display: block;
     margin: {
-      top: 1.3rem;
+      top: 1.5rem;
     }
     >div:nth-child(1) {
       img {
         width: 100%;
+        height: 10.6rem;
+        object-fit: cover;
       }
     }
     >h3:nth-child(2) {
       @include fontSize(1.75rem, #333333);
+      line-height: 2.5rem;
       overflow: hidden;
-      text-overflow:ellipsis;
+      text-overflow: ellipsis;
       white-space: nowrap;
     }
     p:nth-child(3) {

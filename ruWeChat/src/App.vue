@@ -17,10 +17,22 @@ export default {
   components: {
     TheFooter: resolve => require(['@/views/footer/footer'], resolve)
   },
+  methods: {
+    // 登录
+    loginAjax () {
+      this.axios.get('/wx/t_login').then(res => {
+
+      }).catch(error => {
+        console.log(error)
+        this.Toast.fail('网络链接错误')
+      })
+    }
+  },
   mounted () {
     var fontSize = 16
     fontSize = window.innerWidth / 750 * 16 > 16 ? 16 : window.innerWidth / 750 * 16
     document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px'
+    this.loginAjax()
   }
 }
 </script>

@@ -6,9 +6,13 @@
   .left {
     img {
       width: 100%;
+      height: 13.18rem;
+      object-fit: cover;
     }
   }
   .right {
+    height: 13.18rem;
+    display: flex;
     h3 {
       width: 100%;
       line-height: 2.25rem;
@@ -50,10 +54,10 @@
   <div>
     <router-link :to="selectedData.url">
       <van-row gutter="10">
-        <van-col class="left" span="8">
+        <van-col class="left" span="11">
           <img v-lazy="selectedData.img" alt="">
         </van-col>
-        <van-col class="right" span="16">
+        <van-col class="right" span="13">
           <div class="space-around">
             <h3>
               {{ selectedData.className | maxLength25 }}

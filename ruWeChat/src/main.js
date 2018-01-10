@@ -15,7 +15,9 @@ import {
   SwipeItem,
   Lazyload,
   Toast,
-  Waterfall
+  Waterfall,
+  Cell,
+  CellGroup
 } from 'vant'
 
 Vue.use(Tabbar)
@@ -27,14 +29,16 @@ Vue.use(Field)
 Vue.use(Swipe)
 Vue.use(SwipeItem)
 Vue.use(Waterfall)
+Vue.use(Cell)
+Vue.use(CellGroup)
 Vue.use(Lazyload, {
   preLoad: 1.3,
   loading: 'static/loading-bars.svg',
   attempt: 1
 })
 
-axios.defaults.baseURL = 'http://www.ruketang.com'
-// axios.defaults.baseURL = 'http://192.168.123.51:5000'
+// axios.defaults.baseURL = 'http://www.ruketang.com'
+axios.defaults.baseURL = 'http://tao.liu:5000'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.withCredentials = true
 Vue.prototype.axios = axios

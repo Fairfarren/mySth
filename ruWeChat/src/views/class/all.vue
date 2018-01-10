@@ -325,7 +325,7 @@
             <div class="submit">
               <ul>
                 <li class="clear"
-                  @click="money = -1; screen = -1; chioseWhoIs = false; chioseWho = 0;"
+                  @click="money = -1; screen = -1; chioseWhoIs = false; chioseWho = 0; page = 1; categoryChiose = 'all'; smallChiose = 'all'; ajaxAll()"
                 >
                   清空筛选
                 </li>
@@ -402,9 +402,10 @@ export default {
   methods: {
     // 获取数据
     ajaxAll (_new) {
+      this.disabled = true
       let category = this.categoryChiose === 'all' ? '' : `&category=${this.categoryChiose}`
       let small = this.smallChiose === 'all' ? '' : `&small=${this.smallChiose}`
-      this.axios.get(`/api/course?per_page=12&page=${this.page}${category}${small}`).then((res) => {
+      this.axios.get(`/wx/course?per_page=12&page=${this.page}${category}${small}`).then((res) => {
         if (res.data.status_code === 200) {
           if (_new) {
             this.classList = res.data.course_list
@@ -434,7 +435,7 @@ export default {
     },
     // 获取分类
     getCategory () {
-      this.axios.get('/api/category').then((res) => {
+      this.axios.get('/wx/category').then((res) => {
         if (res.data.status_code === 200) {
           this.category = []
           this.small = []
@@ -458,7 +459,7 @@ export default {
       setTimeout(() => {
         this.page += 1
         this.ajaxAll()
-      }, 200)
+      }, 500)
     }
   },
   mounted () {

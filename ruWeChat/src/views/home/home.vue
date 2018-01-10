@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     homeAjax () {
-      this.axios.get('/api/index').then((res) => {
+      this.axios.get('/wx/index').then((res) => {
         if (res.data.status_code === 200) {
           // banner
           this.banner = res.data.banners_list
@@ -133,6 +133,12 @@ export default {
   },
   mounted () {
     this.homeAjax()
+    // 登录
+    // this.axios.get('/t_login').then(res => {
+
+    // }).catch(error => {
+    //   console.log(error)
+    // })
   }
 }
 </script>
