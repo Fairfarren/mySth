@@ -9,28 +9,7 @@
     -o-transition: all $time;
     -moz-transition: all $time;
   }
-  .top {
-    padding: 2.5rem 1.25rem;
-    .userImg {
-      text-align: center;
-      img {
-        width: 8.81rem;
-        height: 8.81rem;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-    }
-    .userName {
-      >div {
-        height: 8.81rem;
-        display: flex;
-        align-items: center;
-        >h3 {
-          @include fontSize(2.25rem, #333333);
-        }
-      }
-    }
-  }
+
   .chiose {
     padding: 0 10px;
     text-align: center;
@@ -130,20 +109,7 @@
 
 <template>
   <div>
-    <div class="top">
-      <van-row gutter="20">
-        <van-col span="6" class="userImg">
-          <img src="https://i.loli.net/2018/01/08/5a531d4876673.png" alt="">
-        </van-col>
-        <van-col span="18" class="userName">
-          <div>
-            <h3>
-              天道忧伤
-            </h3>
-          </div>
-        </van-col>
-      </van-row>
-    </div>
+
     <div class="chiose">
       <van-row gutter="20">
         <van-col span="8">
@@ -314,6 +280,8 @@ export default {
               this.startIng.push(value)
             }
           })
+        } else if (res.data.status_code === 401) {
+          this.$store.commit('NOW401')
         } else {
           this.Toast.fail(res.data.msg)
         }

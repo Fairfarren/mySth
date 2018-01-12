@@ -5,9 +5,11 @@
         <router-view />
       </transition>
     </div>
-    <div id="footerDiv">
-      <the-footer />
-    </div>
+    <transition name="fade" mode="out-in">
+      <div id="footerDiv" v-if="footerShow">
+        <the-footer />
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -17,15 +19,23 @@ export default {
   components: {
     TheFooter: resolve => require(['@/views/footer/footer'], resolve)
   },
+  data () {
+    return {
+      routePath: this.$route.path,
+      footerShow: true
+    }
+  },
   methods: {
     // 登录
     loginAjax () {
-      this.axios.get('/wx/t_login').then(res => {
-
-      }).catch(error => {
-        console.log(error)
-        this.Toast.fail('网络链接错误')
-      })
+      // this.axios.get('/wx/t_login').then(res => {
+      //   if (res.data.status_code === 401) {
+      //     this.$store.commit('NOW401')
+      //   }
+      // }).catch(error => {
+      //   console.log(error)
+      //   this.Toast.fail('网络链接错误')
+      // })
     }
   },
   mounted () {
@@ -33,6 +43,21 @@ export default {
     fontSize = window.innerWidth / 750 * 16 > 16 ? 16 : window.innerWidth / 750 * 16
     document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px'
     this.loginAjax()
+  },
+  watch: {
+    '$route.path' (value) {
+      const path = value.split('/')[1]
+      switch (path) {
+        case 'home' :
+        case 'classification':
+        case 'myclass':
+        case 'user':
+          this.footerShow = true
+          break
+        default :
+          this.footerShow = false
+      }
+    }
   }
 }
 </script>
@@ -72,5 +97,8 @@ body {
 }
 .fade-enter, .fade-leave-to {
   opacity: 0
+}
+.van-picker__cancel, .van-picker__confirm {
+  font-size: 2.25rem;
 }
 </style>

@@ -425,6 +425,8 @@ export default {
                 this.disabledText = true
               })()
           }
+        } else if (res.data.status_code === 401) {
+          this.$store.commit('NOW401')
         } else {
           this.Toast.fail(res.data.msg)
         }
@@ -446,6 +448,8 @@ export default {
               this.small[index].splice(ind, 1, text)
             })
           })
+        } else if (res.data.status_code === 401) {
+          this.$store.commit('NOW401')
         } else {
           this.Toast.fail(res.data.msg)
         }

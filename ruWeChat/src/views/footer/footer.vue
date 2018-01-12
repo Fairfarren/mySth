@@ -31,7 +31,7 @@
   <div id="footer">
     <van-tabbar v-model="active">
       <van-tabbar-item icon="wap-home">
-        <router-link to="/" tag="span">首页</router-link>
+        <router-link to="/home" tag="span">首页</router-link>
         <template slot="icon" slot-scope="props">
           <router-link to="/">
             <img :src="props.active ? 'static/images/icon_06.png' : 'static/images/icon_01.png'" />
@@ -97,7 +97,7 @@ export default {
     '$route.path' (value) {
       const urlName = value.split('/')[1]
       switch (urlName) {
-        case '':
+        case 'home':
           this.active = 0
           break
         case 'classification' :
@@ -118,7 +118,7 @@ export default {
       if (routePathLength > 2) return
       switch (value) {
         case 0 :
-          this.$router.push('/')
+          this.$router.push('/home')
           break
         case 1 :
           this.$router.push('/classification')

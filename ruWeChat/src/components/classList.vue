@@ -52,7 +52,7 @@
 </style>
 
 <template>
-  <router-link :to="`/class/${value.id}`">
+  <router-link :to="`/recording/${value.id}`">
     <div>
       <img v-lazy="value.img" alt="">
     </div>

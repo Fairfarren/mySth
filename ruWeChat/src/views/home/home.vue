@@ -117,11 +117,13 @@ export default {
               money: value.price,
               publishing: value.lecturer,
               img: value.img,
-              url: `/class/recording/${value.id}`
+              url: `/recording/${value.id}`
             })
           })
           // 推荐
           this.recommend = res.data.course_list
+        } else if (res.data.status_code === 401) {
+          this.$store.commit('NOW401')
         } else {
           this.Toast.fail(res.data.msg)
         }
