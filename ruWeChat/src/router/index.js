@@ -70,7 +70,7 @@ export default new Router({
       path: '/bindingMobile',
       component: resolve => require(['@/views/user/bindingMobile'], resolve),
       beforeEnter: (to, from, next) => {
-        document.title = '绑定手机',
+        document.title = '绑定手机'
         next()
       }
     }
