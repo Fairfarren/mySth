@@ -118,6 +118,7 @@
           v-model="formData.name"
           placeholder="请输入用户名"
           label="昵称："
+          @keyup.enter="showName = false"
         />
       </van-actionsheet>
       <van-actionsheet class="popp" v-model="showSex">
