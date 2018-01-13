@@ -31,7 +31,7 @@
             @click-icon="mobile = ''"
             :error-message="errorText.mobile"
             :error="errorText.mobileTF"
-            
+
           />
         </van-cell-group>
       </van-col>
@@ -50,7 +50,7 @@
         </van-cell-group>
       </van-col>
       <van-col span="9">
-        <van-button 
+        <van-button
           type="default"
           @click="getCode"
           :disabled="diabled"
@@ -61,8 +61,8 @@
     </van-row>
     <van-row style="margin-top: 2rem;">
       <van-col span="24">
-        <van-button 
-          type="primary" 
+        <van-button
+          type="primary"
           size="large"
           @click="submit"
         >
