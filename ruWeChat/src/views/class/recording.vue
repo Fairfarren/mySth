@@ -45,9 +45,9 @@
       position: absolute;
       top: 0;
       left: 0;
-      background: {
-        color: #f2f1f6;
-      }
+      // background: {
+      //   color: #f2f1f6;
+      // }
       padding: {
         bottom: 6.125rem;
       }
@@ -62,8 +62,11 @@
       background: {
         color: #fff;
       }
-      margin: {
-        bottom: 2.25rem;
+      // margin: {
+      //   bottom: 2.25rem;
+      // }
+      border: {
+        bottom: 2.25rem solid #f2f1f6;
       }
       h3 {
         @include fontSize(1.75rem, #333333);
