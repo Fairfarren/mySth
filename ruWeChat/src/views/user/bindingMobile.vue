@@ -119,6 +119,8 @@ export default {
       this.axios.get(`/wx/send_sms?sign=${mobile}&mobile=${this.mobile}`).then(res => {
         if (res.data.status_code === 200) {
 
+        } else if (res.data.status_code === 401) {
+          this.$store.commit('NOW401')
         } else {
           this.Toast.fail(res.data.msg)
         }
@@ -151,6 +153,8 @@ export default {
                 history.go(-1)
               }
             }, 1000)
+          } else if (res.data.status_code === 401) {
+            this.$store.commit('NOW401')
           } else {
             this.Toast.fail(res.data.msg)
           }

@@ -338,7 +338,7 @@
     <div class="bottomBut">
       <div class="goToPay"
         v-if="!theClass.is_buy"
-        @click=""
+        @click="payClass"
       >
         <p>加入学习</p>
       </div>
