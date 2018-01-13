@@ -25,7 +25,7 @@
   <div id="banner">
     <van-swipe :autoplay="3000">
       <van-swipe-item v-for="(image, index) in banner" :key="index">
-        <router-link :to="`/class/${image.course_id}`">
+        <router-link :to="`/recording/${image.course_id}`">
           <img v-lazy="image.banner_img" listenEvents="qwe"/>
         </router-link>
       </van-swipe-item>
