@@ -85,7 +85,7 @@
     </div>
     <div class="bottom">
       <ul>
-        <li @click="showName = true">
+        <li @click="changeName">
           <span>
             昵称：
           </span>
@@ -118,6 +118,7 @@
           v-model="formData.name"
           placeholder="请输入用户名"
           label="昵称："
+          id="changeUserName"
           @keyup.enter="showName = false"
         />
       </van-actionsheet>
@@ -178,22 +179,6 @@ export default {
       const [year, moon, day] = this.formData.birthday.split('-')
       this.currentDate = new Date(year, moon - 1, day)
     },
-    // 重新获取用户信息
-    getUserAjax () {
-      this.axios.get('/wx/profile').then(res => {
-        if (res.data.status_code === 200) {
-          this.$store.commit('SETUSER', res.data.data)
-          this.getUserSth()
-        } else if (res.data.status_code === 401) {
-          this.$store.commit('NOW401')
-        } else {
-          this.Toast.fail(res.data.msg)
-        }
-      }).catch(error => {
-        console.log(error)
-        this.Toast.fail('网络连接错误')
-      })
-    },
     // 改变头像
     changeImg (e) {
       // const event = e || window.event
@@ -213,6 +198,14 @@ export default {
       //   // console.log(evt.target.result)
       //   this.ruleForm01.img = evt.target.result
       // }
+    },
+    // 改名字
+    changeName () {
+      this.showName = true
+      setTimeout(() => {
+        const userNameInput = document.querySelector('#changeUserName')
+        userNameInput.focus()
+      }, 300)
     },
     // 改变生日
     changeBirthday (value) {
@@ -241,7 +234,7 @@ export default {
         this.showSex = false
         if (res.data.status_code === 201) {
           this.Toast.success(res.data.msg)
-          this.getUserAjax()
+          this.$store.dispatch('GET_USER_INFO') // 获取用户信息
         } else if (res.data.status_code === 401) {
           this.$store.commit('NOW401')
         } else {
@@ -254,11 +247,13 @@ export default {
     }
   },
   mounted () {
-    this.getUserAjax()
+    setTimeout(() => {
+      this.getUserSth()
+    }, 1000)
   },
   watch: {
     showName (value) {
-      !value && this.formData.name !== this.$store.state.USER.name && this.setUserSth()
+      !value && this.formData.name !== this.$store.state.USER.username && this.setUserSth()
     }
   }
 }

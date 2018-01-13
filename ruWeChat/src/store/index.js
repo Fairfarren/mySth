@@ -4,16 +4,16 @@ import Vuex from 'vuex'
 // vuex的属性的配置文件
 import * as mutations from './mutations'
 import * as getters from './getters'
-import * as action from './action'
+import * as actions from './actions'
 import state from './rootState'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
-    state,
-    mutations,
-    action,
-    getters
+  state,
+  mutations,
+  actions,
+  getters
 })
 
 // 将这个名字暴露出去，main.js才能获取到

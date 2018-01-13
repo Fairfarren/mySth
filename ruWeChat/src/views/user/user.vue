@@ -112,23 +112,23 @@ export default {
   },
   methods: {
     // 获取用户信息/wx/profile
-    getUserAjax () {
-      this.axios.get('/wx/profile').then(res => {
-        if (res.data.status_code === 200) {
-          this.$store.commit('SETUSER', res.data.data)
-        } else if (res.data.status_code === 401) {
-          this.$store.commit('NOW401')
-        } else {
-          this.Toast.fail(res.data.msg)
-        }
-      }).catch(error => {
-        console.log(error)
-        this.Toast.fail('网络连接错误')
-      })
-    }
+    // getUserAjax () {
+    //   this.axios.get('/wx/profile').then(res => {
+    //     if (res.data.status_code === 200) {
+    //       this.$store.commit('SETUSER', res.data.data)
+    //     } else if (res.data.status_code === 401) {
+    //       this.$store.commit('NOW401')
+    //     } else {
+    //       this.Toast.fail(res.data.msg)
+    //     }
+    //   }).catch(error => {
+    //     console.log(error)
+    //     this.Toast.fail('网络连接错误')
+    //   })
+    // }
   },
   mounted () {
-    this.getUserAjax()
+
   }
 }
 </script>

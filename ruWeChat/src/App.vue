@@ -43,6 +43,7 @@ export default {
     fontSize = window.innerWidth / 750 * 16 > 16 ? 16 : window.innerWidth / 750 * 16
     document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px'
     this.loginAjax()
+    this.$store.dispatch('GET_USER_INFO')
   },
   watch: {
     '$route.path' (value) {
