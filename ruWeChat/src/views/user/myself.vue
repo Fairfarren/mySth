@@ -38,6 +38,7 @@
       width: 11.625rem;
       height: 11.625rem;
       border-radius: 50%;
+      object-fit: cover;
     }
   }
   .bottom {
@@ -140,6 +141,7 @@
           :min-hour="minHour"
           :max-hour="maxHour"
           :min-date="minDate"
+          :max-date="maxDate"
           @confirm="changeBirthday"
         />
       </van-actionsheet>
@@ -163,7 +165,7 @@ export default {
       minHour: 10,
       maxHour: 20,
       minDate: new Date(1919, 1, 1),
-      maxDate: new Date(2019, 10, 1),
+      maxDate: new Date(2018, 0, 1),
       currentDate: new Date(2018, 0, 1)
     }
   },
@@ -250,6 +252,12 @@ export default {
     setTimeout(() => {
       this.getUserSth()
     }, 1000)
+    const date = new Date()
+    this.maxDate = new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate()
+    )
   },
   watch: {
     showName (value) {
