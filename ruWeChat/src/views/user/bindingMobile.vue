@@ -129,15 +129,30 @@ export default {
     },
     // 提交
     submit () {
-      if (this.errorText.mobileTF && this.errorText.codeTF) {
-        this.axios.put('/api/bind_mobile', {
+      if (!this.errorText.mobileTF && !this.errorText.codeTF) {
+        this.axios.put('/wx/bind_mobile', {
           mobile: this.mobile,
           code: this.code
         }).then(res => {
           if (res.data.status_code === 200) {
-
+            const toast = this.Toast.success({
+              duration: 0,
+              forbidClick: true,
+              message: '绑定成功！3秒后返回'
+            })
+            let second = 3
+            const timer = setInterval(() => {
+              second--
+              if (second) {
+                toast.message = `绑定成功！${second}秒后返回`
+              } else {
+                clearInterval(timer)
+                this.Toast.clear()
+                history.go(-1)
+              }
+            }, 1000)
           } else {
-            this.Toast.fail(res.data.mag)
+            this.Toast.fail(res.data.msg)
           }
         }).catch(error => {
           console.log(error)
