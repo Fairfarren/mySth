@@ -337,12 +337,15 @@
     </div>
     <div class="bottomBut">
       <div class="goToPay"
-        v-if="!theClass.is_buy"
+        v-if="theClass.is_buy"
         @click="payClass"
       >
         <p>加入学习</p>
       </div>
-      <div class="pay" v-else>
+      <div class="pay"
+        v-else
+        @click="startStudy"
+      >
         <p>开始学习</p>
       </div>
     </div>
@@ -434,7 +437,7 @@ export default {
     },
     // 购买课程
     payClass () {
-      const mobile = 1
+      const mobile = this.$store.state.USER.mobile
       !mobile
         ? this.noMobile()
         : (
@@ -459,6 +462,10 @@ export default {
           toast.message = `你还没有绑定手机，快去绑定吧~${num}秒后跳转`
         }
       }, 1000)
+    },
+    // 开始学习
+    startStudy () {
+      this.$router.push(`/video/${this.$route.params.id}`)
     }
   },
   mounted () {
