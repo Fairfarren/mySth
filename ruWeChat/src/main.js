@@ -6,6 +6,11 @@ import router from './router'
 import axios from 'axios'
 import Vuex from 'vuex'
 import store from '@/store/index'
+import VueVideoPlayer from 'vue-video-player'
+import 'video.js/dist/video-js.css'
+import 'vue-video-player/src/custom-theme.css'
+import 'videojs-flash'
+import 'videojs-contrib-hls/dist/videojs-contrib-hls'
 import {
   Tabbar,
   TabbarItem,
@@ -24,6 +29,8 @@ import {
   DatetimePicker,
   Button
 } from 'vant'
+
+Vue.use(VueVideoPlayer)
 
 Vue.use(Tabbar)
 Vue.use(TabbarItem)

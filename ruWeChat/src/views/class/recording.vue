@@ -344,7 +344,7 @@
       </div>
       <div class="pay"
         v-else
-        @click="startStudy"
+        @click="startStudy()"
       >
         <p>开始学习</p>
       </div>
@@ -464,8 +464,14 @@ export default {
       }, 1000)
     },
     // 开始学习
-    startStudy () {
-      this.$router.push(`/video/${this.$route.params.id}`)
+    startStudy (id) {
+      let lessonid = id || this.theClass.lesson_list[0].lesson[0][0].id
+      this.$router.push({
+        path: `/video/${this.$route.params.id}`,
+        query: {
+          lessonId: lessonid
+        }
+      })
     }
   },
   mounted () {

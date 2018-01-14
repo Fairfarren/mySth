@@ -81,6 +81,14 @@ export default new Router({
         document.title = '确认订单'
         next()
       }
+    },
+    {
+      path: '/video/:id',
+      component: resolve => require(['@/views/class/video'], resolve),
+      beforeEnter: (to, from, next) => {
+        document.title = '汝课堂'
+        next()
+      }
     }
   ]
 })

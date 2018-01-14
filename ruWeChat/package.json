@@ -14,8 +14,11 @@
     "axios": "^0.17.1",
     "md5": "^2.2.1",
     "vant": "^0.12.0",
+    "videojs-contrib-hls": "^5.12.2",
+    "videojs-flash": "^2.1.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
+    "vue-video-player": "^4.0.4",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

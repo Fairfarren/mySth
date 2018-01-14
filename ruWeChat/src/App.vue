@@ -102,4 +102,8 @@ body {
 .van-picker__cancel, .van-picker__confirm {
   font-size: 2.25rem;
 }
+/* 播放器 */
+.vjs-custom-skin > .video-js {
+  height: 100%;
+}
 </style>
