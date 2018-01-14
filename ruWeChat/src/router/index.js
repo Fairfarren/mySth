@@ -73,6 +73,14 @@ export default new Router({
         document.title = '绑定手机'
         next()
       }
+    },
+    {
+      path: '/payClass/:id',
+      component: resolve => require(['@/views/pay/payClass'], resolve),
+      beforeEnter: (to, from, next) => {
+        document.title = '确认订单'
+        next()
+      }
     }
   ]
 })

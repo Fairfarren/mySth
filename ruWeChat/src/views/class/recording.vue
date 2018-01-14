@@ -373,6 +373,7 @@ export default {
       this.axios.get(`/wx/course_info?course_id=${this.$route.params.id}`).then(res => {
         if (res.data.status_code === 200) {
           this.theClass = res.data.data
+          this.$store.commit('SETCLASS', res.data.data)
         } else if (res.data.status_code === 401) {
           this.$store.commit('NOW401')
         } else {
@@ -433,7 +434,31 @@ export default {
     },
     // 购买课程
     payClass () {
-
+      const mobile = 1
+      !mobile
+        ? this.noMobile()
+        : (
+          this.$router.push(`/payClass/${this.$route.params.id}`)
+        )
+    },
+    // 没有绑定手机先绑定
+    noMobile () {
+      const toast = this.Toast.fail({
+        duration: 0,
+        forbidClick: true,
+        message: '你还没有绑定手机，快去绑定吧~3秒后跳转'
+      })
+      let num = 3
+      const timer = setInterval(() => {
+        num--
+        if (!num) {
+          this.Toast.clear()
+          clearInterval(timer)
+          this.$router.push('/bindingMobile')
+        } else {
+          toast.message = `你还没有绑定手机，快去绑定吧~${num}秒后跳转`
+        }
+      }, 1000)
     }
   },
   mounted () {
