@@ -235,7 +235,8 @@ export default {
     // 去支付
     weChatPay () {
       this.axios.post('/wx/buy/course', {
-        course_id: this.$route.params.id
+        course_id: this.$route.params.id,
+        url: window.location.href
       }).then(res => {
         if (res.data.status_code === 201) {
           // 免费已经购买了
