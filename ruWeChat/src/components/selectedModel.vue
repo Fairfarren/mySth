@@ -66,8 +66,8 @@
               {{ selectedData.publishing }}
             </p>
             <p>
-              <span :class="{freeColor: selectedData.publishing > 0}">
-                {{ selectedData.publishing > 0 ? `¥${selectedData.publishing}`: '免费' }}
+              <span :class="{freeColor: selectedData.money > 0}">
+                {{ selectedData.money > 0 ? `¥${selectedData.money}`: '免费' }}
               </span>
             </p>
           </div>
@@ -87,6 +87,9 @@ export default {
       value = value.length >= 25 ? `${value.slice(0, 23)}......` : value
       return value
     }
+  },
+  mounted () {
+    console.log(this.selectedData)
   }
 }
 </script>

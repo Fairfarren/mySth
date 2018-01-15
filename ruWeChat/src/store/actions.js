@@ -5,6 +5,7 @@ axios.defaults.baseURL = 'http://www.ruketang.com'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.withCredentials = true
 
+// 获取用户信息登录
 export const GET_USER_INFO = ({ commit }) => {
   axios.get('/wx/profile').then(res => {
     if (res.data.status_code === 200) {
@@ -16,3 +17,4 @@ export const GET_USER_INFO = ({ commit }) => {
     console.log(error)
   })
 }
+

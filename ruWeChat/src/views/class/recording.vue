@@ -371,7 +371,8 @@ export default {
       theClass: {},
       problem: [],
       page: 1,
-      disabled: false
+      disabled: false,
+      jssdk: {}
     }
   },
   methods: {
@@ -481,11 +482,63 @@ export default {
       } else {
         this.noMobile()
       }
+    },
+    // 分享获取信息
+    weChatShare () {
+      this.axios.get('/wx/share', {
+        params: {
+          url: window.location.href
+        }
+      }).then(res => {
+        if (res.data.status_code === 201) {
+          this.jssdk = res.data.data
+          this.weChatConfig()
+        } else {
+          this.Toast.fail(res.data.msg)
+        }
+      }).catch(error => {
+        console.log(error)
+        this.Toast.fail('网络连接错误')
+      })
+    },
+    // 分享注册信息
+    weChatConfig () {
+      wx.config({
+        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: this.jssdk.appId, // 必填，公众号的唯一标识
+        timestamp: this.jssdk.timestamp, // 必填，生成签名的时间戳
+        nonceStr: this.jssdk.noncestr, // 必填，生成签名的随机串
+        signature: 'MD5', // 必填，签名，见附录1
+        jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+      })
+      wx.onMenuShareTimeline({
+        title: this.theClass.name, // 分享标题
+        link: this.jssdk.url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: '', // 分享图标
+        success: function () {
+          // 用户确认分享后执行的回调函数
+        }
+      })
+      wx.onMenuShareAppMessage({
+        title: this.theClass.name, // 分享标题
+        desc: this.theClass.desc, // 分享描述
+        link: this.jssdk.url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+        imgUrl: '', // 分享图标
+        type: '', // 分享类型,music、video或link，不填默认为link
+        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+        success: function () {
+        // 用户确认分享后执行的回调函数
+        },
+        cancel: function () {
+        // 用户取消分享后执行的回调函数
+        }
+      })
     }
   },
   mounted () {
     this.getClassAjax()
     this.getProblem()
+    this.weChatShare()
   }
 }
 </script>

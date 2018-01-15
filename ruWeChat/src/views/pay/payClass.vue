@@ -240,7 +240,7 @@ export default {
       }).then(res => {
         if (res.data.status_code === 201) {
           // 免费已经购买了
-          if (res.data.data.pay_type) {
+          if (res.data.data.pay_type === 0) {
             this.Toast.loading({
               duration: 0,
               forbidClick: true,
