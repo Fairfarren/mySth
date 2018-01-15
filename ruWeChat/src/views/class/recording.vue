@@ -358,7 +358,7 @@
 
 <script>
 import NoList from '@/components/noList'
-
+const wx = window.wx
 export default {
   components: {
     NoList

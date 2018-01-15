@@ -205,7 +205,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
+const wx = window.wx
 export default {
   computed: {
     ...mapGetters(['USERPHONEPSW'])

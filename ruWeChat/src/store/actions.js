@@ -17,4 +17,3 @@ export const GET_USER_INFO = ({ commit }) => {
     console.log(error)
   })
 }
-
