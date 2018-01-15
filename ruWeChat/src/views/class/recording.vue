@@ -487,7 +487,7 @@ export default {
     weChatShare () {
       this.axios.get('/wx/share', {
         params: {
-          url: window.location.href
+          url: window.location.href.split('#')[0]
         }
       }).then(res => {
         if (res.data.status_code === 201) {
