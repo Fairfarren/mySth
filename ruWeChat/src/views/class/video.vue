@@ -23,9 +23,9 @@
     // margin: {
     //   bottom: 2.25rem;
     // }
-    border: {
-      bottom: 2.25rem solid #f2f1f6;
-    }
+    // border: {
+    //   bottom: 2.25rem solid #f2f1f6;
+    // }
     h3 {
       @include fontSize(1.75rem, #333333);
       margin: {

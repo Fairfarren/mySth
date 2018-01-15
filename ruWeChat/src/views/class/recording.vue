@@ -287,7 +287,11 @@
               <li>
                 {{ value.chapter }}
               </li>
-              <li v-for="(text, ind) in value.lesson[0]" :key="ind">
+              <li
+                v-for="(text, ind) in value.lesson[0]"
+                :key="ind"
+                @click="startStudy(text.id)"
+              >
                 <img src="static/images/icon4_02.png" alt="">
                 {{ text.name }}
               </li>
@@ -337,7 +341,7 @@
     </div>
     <div class="bottomBut">
       <div class="goToPay"
-        v-if="theClass.is_buy"
+        v-if="!theClass.is_buy"
         @click="payClass"
       >
         <p>加入学习</p>
@@ -465,13 +469,18 @@ export default {
     },
     // 开始学习
     startStudy (id) {
-      let lessonid = id || this.theClass.lesson_list[0].lesson[0][0].id
-      this.$router.push({
-        path: `/video/${this.$route.params.id}`,
-        query: {
-          lessonId: lessonid
-        }
-      })
+      const mobile = this.$store.state.USER.mobile
+      if (mobile) {
+        let lessonid = id || this.theClass.lesson_list[0].lesson[0][0].id
+        this.$router.push({
+          path: `/video/${this.$route.params.id}`,
+          query: {
+            lessonId: lessonid
+          }
+        })
+      } else {
+        this.noMobile()
+      }
     }
   },
   mounted () {

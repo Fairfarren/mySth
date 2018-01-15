@@ -28,21 +28,21 @@ export default {
   methods: {
     // 登录
     loginAjax () {
-      // this.axios.get('/wx/t_login').then(res => {
-      //   if (res.data.status_code === 401) {
-      //     this.$store.commit('NOW401')
-      //   }
-      // }).catch(error => {
-      //   console.log(error)
-      //   this.Toast.fail('网络链接错误')
-      // })
+      this.axios.get('/wx/t_login').then(res => {
+        if (res.data.status_code === 401) {
+          this.$store.commit('NOW401')
+        }
+      }).catch(error => {
+        console.log(error)
+        this.Toast.fail('网络链接错误')
+      })
     }
   },
   mounted () {
     var fontSize = 16
     fontSize = window.innerWidth / 750 * 16 > 16 ? 16 : window.innerWidth / 750 * 16
     document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px'
-    this.loginAjax()
+    // this.loginAjax()
     this.$store.dispatch('GET_USER_INFO')
   },
   watch: {

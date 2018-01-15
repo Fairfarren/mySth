@@ -53,8 +53,8 @@ Vue.use(Lazyload, {
 })
 Vue.use(Vuex)
 
-axios.defaults.baseURL = 'http://www.ruketang.com'
-// axios.defaults.baseURL = 'http://tao.liu:5000'
+// axios.defaults.baseURL = 'http://www.ruketang.com'
+axios.defaults.baseURL = 'http://tao.liu:5000'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.withCredentials = true
 Vue.prototype.axios = axios
