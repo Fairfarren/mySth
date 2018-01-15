@@ -173,7 +173,7 @@
             课时：{{ this.$store.state.CLASS.lesson_list ? this.$store.state.CLASS.lesson_list.length : 0 }}
           </p>
           <h4>
-            {{ this.$store.state.CLASS.price }}
+            ￥{{ this.$store.state.CLASS.price }}
           </h4>
         </div>
       </div>
@@ -210,6 +210,11 @@ export default {
   computed: {
     ...mapGetters(['USERPHONEPSW'])
   },
+  data () {
+    return {
+      jssdk: {}
+    }
+  },
   methods: {
     // 获取课程详情
     getClassAjax () {
@@ -229,7 +234,72 @@ export default {
     },
     // 去支付
     weChatPay () {
-      this.Toast.loading('去支付')
+      this.axios.post('/wx/buy/course', {
+        course_id: this.$route.params.id
+      }).then(res => {
+        if (res.data.status_code === 201) {
+          // 免费已经购买了
+          if (res.data.data.pay_type) {
+            this.Toast.loading({
+              duration: 0,
+              forbidClick: true,
+              message: '正在为您免费购买课程'
+            })
+            let num = 3
+            const timer = setInterval(() => {
+              num--
+              if (!num) {
+                this.Toast.clear()
+                clearInterval(timer)
+                history.go(-1)
+              }
+            }, 1000)
+          } else {
+            this.jssdk = res.data.data
+            setTimeout(() => {
+              this.weChatJSSDK()
+            }, 100)
+          }
+        } else {
+          this.Toast.fail(res.data.msg)
+        }
+      }).catch(error => {
+        console.log(error)
+        this.Toast.fail('网络连接错误')
+      })
+    },
+    // 调微信支付接口
+    weChatJSSDK () {
+      wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: this.jssdk.appId, // 必填，企业号的唯一标识，此处填写企业号corpid
+        timestamp: this.jssdk.timeStamp, // 必填，生成签名的时间戳
+        nonceStr: this.jssdk.nonceStr, // 必填，生成签名的随机串
+        signature: 'MD5', // 必填，签名，见附录1
+        jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+      })
+      const that = this
+      wx.ready(res => {
+        wx.chooseWXPay({
+          timestamp: this.jssdk.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+          nonceStr: this.jssdk.nonceStr, // 支付签名随机串，不长于 32 位
+          package: this.jssdk.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+          signType: 'MD5', // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+          paySign: this.jssdk.sign, // 支付签名
+          success: function (res) {
+            // 支付成功后的回调函数
+            that.Toast.success({
+              duration: 0,
+              forbidClick: true,
+              message: '付款成功'
+            })
+            setTimeout(() => {
+              that.Toast.clear()
+              history.go(-1)
+            }, 2000)
+          }
+        })
+      })
     }
   },
   mounted () {

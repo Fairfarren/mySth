@@ -115,7 +115,7 @@ export default {
     },
     // 获取验证码ajax
     getCodeAjax () {
-      const mobile = md5(this.mobile)
+      const mobile = md5(`${this.mobile}jet_cloud2020`).toUpperCase()
       this.axios.get(`/wx/send_sms?sign=${mobile}&mobile=${this.mobile}`).then(res => {
         if (res.data.status_code === 200) {
 
@@ -136,7 +136,7 @@ export default {
           mobile: this.mobile,
           code: this.code
         }).then(res => {
-          if (res.data.status_code === 200) {
+          if (res.data.status_code === 201) {
             const toast = this.Toast.success({
               duration: 0,
               forbidClick: true,
@@ -150,6 +150,7 @@ export default {
               } else {
                 clearInterval(timer)
                 this.Toast.clear()
+                this.$store.dispatch('GET_USER_INFO')
                 history.go(-1)
               }
             }, 1000)
