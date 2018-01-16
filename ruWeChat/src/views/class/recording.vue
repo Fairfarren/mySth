@@ -485,9 +485,10 @@ export default {
     },
     // 分享获取信息
     weChatShare () {
+      const url = 'http://www.ruketang.com/wechat/'
       this.axios.get('/wx/share', {
         params: {
-          url: `https://www.ruketang.wechat?recordingId=${this.$route.params.id}`
+          url: `${url}?recordingId=${this.$route.params.id}`
         }
       }).then(res => {
         if (res.data.status_code === 201) {
@@ -498,6 +499,7 @@ export default {
         }
       }).catch(error => {
         console.log(error)
+        alert(error)
         this.Toast.fail('网络连接错误')
       })
     },
