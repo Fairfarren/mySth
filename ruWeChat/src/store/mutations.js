@@ -15,3 +15,8 @@ export const CLEARCLASS = (state, data) => {
 export const NOW401 = state => {
   window.location.href = `http://www.ruketang.com/wx/authorized?url=http%3a%2f%2fwww.ruketang.com%2fwechat`
 }
+
+// 微信基本配置
+export const WX_NO_CLASS_CONFIG = (state, data) => {
+
+}
