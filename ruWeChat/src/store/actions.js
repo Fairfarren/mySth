@@ -26,7 +26,6 @@ export const weChatConfig = ({ commit }, data) => {
     }
   }).then(res => {
     if (res.data.status_code === 201) {
-      commit('setWxComfig', res.data.data)
     }
   }).catch(error => {
     console.log(error)

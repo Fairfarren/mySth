@@ -545,11 +545,8 @@ export default {
     // }
   },
   mounted () {
-    Promise.all([this.getClassAjax(), this.getProblem()]).then(res => {
-      setTimeout(() => {
-        this.$store.commit('wxMenuShare')
-      }, 100)
-    })
+    this.getClassAjax()
+    this.getProblem()
   }
 }
 </script>
