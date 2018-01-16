@@ -377,21 +377,21 @@ export default {
   },
   methods: {
     // 获取课程详情
-    getClassAjax () {
-      this.axios.get(`/wx/course_info?course_id=${this.$route.params.id}`).then(res => {
-        if (res.data.status_code === 200) {
-          this.theClass = res.data.data
-          this.$store.commit('SETCLASS', res.data.data)
-        } else if (res.data.status_code === 401) {
-          this.$store.commit('NOW401')
-        } else {
-          this.Toast.fail(res.data.msg)
-        }
-      }).catch(error => {
-        console.log(error)
-        this.Toast.fail('网络连接错误')
-      })
-    },
+    // getClassAjax () {
+    //   this.axios.get(`/wx/course_info?course_id=${this.$route.params.id}`).then(res => {
+    //     if (res.data.status_code === 200) {
+    //       this.theClass = res.data.data
+    //       this.$store.commit('SETCLASS', res.data.data)
+    //     } else if (res.data.status_code === 401) {
+    //       this.$store.commit('NOW401')
+    //     } else {
+    //       this.Toast.fail(res.data.msg)
+    //     }
+    //   }).catch(error => {
+    //     console.log(error)
+    //     this.Toast.fail('网络连接错误')
+    //   })
+    // },
     changeCard (goTo) {
       this.number = this.chioseSpan
       if (goTo < 1) {
@@ -482,72 +482,86 @@ export default {
       } else {
         this.noMobile()
       }
-    },
-    // 分享获取信息
-    weChatShare () {
-      this.axios.get('/wx/share', {
-        params: {
-          url: encodeURIComponent(window.location.href.split('#')[0])
-          // url: 'http://www.ruketang.com/wechat'
-        }
-      }).then(res => {
-        if (res.data.status_code === 201) {
-          this.jssdk = res.data.data
-          setTimeout(() => {
-            this.weChatConfig()
-          }, 100)
-        } else {
-          this.Toast.fail(res.data.msg)
-        }
-      }).catch(error => {
-        console.log(error)
-        alert(error)
-        this.Toast.fail('网络连接错误')
-      })
-    },
-    // 分享注册信息
-    weChatConfig () {
-      this.wx.config({
-        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-        appId: this.jssdk.appId, // 必填，企业号的唯一标识，此处填写企业号corpid
-        timestamp: this.jssdk.timestamp, // 必填，生成签名的时间戳
-        nonceStr: this.jssdk.noncestr, // 必填，生成签名的随机串
-        signature: this.jssdk.sign, // 必填，签名，见附录1
-        jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-      })
-      this.wx.ready(() => {
-        this.wx.onMenuShareTimeline({
-          title: this.theClass.name, // 分享标题
-          link: this.jssdk.url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          imgUrl: this.theClass.img, // 分享图标
-          success: function () {
-            // 用户确认分享后执行的回调函数
-            alert('分享成功')
-          }
-        })
-        this.wx.onMenuShareAppMessage({
-          title: this.theClass.name, // 分享标题
-          desc: this.theClass.desc, // 分享描述
-          link: this.jssdk.url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-          imgUrl: this.theClass.img, // 分享图标
-          type: 'link', // 分享类型,music、video或link，不填默认为link
-          dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-          success: function () {
-            // 用户确认分享后执行的回调函数
-            alert('分享成功')
-          },
-          cancel: function (error) {
-            // 用户取消分享后执行的回调函数
-            alert('失败' + error)
-          }
-        })
-      })
     }
+    // 分享获取信息
+    // weChatShare () {
+    //   this.axios.get('/wx/share', {
+    //     params: {
+    //       url: encodeURIComponent(window.location.href.split('#')[0])
+    //       // url: 'http://www.ruketang.com/wechat'
+    //     }
+    //   }).then(res => {
+    //     if (res.data.status_code === 201) {
+    //       this.jssdk = res.data.data
+    //       setTimeout(() => {
+    //         this.weChatConfig()
+    //       }, 100)
+    //     } else {
+    //       this.Toast.fail(res.data.msg)
+    //     }
+    //   }).catch(error => {
+    //     console.log(error)
+    //     alert(error)
+    //     this.Toast.fail('网络连接错误')
+    //   })
+    // },
+    // 分享注册信息
+    // weChatConfig () {
+    //   this.wx.config({
+    //     debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+    //     appId: this.jssdk.appId, // 必填，企业号的唯一标识，此处填写企业号corpid
+    //     timestamp: this.jssdk.timestamp, // 必填，生成签名的时间戳
+    //     nonceStr: this.jssdk.noncestr, // 必填，生成签名的随机串
+    //     signature: this.jssdk.sign, // 必填，签名，见附录1
+    //     jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    //   })
+    //   this.wx.ready(() => {
+    //     this.wx.onMenuShareTimeline({
+    //       title: this.theClass.name, // 分享标题
+    //       link: this.jssdk.url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+    //       imgUrl: this.theClass.img, // 分享图标
+    //       success: function () {
+    //         // 用户确认分享后执行的回调函数
+    //         alert('分享成功')
+    //       }
+    //     })
+    //     this.wx.onMenuShareAppMessage({
+    //       title: this.theClass.name, // 分享标题
+    //       desc: this.theClass.desc, // 分享描述
+    //       link: this.jssdk.url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+    //       imgUrl: this.theClass.img, // 分享图标
+    //       type: 'link', // 分享类型,music、video或link，不填默认为link
+    //       dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+    //       success: function () {
+    //         // 用户确认分享后执行的回调函数
+    //         alert('分享成功')
+    //       },
+    //       cancel: function (error) {
+    //         // 用户取消分享后执行的回调函数
+    //         alert('失败' + error)
+    //       }
+    //     })
+    //   })
+    // }
   },
   mounted () {
-    this.getClassAjax()
     this.getProblem()
-    this.weChatShare()
+    // this.weChatShare()
+    // 获取课程详情
+    this.$store.dispatch('GET_CLASS_AJAX', this.$route.params.id).then(res => {
+      this.theClass = res
+    }).then(() => {
+      // 获取微信签名并配置
+      this.$store.dispatch('WX_CONFIG_AJAX').then(res => {
+        // this.$store.commit('WX_RECORDING_CONFIG', res, this.theClass)
+      })
+    })
+  },
+  beforeRouteLeave (to, from, next) {
+    Promise.all([this.$store.commit('CLEARCLASS')]).then(() => {
+      this.$store.dispatch('WX_CONFIG_AJAX')
+      next()
+    })
   }
 }
 </script>

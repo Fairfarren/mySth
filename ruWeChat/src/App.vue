@@ -44,6 +44,9 @@ export default {
     document.getElementsByTagName('html')[0].style.fontSize = fontSize + 'px'
     // this.loginAjax()
     this.$store.dispatch('GET_USER_INFO')
+    Promise.all([this.$store.commit('CLEARCLASS')]).then(() => {
+      this.$store.dispatch('WX_CONFIG_AJAX')
+    })
   },
   watch: {
     '$route.path' (value) {

@@ -135,13 +135,6 @@ export default {
   },
   mounted () {
     this.homeAjax()
-    // 登录
-    // this.axios.get('/t_login').then(res => {
-
-    // }).catch(error => {
-    //   console.log(error)
-    // })
-    this.$store.commit('CLEARCLASS')
   }
 }
 </script>
