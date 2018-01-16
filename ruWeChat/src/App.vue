@@ -36,6 +36,17 @@ export default {
         console.log(error)
         this.Toast.fail('网络链接错误')
       })
+    },
+    // 判断是否是课程分享
+    is_recording () {
+      const search = window.location.search.slice(1)
+      let arr = search.split('&')
+      arr.forEach((value, index) => {
+        if (value.indexOf('recordingId=') !== -1) {
+          window.location.search = ''
+          this.$router.push(`/recording/${value.split('recordingId=')[1]}`)
+        }
+      })
     }
   },
   mounted () {
@@ -47,6 +58,8 @@ export default {
     Promise.all([this.$store.commit('CLEARCLASS')]).then(() => {
       this.$store.dispatch('WX_CONFIG_AJAX')
     })
+    // 判断是否是课程分享
+    this.is_recording()
   },
   watch: {
     '$route.path' (value) {

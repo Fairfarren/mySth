@@ -1,3 +1,5 @@
+import { Toast } from 'vant'
+
 // 设置用户信息
 export const SETUSER = (state, data) => {
   data.mobile = data.mobile ? data.mobile : ''
@@ -28,6 +30,7 @@ export const WX_RECORDING_CONFIG = (state, wxConfig) => {
     jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline']
   })
   wx.ready(() => {
+    state.CLASS.url = `http://www.ruketang.com/wechat?recordingId=${state.CLASS.id}`
     let theClass = state.CLASS.name
       ? state.CLASS
       : {
@@ -42,7 +45,7 @@ export const WX_RECORDING_CONFIG = (state, wxConfig) => {
       imgUrl: theClass.img, // 分享图标
       success: function () {
         // 用户确认分享后执行的回调函数
-        alert('分享成功')
+        Toast.success('分享成功')
       }
     })
     wx.onMenuShareAppMessage({
@@ -54,11 +57,12 @@ export const WX_RECORDING_CONFIG = (state, wxConfig) => {
       dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
       success: function () {
         // 用户确认分享后执行的回调函数
-        alert('分享成功')
+        Toast.success('分享成功')
       },
       cancel: function (error) {
         // 用户取消分享后执行的回调函数
-        alert('失败' + error)
+        // Toast.fail('分享成功')
+        console.log(error)
       }
     })
   })
