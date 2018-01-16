@@ -358,7 +358,7 @@
 
 <script>
 import NoList from '@/components/noList'
-const wx = window.wx
+// const wx = window.wx
 export default {
   components: {
     NoList
@@ -485,15 +485,17 @@ export default {
     },
     // 分享获取信息
     weChatShare () {
-      const url = 'http://www.ruketang.com/wechat/'
       this.axios.get('/wx/share', {
         params: {
-          url: url
+          url: window.location.href.split('#')[0]
+          // url: 'http://www.ruketang.com/wechat'
         }
       }).then(res => {
         if (res.data.status_code === 201) {
           this.jssdk = res.data.data
-          this.weChatConfig()
+          setTimeout(() => {
+            this.weChatConfig()
+          }, 100)
         } else {
           this.Toast.fail(res.data.msg)
         }
@@ -505,16 +507,16 @@ export default {
     },
     // 分享注册信息
     weChatConfig () {
-      wx.config({
+      this.wx.config({
         debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-        appId: this.jssdk.appId, // 必填，公众号的唯一标识
+        appId: this.jssdk.appId, // 必填，企业号的唯一标识，此处填写企业号corpid
         timestamp: this.jssdk.timestamp, // 必填，生成签名的时间戳
         nonceStr: this.jssdk.noncestr, // 必填，生成签名的随机串
-        signature: 'MD5', // 必填，签名，见附录1
+        signature: 'SHA1', // 必填，签名，见附录1
         jsApiList: ['onMenuShareAppMessage', 'onMenuShareTimeline'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
       })
-      wx.ready(() => {
-        wx.onMenuShareTimeline({
+      this.wx.ready(() => {
+        this.wx.onMenuShareTimeline({
           title: this.theClass.name, // 分享标题
           link: this.jssdk.url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
           imgUrl: this.theClass.img, // 分享图标
@@ -523,7 +525,7 @@ export default {
             alert('分享成功')
           }
         })
-        wx.onMenuShareAppMessage({
+        this.wx.onMenuShareAppMessage({
           title: this.theClass.name, // 分享标题
           desc: this.theClass.desc, // 分享描述
           link: this.jssdk.url, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致

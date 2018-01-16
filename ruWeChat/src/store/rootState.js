@@ -2,7 +2,8 @@ const state = {
   USER: {
     mobile: ''
   },
-  CLASS: {}
+  CLASS: {},
+  weChatConfig: {}
 }
 
 export default state

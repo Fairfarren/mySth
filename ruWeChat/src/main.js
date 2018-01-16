@@ -53,12 +53,15 @@ Vue.use(Lazyload, {
 })
 Vue.use(Vuex)
 
+const wx = require('weixin-js-sdk')
+
 axios.defaults.baseURL = 'http://www.ruketang.com'
 // axios.defaults.baseURL = 'http://tao.liu:5000'
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 axios.defaults.withCredentials = true
 Vue.prototype.axios = axios
 Vue.prototype.Toast = Toast
+Vue.prototype.wx = wx
 
 Vue.config.productionTip = false
 

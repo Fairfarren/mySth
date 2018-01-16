@@ -205,7 +205,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-const wx = window.wx
+// const wx = window.wx
 export default {
   computed: {
     ...mapGetters(['USERPHONEPSW'])
@@ -271,8 +271,8 @@ export default {
     },
     // 调微信支付接口
     weChatJSSDK () {
-      wx.config({
-        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+      this.wx.config({
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
         appId: this.jssdk.appId, // 必填，企业号的唯一标识，此处填写企业号corpid
         timestamp: this.jssdk.timeStamp, // 必填，生成签名的时间戳
         nonceStr: this.jssdk.nonceStr, // 必填，生成签名的随机串
@@ -280,8 +280,8 @@ export default {
         jsApiList: ['chooseWXPay'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
       })
       const that = this
-      wx.ready(res => {
-        wx.chooseWXPay({
+      this.wx.ready(res => {
+        this.wx.chooseWXPay({
           timestamp: this.jssdk.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
           nonceStr: this.jssdk.nonceStr, // 支付签名随机串，不长于 32 位
           package: this.jssdk.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）

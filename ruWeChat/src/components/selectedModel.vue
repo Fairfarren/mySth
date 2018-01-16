@@ -89,7 +89,7 @@ export default {
     }
   },
   mounted () {
-    console.log(this.selectedData)
+    // console.log(this.selectedData)
   }
 }
 </script>
