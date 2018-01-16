@@ -43,8 +43,8 @@ export default {
       let arr = search.split('&')
       arr.forEach((value, index) => {
         if (value.indexOf('recordingId=') !== -1) {
-          window.location.search = ''
           this.$router.push(`/recording/${value.split('recordingId=')[1]}`)
+          // window.location.search = ''
         }
       })
     }
