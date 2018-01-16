@@ -141,6 +141,11 @@ export default {
     // }).catch(error => {
     //   console.log(error)
     // })
+    Promise.all([this.$store.commit('CLEARCLASS')]).then(() => {
+      setTimeout(() => {
+        this.$store.commit('wxMenuShare')
+      }, 100)
+    })
   }
 }
 </script>

@@ -17,3 +17,18 @@ export const GET_USER_INFO = ({ commit }) => {
     console.log(error)
   })
 }
+
+// 获取微信配置
+export const weChatConfig = ({ commit }, data) => {
+  axios.get('/wx/share', {
+    params: {
+      url: encodeURIComponent(window.location.href.split('#')[0])
+    }
+  }).then(res => {
+    if (res.data.status_code === 201) {
+      commit('setWxComfig', res.data.data)
+    }
+  }).catch(error => {
+    console.log(error)
+  })
+}
