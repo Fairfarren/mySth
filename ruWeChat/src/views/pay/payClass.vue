@@ -155,7 +155,7 @@
     <div class="payBox">
       <p>
         <span>
-          机构：
+          类别：
         </span>
         <span>
           {{ this.$store.state.CLASS.category }}
@@ -170,7 +170,7 @@
             {{ this.$store.state.CLASS.name }}
           </h3>
           <p>
-            课时：{{ this.$store.state.CLASS.lesson_list ? this.$store.state.CLASS.lesson_list.length : 0 }}
+            课时：{{ classHour }}
           </p>
           <h4>
             ￥{{ this.$store.state.CLASS.price }}
@@ -208,7 +208,17 @@ import { mapGetters } from 'vuex'
 // const wx = window.wx
 export default {
   computed: {
-    ...mapGetters(['USERPHONEPSW'])
+    ...mapGetters(['USERPHONEPSW']),
+    classHour () {
+      const lesson_list = this.$store.state.CLASS.lesson_list
+      let num = 0
+      lesson_list.forEach((value, index) => {
+        value.lesson[0].forEach((text, ind) => {
+          num++
+        })
+      })
+      return num
+    }
   },
   data () {
     return {

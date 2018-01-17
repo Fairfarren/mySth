@@ -140,7 +140,7 @@
                   <div>
                     <h3>
                       <span>{{ value.name.length > 15 ? `${value.name.slice(0, 15)}......` : value.name }}</span>
-                      <span>开始学习</span>
+                      <router-link tag="span" :to="`/recording/${value.id}`">开始学习</router-link>
                     </h3>
                   </div>
                   <div>
