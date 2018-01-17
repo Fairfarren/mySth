@@ -210,9 +210,9 @@ export default {
   computed: {
     ...mapGetters(['USERPHONEPSW']),
     classHour () {
-      const lesson_list = this.$store.state.CLASS.lesson_list
+      const theLessonList = this.$store.state.CLASS.lesson_list
       let num = 0
-      lesson_list.forEach((value, index) => {
+      theLessonList.forEach((value, index) => {
         value.lesson[0].forEach((text, ind) => {
           num++
         })

@@ -173,7 +173,7 @@
                   <div>
                     <h3>
                       <span>{{ value.name.length > 15 ? `${value.name.slice(0, 15)}......` : value.name }}</span>
-                      <span>继续学习</span>
+                      <router-link tag="span" :to="`/recording/${value.id}`">继续学习</router-link>
                     </h3>
                   </div>
                   <div>
@@ -206,7 +206,7 @@
                   <div>
                     <h3>
                       <span>{{ value.name.length > 15 ? `${value.name.slice(0, 15)}......` : value.name }}</span>
-                      <span>再次学习</span>
+                      <router-link tag="span" :to="`/recording/${value.id}`">再次学习</router-link>
                     </h3>
                   </div>
                   <div>

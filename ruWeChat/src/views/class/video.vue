@@ -153,6 +153,17 @@ export default {
         //     fullscreenToggle: true // 全屏
         // },
       },
+      playerStatus: {
+        play: false,
+        listen: 0.5,
+        muted: false,
+        allWindow: false,
+        allTime: '00:00:00',
+        nowTime: '00:00:00',
+        ready: false,
+        timer: ''
+      },
+      scheduleLock: true,
       lesson_list: []
     }
   },
@@ -213,39 +224,69 @@ export default {
     onPlayerCanplaythrough (event) {
       // console.log('onPlayerCanplaythrough');
       // 当前时间
-      // const allTime = parseInt(this.player.duration())
-      // let allTimeStaus = {
-      //   s: allTime % 60,
-      //   m: parseInt(allTime / 60),
-      //   h: parseInt(allTime / 60 / 60)
-      // }
-      // this.playerStatus.allTime = `${allTimeStaus.h}:${allTimeStaus.m}:${allTimeStaus.s}`
+      const allTime = parseInt(this.player.duration())
+      let allTimeStaus = {
+        s: allTime % 60 < 10 ? `0${allTime % 60}` : allTime % 60,
+        m: parseInt(allTime / 60),
+        h: parseInt(allTime / 60 / 60)
+      }
+      this.playerStatus.allTime = `${allTimeStaus.h}:${allTimeStaus.m}:${allTimeStaus.s}`
       // 设置音量
-      this.player.volume(1)
-      // console.log(event);
+      // this.player.volume(1)
     },
     onPlayerWaiting () {
       console.log('选择时间')
     },
-    onPlayerPlaying () {
+    onPlayerPlaying (event) {
+      // console.log(event)
       // console.log('正在播放')
     },
     onPlayerLoadeddata () {
-      // console.log('onPlayerLoadeddata');
+      console.log('onPlayerLoadeddata')
     },
     onPlayerTimeupdate () {
+      // 正在播放
       // console.log('onPlayerTimeupdate');
       // 播放时间
-      // const time = parseInt(this.player.currentTime())
-      // const timeStatus = {
-      //   s: time % 60 < 10 ? `0${time % 60}` : time % 60,
-      //   m: parseInt(time / 60),
-      //   h: parseInt(time / 60 / 60)
-      // }
-      // this.playerStatus.nowTime = `${timeStatus.h}:${timeStatus.m}:${timeStatus.s}`
+      const time = parseInt(this.player.currentTime())
+      const timeStatus = {
+        s: time % 60 < 10 ? `0${time % 60}` : time % 60,
+        m: parseInt(time / 60),
+        h: parseInt(time / 60 / 60)
+      }
+      this.playerStatus.nowTime = `${timeStatus.h}:${timeStatus.m}:${timeStatus.s}`
+      // this.playerStatus.nowTime = `${timeStatus.h}:${timeStatus.m}`
+      if (this.playerStatus.nowTime === this.playerStatus.allTime) {
+        this.scheduleLock = true
+        this.upDataSchedule(3)
+      }
+      this.upDataSchedule(2)
     },
     onPlayerCanplay () {
-        // console.log('onPlayerCanplay');
+      console.log('onPlayerCanplay')
+    },
+    // 更新进度
+    upDataSchedule (status) {
+      if (!this.scheduleLock) return
+      this.scheduleLock = false
+      this.axios.post('/wx/schedule', {
+        lesson_id: this.$route.query.lessonId,
+        last_look: this.playerStatus.nowTime,
+        status: status
+      }).then(res => {
+        if (res.data.status_code === 200) {
+          setTimeout(() => {
+            this.scheduleLock = true
+          }, 120000)
+        } else if (res.data.status_code === 401) {
+          this.$store.commit('NOW401')
+        } else {
+          this.Toast.fail(res.data.msg)
+        }
+      }).catch(error => {
+        console.log(error)
+        this.Toast.fail('网络连接错误')
+      })
     }
   },
   mounted () {
