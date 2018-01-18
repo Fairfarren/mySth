@@ -27,7 +27,8 @@ import {
   CellGroup,
   Actionsheet,
   DatetimePicker,
-  Button
+  Button,
+  Popup
 } from 'vant'
 
 Vue.use(VueVideoPlayer)
@@ -46,6 +47,7 @@ Vue.use(CellGroup)
 Vue.use(Actionsheet)
 Vue.use(DatetimePicker)
 Vue.use(Button)
+Vue.use(Popup)
 Vue.use(Lazyload, {
   preLoad: 1.3,
   loading: 'static/loading-bars.svg',

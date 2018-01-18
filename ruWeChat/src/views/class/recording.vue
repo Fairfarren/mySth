@@ -114,6 +114,72 @@
         left: 1.25rem;
         right: 1.25rem;
       }
+      .comment {
+        padding: 2.5rem 0;
+        border: {
+          bottom: 1px solid #e6e6e6;
+        }
+        >span {
+          display: block;
+          margin: 0 auto;
+          width: 17.5rem;
+          height: 4.375rem;
+          line-height: 4.375rem;
+          text-align: center;
+          @include fontSize(1.75rem, #0099fa);
+          border: 1px solid #0099fa;
+          border-radius: 4px;
+        }
+      }
+      .props {
+        width: 100%;
+        height: 100%;
+        background: {
+          color: #F2F1F6;
+        }
+        >div {
+          padding: 2.5rem;
+          >div:nth-child(1) {
+            margin: {
+              bottom: 1rem;
+            }
+          }
+          >h3 {
+            @include fontSize(1.75rem, #333333);
+            margin: {
+              bottom: 1rem;
+            }
+          }
+          >div:nth-child(3) {
+            margin: {
+              bottom: 1rem;
+            }
+            textarea {
+              width: 100%;
+              height: 19rem;
+              border: 1px solid #e6e6e6;
+              padding: 1rem;
+              box-sizing: border-box;
+              background: {
+                color: #fff;
+              }
+            }
+          }
+          >div:last-child {
+            button {
+              width: 100%;
+              height: 4.68rem;
+              line-height: 4.68rem;
+              text-align: center;
+              border: 0;
+              @include fontSize(1.75rem, #fff);
+              background: {
+                color: #0098F9
+              }
+            }
+          }
+        }
+      }
       >ul {
         display: flex;
         border: {
@@ -302,6 +368,25 @@
       <transition name="fadeRight">
         <div v-if="chioseSpan === 2">
           <div class="problem">
+            <div class="comment">
+              <span @click="show = true;comment = ''">
+                我要提问
+              </span>
+            </div>
+            <van-popup position="right" :lock-on-scroll="true" v-model="show" class="props">
+              <div>
+                <div>
+                  <van-button type="default" @click="show = false">关闭</van-button>
+                </div>
+                <h3>{{ this.$store.state.CLASS.name }}</h3>
+                <div>
+                  <textarea v-model="comment" name="" id="" cols="30" placeholder="输入留言"></textarea>
+                </div>
+                <div>
+                  <button @click="setComment">提交</button>
+                </div>
+              </div>
+            </van-popup>
             <ul v-if="problem.length > 0"
               v-for="(value, index) in problem"
               :key="index"
@@ -365,6 +450,7 @@ export default {
   },
   data () {
     return {
+      show: false,
       chioseSpan: 0,
       number: 0,
       fadeLR: 'fadeRight',
@@ -372,7 +458,8 @@ export default {
       problem: [],
       page: 1,
       disabled: false,
-      jssdk: {}
+      jssdk: {},
+      comment: ''
     }
   },
   methods: {
@@ -482,6 +569,31 @@ export default {
       } else {
         this.noMobile()
       }
+    },
+    // 提交评论
+    setComment () {
+      if (!this.comment.trim()) return
+      this.axios.post('/wx/question', {
+        title: this.comment,
+        course_id: this.$route.params.id
+      }).then(res => {
+        if (res.data.status_code === 201) {
+          this.Toast.success('评论成功')
+          this.page = 1
+          this.problem = []
+          setTimeout(() => {
+            this.getProblem()
+            this.show = false
+          }, 2000)
+        } else if (res.data.status_code === 401) {
+          this.$store.commit('NOW401')
+        } else {
+          this.Toast.fail(res.data.msg)
+        }
+      }).catch(error => {
+        console.log(error)
+        this.Toast.fail('网络连接错误')
+      })
     }
     // 分享获取信息
     // weChatShare () {

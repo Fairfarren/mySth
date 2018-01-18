@@ -95,6 +95,11 @@
           <img slot="icon" src="static/images/icon3_05.png" alt="">
         </van-cell>
       </van-cell-group>
+      <van-cell-group>
+        <van-cell title="我的评论" icon="location" to="/myComment" is-link>
+          <img slot="icon" src="static/images/icon3_05.png" alt="">
+        </van-cell>
+      </van-cell-group>
     </div>
   </div>
 </template>
