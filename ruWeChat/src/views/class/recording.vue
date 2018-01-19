@@ -224,8 +224,11 @@
               margin: {
                 bottom: 1.56rem;
               }
+              background: {
+                color: #fff;
+              }
             }
-            >p:nth-child(3) {
+            >p {
               @include fontSize(1.625rem, #666666);
               padding: 1.875rem;
               background: {
