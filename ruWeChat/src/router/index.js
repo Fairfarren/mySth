@@ -89,6 +89,14 @@ export default new Router({
         document.title = '汝课堂'
         next()
       }
+    },
+    {
+      path: '/myComment',
+      component: resolve => require(['@/views/user/myComment'], resolve),
+      beforeEnter: (to, from, next) => {
+        document.title = '我的评论'
+        next()
+      }
     }
   ]
 })
