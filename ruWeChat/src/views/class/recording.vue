@@ -681,6 +681,13 @@ export default {
       this.$store.dispatch('WX_CONFIG_AJAX')
       next()
     })
+  },
+  watch: {
+    'comment'(value) {
+      if (value.length > 200) {
+        this.comment = this.comment.slice(0, 200)
+      }
+    }
   }
 }
 </script>
