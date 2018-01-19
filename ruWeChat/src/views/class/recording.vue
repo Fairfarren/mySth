@@ -163,6 +163,7 @@
               background: {
                 color: #fff;
               }
+              @include fontSize(1.25rem, #333333)
             }
           }
           >div:last-child {
@@ -417,7 +418,7 @@
                   <p v-for="(text, ind) in value.answer_list"
                     :key="ind"
                   >
-                    {{ text.content }}
+                    {{text.lecturer_info.name}}：{{ text.content }}
                   </p>
                 </li>
               </ul>

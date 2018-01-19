@@ -98,7 +98,7 @@
           <p v-for="(text, ind) in value.answer_list"
             :key="ind"
           >
-            {{ text.content }}
+            {{text.lecturer_info.name}}：{{ text.content }}
           </p>
         </li>
       </router-link>
