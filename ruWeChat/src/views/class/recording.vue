@@ -180,58 +180,61 @@
           }
         }
       }
-      >ul {
-        display: flex;
-        border: {
-          bottom: 1px solid #e6e6e6;
-        }
-        padding: {
-          top: 3.43rem;
-          bottom: 2.18rem;
-        }
-        >.left {
-          text-align: center;
-          margin: {
-            right: 1.25rem;
+      >.ul {
+        >ul {
+          display: flex;
+          border: {
+            bottom: 1px solid #e6e6e6;
           }
-          img {
-            width: 4rem;
-            height: 4rem;
-            border-radius: 50%;
+          padding: {
+            top: 3.43rem;
+            bottom: 2.18rem;
           }
-        }
-        >.right {
-          width: 100%;
-          >div:nth-child(1) {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            >span:nth-child(1) {
-              @include fontSize(1.75rem, #0099fa);
-              font-weight: bold;
-            }
-            >span:nth-child(2) {
-              @include fontSize(1.25rem, #999999);
-            }
+          >.left {
+            text-align: center;
             margin: {
-              bottom: 1.56rem;
+              right: 1.25rem;
+            }
+            img {
+              width: 4rem;
+              height: 4rem;
+              border-radius: 50%;
             }
           }
-          >p:nth-child(2) {
-            @include fontSize(1.625rem, #333333);
-            margin: {
-              bottom: 1.56rem;
+          >.right {
+            width: 100%;
+            >div:nth-child(1) {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              >span:nth-child(1) {
+                @include fontSize(1.75rem, #0099fa);
+                font-weight: bold;
+              }
+              >span:nth-child(2) {
+                @include fontSize(1.25rem, #999999);
+              }
+              margin: {
+                bottom: 1.56rem;
+              }
             }
-          }
-          >p:nth-child(3) {
-            @include fontSize(1.625rem, #666666);
-            padding: 1.875rem;
-            background: {
-              color: #f3f3f5;
+            >p:nth-child(2) {
+              @include fontSize(1.625rem, #333333);
+              margin: {
+                bottom: 1.56rem;
+              }
+            }
+            >p:nth-child(3) {
+              @include fontSize(1.625rem, #666666);
+              padding: 1.875rem;
+              background: {
+                color: #f3f3f5;
+              }
             }
           }
         }
       }
+
     }
   }
   .bottomBut {
@@ -387,35 +390,38 @@
                 </div>
               </div>
             </van-popup>
-            <ul v-if="problem.length > 0"
-              v-for="(value, index) in problem"
-              :key="index"
+            <div class="ul"
               v-waterfall-lower="loadMore"
               waterfall-disabled="disabled"
               waterfall-offset="20"
             >
-              <li class="left">
-                <img :src="value.user_info.avatar" alt="">
-              </li>
-              <li class="right">
-                <div>
-                  <span>
-                    {{ value.user_info.username }}
-                  </span>
-                  <span>
-                    {{ value.date.split(' ')[0] }}
-                  </span>
-                </div>
-                <p>
-                  {{ value.title }}
-                </p>
-                <p v-for="(text, ind) in value.answer_list"
-                  :key="ind"
-                >
-                  {{ text.content }}
-                </p>
-              </li>
-            </ul>
+              <ul v-if="problem.length > 0"
+                v-for="(value, index) in problem"
+                :key="index"
+              >
+                <li class="left">
+                  <img :src="value.user_info.avatar" alt="">
+                </li>
+                <li class="right">
+                  <div>
+                    <span>
+                      {{ value.user_info.username }}
+                    </span>
+                    <span>
+                      {{ value.date.split(' ')[0] }}
+                    </span>
+                  </div>
+                  <p>
+                    {{ value.title }}
+                  </p>
+                  <p v-for="(text, ind) in value.answer_list"
+                    :key="ind"
+                  >
+                    {{ text.content }}
+                  </p>
+                </li>
+              </ul>
+            </div>
             <NoList noTitle="没有提问" v-if="problem.length === 0"/>
             <p style="text-align: center;">
               <img src="static/loading-bars.svg" alt="" v-if="!disabled">
