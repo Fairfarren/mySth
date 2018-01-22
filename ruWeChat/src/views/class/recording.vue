@@ -312,7 +312,7 @@
     </div>
     <div class="card">
       <transition name="fadeLeft">
-        <div v-if="chioseSpan === 0">
+        <div v-if="chioseSpan === 0" @touchstart="touchMoveStart" @touchend="touchMoveEnd">
           <div class="box">
             <h3>
               {{ theClass.name }}
@@ -344,7 +344,7 @@
         </div>
       </transition>
       <transition :name="fadeLR">
-        <div v-if="chioseSpan === 1">
+        <div v-if="chioseSpan === 1" @touchstart="touchMoveStart" @touchend="touchMoveEnd">
           <div class="box">
             <h3>
               {{ theClass.name }}
@@ -374,7 +374,7 @@
         </div>
       </transition>
       <transition name="fadeRight">
-        <div v-if="chioseSpan === 2">
+        <div v-if="chioseSpan === 2" @touchstart="touchMoveStart" @touchend="touchMoveEnd">
           <div class="problem">
             <div class="comment">
               <span @click="show = true;comment = ''">
@@ -470,7 +470,13 @@ export default {
       page: 1,
       disabled: false,
       jssdk: {},
-      comment: ''
+      comment: '',
+      touch: {
+        start: 0,
+        end: 0,
+        time: 0,
+        timer: 0
+      }
     }
   },
   methods: {
@@ -605,6 +611,45 @@ export default {
         console.log(error)
         this.Toast.fail('网络连接错误')
       })
+    },
+    // 滑动切换
+    touchMoveStart (e) {
+      const event = e || window.event
+      this.touch.start = event.changedTouches[0].clientX
+      this.touch.timer = setInterval(() => {
+        this.touch.time++
+      }, 10)
+    },
+    touchMoveEnd (e) {
+      const event = e || window.event
+      this.touch.end = event.changedTouches[0].clientX
+      clearInterval(this.touch.timer)
+      const num = Math.abs(this.touch.start - this.touch.end) / this.touch.time
+      console.log(num)
+      if (num > 7) {
+        if (this.chioseSpan === 0) {
+          if (this.touch.start > this.touch.end) {
+            // this.chioseSpan = 1
+            this.changeCard(1)
+          }
+        } else if (this.chioseSpan === 1) {
+          if (this.touch.start < this.touch.end) {
+            // this.chioseSpan = 0
+            this.changeCard(0)
+          }
+          if (this.touch.start > this.touch.end) {
+            // this.chioseSpan = 2
+            this.changeCard(2)
+          }
+        } else if (this.chioseSpan === 2) {
+          if (this.touch.start < this.touch.end) {
+            // this.chioseSpan = 1
+            this.changeCard(1)
+          }
+        }
+      }
+
+      this.touch.time = 0
     }
     // 分享获取信息
     // weChatShare () {
