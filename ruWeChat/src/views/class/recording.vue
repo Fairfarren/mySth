@@ -231,6 +231,7 @@
             >p {
               @include fontSize(1.625rem, #666666);
               padding: 1.875rem;
+              word-break:break-all;
               background: {
                 color: #f3f3f5;
               }
@@ -686,7 +687,7 @@ export default {
     })
   },
   watch: {
-    'comment'(value) {
+    'comment' (value) {
       if (value.length > 200) {
         this.comment = this.comment.slice(0, 200)
       }
