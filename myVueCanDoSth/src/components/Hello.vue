@@ -10,7 +10,7 @@
       <router-link to="/routerView">routerView标签的name</router-link>
     </div>
     <div>
-      <router-link to="/useSlot">< slot >标签的使用</router-link>
+      <router-link to="/useSlot">< slot >标签的使用''</router-link>
     </div>
     <div>
       <router-link to="/axios">axios测试并使用代理</router-link>
@@ -50,7 +50,7 @@ export default {
   name: 'hello',
   data () {
     return {
-      
+
     }
   }
 }

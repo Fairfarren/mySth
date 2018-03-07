@@ -13,7 +13,7 @@
             <li></li>
             <li></li>
         </ul>
-        <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+        <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="100">
             {{loading}}
         </div>
     </div>
@@ -26,13 +26,14 @@ export default {
         return {
             data: [],
             busy: false,
-            loading: '加载中'
+            loading: '123'
         }
     },
     methods : {
         loadMore: function() {
             this.busy = true;
-            this.loading = '加载中'
+            this.loading = '加载中';
+            console.log(1)
             setTimeout(() => {
                 this.loading = '加载完'
                 this.busy = false;

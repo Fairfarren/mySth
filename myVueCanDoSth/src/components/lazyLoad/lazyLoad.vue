@@ -11,7 +11,7 @@
 <template>
     <div id="lazyLoadImg">
         <ul>
-            <li v-for="img in imgList">
+            <li v-for="img in imgList" :key="img.img">
                 <img v-lazy="img.img" alt="">
             </li>
         </ul>

@@ -8,6 +8,7 @@
       <span>2</span>
     </nav>
     <router-view></router-view>
+    <vueComponent hello="你好" world="世界"/>
   </div>
 </template>
 

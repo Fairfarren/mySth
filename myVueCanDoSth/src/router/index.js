@@ -35,7 +35,10 @@ import Md5 from '@/components/md5/md5'
 //location
 import Location from '@/components/location/location'
 
+import TheVueComponent from '@/components/vueComponent/index'
+
 Vue.use(Router)
+Vue.use(TheVueComponent)
 
 export default new Router({
   routes: [

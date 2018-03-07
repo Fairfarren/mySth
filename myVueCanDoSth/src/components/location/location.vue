@@ -7,7 +7,7 @@
                 </option>
             </select>
             <select name="bigCity" v-model="smallCity">
-                <option v-for="(name, index) in location[bigCityName].list" :key="name" :value="name">
+                <option v-for="(name, index) in location[bigCityName].list" :key="index" :value="name">
                     {{name}}
                 </option>
             </select>
@@ -50,7 +50,7 @@ export default {
                     index++;
                 }
                 this.location = newBigCity;
-                console.log(newBigCity);
+                console.log(JSON.stringify(newBigCity));
             })
         },
         chosie () {

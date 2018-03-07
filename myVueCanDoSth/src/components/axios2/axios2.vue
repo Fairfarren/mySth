@@ -44,7 +44,7 @@ export default {
             axios({
                 baseURL: 'http://www.nadalive.cn',
                 url: 'nacx/user_collections/',
-                methods: 'get',
+                method: 'get',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 }
