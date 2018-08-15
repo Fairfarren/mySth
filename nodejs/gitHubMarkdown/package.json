@@ -1,0 +1,18 @@
+{
+  "name": "gitHubMarkdown",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "global": "^4.3.2",
+    "html-pdf": "^2.2.0",
+    "phantom": "^6.0.3",
+    "wkhtmltopdf": "^0.3.4"
+  },
+  "scripts": {
+    "vue": "node ./toVue.js",
+    "html": "node ./toHtml.js",
+    "pdf": "node ./toPdf.js"
+  }
+}
