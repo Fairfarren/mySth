@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <div @click="helloSaySth">123</div>
     <router-link to="/">
       <img src="./assets/logo.png">
     </router-link>
@@ -13,8 +14,16 @@
 </template>
 
 <script>
+import hello from './mixins/hello'
 export default {
-  name: 'app'
+  name: 'app',
+  mixins: [hello],
+  methods: {
+    helloSaySth() {
+      this.saySth(123)
+      console.log(this.$data.say)
+    }
+  }
 }
 </script>
 
